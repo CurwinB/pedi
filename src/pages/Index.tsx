@@ -10,7 +10,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   const handleSearch = (query: string) => {
-    navigate(`/search?q=${encodeURIComponent(query)}`);
+    navigate(`/clarify?q=${encodeURIComponent(query)}`);
   };
 
   const categories = [
