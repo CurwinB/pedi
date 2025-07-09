@@ -20,12 +20,17 @@ serve(async (req) => {
   try {
     const { query } = await req.json();
     
+    console.log('Received request with query:', query);
+    
     if (!query) {
       throw new Error('Query parameter is required');
     }
 
     const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
+    console.log('Gemini API key available:', !!geminiApiKey);
+    
     if (!geminiApiKey) {
+      console.error('Gemini API key not found in environment');
       throw new Error('Gemini API key not configured');
     }
 
@@ -73,6 +78,8 @@ Make sure:
 - Use medical terminology when appropriate but keep accessible
 - Return valid JSON only, no other text`;
 
+    console.log('Making request to Gemini API...');
+    
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`, {
       method: 'POST',
       headers: {
@@ -94,18 +101,25 @@ Make sure:
     });
 
     if (!response.ok) {
+      console.error(`Gemini API error: ${response.status} - ${response.statusText}`);
+      const errorText = await response.text();
+      console.error('Error response:', errorText);
       throw new Error(`Gemini API error: ${response.status}`);
     }
 
+    console.log('Gemini API response received successfully');
     const data = await response.json();
     const generatedText = data.candidates[0].content.parts[0].text;
+    console.log('Generated text from Gemini:', generatedText);
     
     // Parse the JSON response from Gemini
     let questions: ClarificationQuestion[];
     try {
       questions = JSON.parse(generatedText.trim());
+      console.log('Successfully parsed questions:', questions.length, 'questions');
     } catch (parseError) {
       console.error('Failed to parse Gemini response:', generatedText);
+      console.error('Parse error:', parseError);
       // Fallback questions - more medical/doctor-like
       questions = [
         {
