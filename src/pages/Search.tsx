@@ -7,6 +7,7 @@ import { AdPlaceholder } from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Remedy {
   name: string;
@@ -37,38 +38,34 @@ const Search = () => {
     navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
     
     try {
-      // TODO: Replace with actual Gemini API call
-      // For now, show mock data
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API delay
-      
-      const mockResult: SearchResult = {
-        summary: `Based on your search for "${searchQuery}", here are some natural remedies that may help. These suggestions are based on traditional uses and available research, but should not replace professional medical advice.`,
-        remedies: [
-          {
-            name: "Ginger Root",
-            description: "Ginger contains powerful anti-inflammatory compounds called gingerols that may help reduce pain and inflammation naturally.",
-            usage: "Fresh ginger can be steeped in hot water for tea (1-2 grams per cup) or taken as a supplement (250-1000mg daily). Can also be used fresh in cooking.",
-            warnings: "May interact with blood thinners. Avoid high doses during pregnancy. Can cause heartburn in sensitive individuals.",
-            sources: ["Journal of Pain Research", "Phytotherapy Research"]
-          },
-          {
-            name: "Turmeric (Curcumin)",
-            description: "Curcumin, the active compound in turmeric, has potent anti-inflammatory and antioxidant properties that may help with various inflammatory conditions.",
-            usage: "Take 500-1000mg curcumin extract daily with black pepper (piperine) for better absorption. Can also add 1-2 teaspoons turmeric powder to foods.",
-            warnings: "May increase bleeding risk when combined with blood thinners. Can worsen acid reflux in some people.",
-            sources: ["Anti-inflammatory & Anti-allergy Agents", "Current Pharmaceutical Design"]
-          },
-          {
-            name: "Chamomile",
-            description: "Contains compounds like apigenin that have calming and anti-inflammatory effects, particularly helpful for digestive issues and anxiety.",
-            usage: "Steep 1-2 teaspoons dried chamomile flowers in hot water for 5-10 minutes. Drink 2-3 cups daily or take as standardized extract (400-1600mg daily).",
-            warnings: "May cause allergic reactions in people sensitive to ragweed, chrysanthemums, or daisies. Can interact with blood thinners.",
-            sources: ["Molecular Medicine Reports", "Phytomedicine"]
+      // Get clarification answers from URL params
+      const clarificationAnswers: Record<string, string | string[]> = {};
+      searchParams.forEach((value, key) => {
+        if (key !== 'q') {
+          // Handle multiple values for the same key (checkbox answers)
+          if (clarificationAnswers[key]) {
+            if (Array.isArray(clarificationAnswers[key])) {
+              (clarificationAnswers[key] as string[]).push(value);
+            } else {
+              clarificationAnswers[key] = [clarificationAnswers[key] as string, value];
+            }
+          } else {
+            clarificationAnswers[key] = value;
           }
-        ]
-      };
+        }
+      });
+
+      // Call the Gemini edge function
+      const { data, error } = await supabase.functions.invoke('generate-remedies', {
+        body: { 
+          query: searchQuery,
+          clarificationAnswers
+        }
+      });
+
+      if (error) throw error;
       
-      setResult(mockResult);
+      setResult(data);
       
     } catch (error) {
       toast({
