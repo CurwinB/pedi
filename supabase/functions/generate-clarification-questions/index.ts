@@ -29,38 +29,48 @@ serve(async (req) => {
       throw new Error('Gemini API key not configured');
     }
 
-    const prompt = `You are a helpful assistant that generates clarification questions for natural remedy searches. 
+    const prompt = `You are a medical professional creating clarification questions for someone seeking natural remedies for "${query}". Generate 3-6 relevant questions that a doctor would ask to better understand the patient's condition and provide more targeted natural remedy recommendations.
 
-For the search query "${query}", generate 2-3 relevant clarification questions that would help provide better natural remedy recommendations. 
+Focus on questions that would help determine:
+- Specific symptoms and their severity/duration
+- Triggers or patterns (environmental, dietary, stress-related)
+- Current medications or treatments being used
+- Age group and any relevant health conditions
+- Lifestyle factors that might influence remedy selection
+- Allergies or sensitivities to consider
 
-Each question should help understand:
-- Specific symptoms or manifestations
-- Severity or duration 
-- Any relevant health context
-- Age group considerations
+Each question should be medically relevant and help narrow down the most appropriate natural remedies. Always include "This is for general knowledge only" as an option in at least one question.
 
-Always include "This is for general knowledge only" as an option in at least one question.
+Examples of good doctor-like questions:
+- "How long have you been experiencing these symptoms?" 
+- "What seems to trigger or worsen your condition?"
+- "Are you currently taking any medications?"
+- "Do you have any known allergies or food sensitivities?"
+- "What is your age group?" (to determine age-appropriate remedies)
+- "How would you rate the severity of your symptoms?"
 
 Return ONLY a valid JSON array with this exact structure:
 [
   {
-    "title": "What specific symptoms are you experiencing?",
-    "type": "checkbox",
-    "options": ["Option 1", "Option 2", "Option 3", "Option 4", "This is for general knowledge only"]
+    "title": "How long have you been experiencing symptoms related to ${query}?",
+    "type": "radio",
+    "options": ["Less than 1 week", "1-4 weeks", "1-6 months", "More than 6 months", "This is for general knowledge only"]
   },
   {
-    "title": "How long have you been experiencing this?",
-    "type": "radio", 
-    "options": ["Less than a week", "1-4 weeks", "1-6 months", "More than 6 months", "This is for general knowledge only"]
+    "title": "What seems to trigger or worsen your condition?",
+    "type": "checkbox", 
+    "options": ["Stress", "Certain foods", "Weather changes", "Physical activity", "Environmental factors", "This is for general knowledge only"]
   }
 ]
 
 Make sure:
-- 2-3 questions maximum
-- 3-6 options per question
+- 3-6 questions maximum
+- Questions are specific to "${query}" and medically relevant
+- Include both "checkbox" and "radio" types as appropriate
+- 4-6 options per question
 - Include "This is for general knowledge only" as an option
-- Questions are relevant to "${query}"
-- Use either "checkbox" or "radio" as appropriate
+- Questions help determine the best natural remedies
+- Use medical terminology when appropriate but keep accessible
 - Return valid JSON only, no other text`;
 
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`, {
@@ -96,17 +106,22 @@ Make sure:
       questions = JSON.parse(generatedText.trim());
     } catch (parseError) {
       console.error('Failed to parse Gemini response:', generatedText);
-      // Fallback questions
+      // Fallback questions - more medical/doctor-like
       questions = [
         {
-          title: "What are your specific symptoms?",
-          type: "checkbox",
-          options: ["Mild discomfort", "Moderate symptoms", "Severe symptoms", "This is for general knowledge only"]
+          title: "How long have you been experiencing these symptoms?",
+          type: "radio",
+          options: ["Less than 1 week", "1-4 weeks", "1-6 months", "More than 6 months", "This is for general knowledge only"]
         },
         {
-          title: "How long have you been experiencing this?",
+          title: "What is your age group?",
           type: "radio",
-          options: ["Less than a week", "1-4 weeks", "1-6 months", "More than 6 months", "This is for general knowledge only"]
+          options: ["Under 18", "18-30 years", "31-50 years", "51-65 years", "Over 65", "This is for general knowledge only"]
+        },
+        {
+          title: "Do you have any known allergies or sensitivities?",
+          type: "checkbox",
+          options: ["Food allergies", "Environmental allergies", "Medication sensitivities", "Skin sensitivities", "No known allergies", "This is for general knowledge only"]
         }
       ];
     }
