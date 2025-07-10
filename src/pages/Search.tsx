@@ -5,7 +5,7 @@ import { RemedyCard } from "@/components/RemedyCard";
 import { Disclaimer } from "@/components/Disclaimer";
 import { AdPlaceholder } from "@/components/AdPlaceholder";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, Sparkles, Zap, Shield, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
@@ -88,21 +88,54 @@ const Search = () => {
   }, [query]);
 
   return (
-    <div className="min-h-screen bg-gradient-subtle">
+    <div className="min-h-screen bg-gradient-to-br from-green-50/30 via-background to-primary/5 relative overflow-hidden">
+      {/* Floating background elements */}
+      <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-xl animate-pulse" />
+      <div className="absolute bottom-40 right-20 w-24 h-24 bg-gradient-to-br from-green-400/20 to-primary/20 rounded-full blur-lg animate-pulse delay-1000" />
+      <div className="absolute top-1/2 left-1/3 w-16 h-16 bg-gradient-to-br from-secondary/15 to-primary/15 rounded-full blur-md animate-pulse delay-500" />
+      
       <Header />
 
-      <main className="container mx-auto px-4 py-24">
-        {/* Search Bar Section */}
-        <div className="mb-8">
-          <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Search Natural Remedies</h1>
-            <p className="text-muted-foreground">Find natural solutions for your health concerns</p>
+      <main className="container mx-auto px-4 py-24 relative z-10">
+        {/* Enhanced Search Bar Section */}
+        <div className="mb-12">
+          <div className="text-center mb-8 animate-fade-in">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="p-3 bg-gradient-primary rounded-xl shadow-glow">
+                <Sparkles className="h-6 w-6 text-white" />
+              </div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+                Natural Remedy Search
+              </h1>
+            </div>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Discover personalized natural solutions backed by traditional wisdom and modern research
+            </p>
           </div>
-          <SearchBar 
-            onSearch={handleSearch}
-            placeholder="Search for symptoms or natural remedies..."
-            size="large"
-          />
+          
+          <div className="max-w-3xl mx-auto">
+            <SearchBar 
+              onSearch={handleSearch}
+              placeholder="Describe your symptoms or condition..."
+              size="large"
+            />
+            
+            {/* Quick stats */}
+            <div className="grid grid-cols-3 gap-4 mt-6 max-w-2xl mx-auto">
+              <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
+                <Shield className="h-5 w-5 text-primary mx-auto mb-1" />
+                <p className="text-xs text-muted-foreground">Safety First</p>
+              </div>
+              <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
+                <Zap className="h-5 w-5 text-secondary mx-auto mb-1" />
+                <p className="text-xs text-muted-foreground">Personalized</p>
+              </div>
+              <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
+                <Clock className="h-5 w-5 text-green-600 mx-auto mb-1" />
+                <p className="text-xs text-muted-foreground">Research-Based</p>
+              </div>
+            </div>
+          </div>
         </div>
         {/* Top Ad */}
         <div className="flex justify-center mb-8">
@@ -110,24 +143,54 @@ const Search = () => {
         </div>
 
         {loading && (
-          <div className="flex items-center justify-center py-12">
-            <div className="text-center">
-              <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-4" />
-              <p className="text-muted-foreground">Searching for natural remedies...</p>
+          <div className="flex items-center justify-center py-16">
+            <div className="text-center space-y-6 animate-fade-in">
+              <div className="relative">
+                <div className="w-16 h-16 bg-gradient-primary rounded-full mx-auto flex items-center justify-center shadow-glow animate-pulse">
+                  <Loader2 className="h-8 w-8 animate-spin text-white" />
+                </div>
+                <div className="absolute inset-0 bg-gradient-primary rounded-full animate-ping opacity-20"></div>
+              </div>
+              <div className="space-y-2">
+                <p className="text-xl font-semibold text-foreground">Analyzing Your Symptoms</p>
+                <p className="text-muted-foreground max-w-md mx-auto">
+                  Our system is carefully selecting personalized natural remedies based on your health profile...
+                </p>
+              </div>
+              <div className="flex justify-center space-x-2">
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce delay-100"></div>
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce delay-200"></div>
+              </div>
             </div>
           </div>
         )}
 
         {result && !loading && (
-          <div className="space-y-8">
-            {/* Summary Section */}
-            <div className="bg-background/80 backdrop-blur-sm rounded-lg border border-border p-6 shadow-soft">
-              <h1 className="text-2xl font-bold text-foreground mb-4">
-                Natural Remedies for: "{query}"
-              </h1>
-              <p className="text-muted-foreground leading-relaxed">
-                {result.summary}
-              </p>
+          <div className="space-y-10 animate-fade-in">
+            {/* Enhanced Summary Section */}
+            <div className="relative overflow-hidden bg-gradient-to-br from-background/95 via-background/90 to-primary/5 backdrop-blur-sm rounded-2xl border border-primary/20 p-8 shadow-elegant">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-primary/10 to-transparent rounded-full -translate-y-20 translate-x-20" />
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-secondary/10 to-transparent rounded-full translate-y-16 -translate-x-16" />
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="p-3 bg-gradient-primary rounded-xl shadow-glow">
+                    <Sparkles className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <h1 className="text-3xl font-bold text-foreground mb-1">
+                      Your Personalized Results
+                    </h1>
+                    <p className="text-primary/80 font-medium">Natural remedies for: "{query}"</p>
+                  </div>
+                </div>
+                <div className="bg-background/50 rounded-xl p-6 border border-primary/10">
+                  <p className="text-muted-foreground leading-relaxed text-lg">
+                    {result.summary}
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* First Ad */}
