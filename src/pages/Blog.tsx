@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar, Clock, User, Search, Leaf, Heart, Shield, Brain } from "lucide-react";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -294,6 +295,8 @@ const Blog = () => {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

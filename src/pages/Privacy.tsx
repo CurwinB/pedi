@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Eye, Database, Cookie, UserCheck, Lock } from "lucide-react";
 
@@ -180,6 +181,8 @@ const Privacy = () => {
           </Card>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

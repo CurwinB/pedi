@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, AlertTriangle, Users, Scale, Shield, ExternalLink } from "lucide-react";
 
@@ -203,6 +204,8 @@ const Terms = () => {
           </Card>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

@@ -9,6 +9,7 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 interface Remedy {
   name: string;
@@ -168,6 +169,8 @@ const Search = () => {
           </div>
         )}
       </main>
+      
+      <Footer />
     </div>
   );
 };

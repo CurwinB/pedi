@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Leaf, Heart, Shield, Search, BookOpen, Users, Lightbulb, CheckCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -256,6 +257,8 @@ const About = () => {
           </Card>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };
