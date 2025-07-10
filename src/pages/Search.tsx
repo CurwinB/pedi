@@ -33,11 +33,69 @@ const Search = () => {
   
   const query = searchParams.get("q") || "";
 
+  const updateSEOMetaTags = (searchQuery: string, searchResult?: SearchResult) => {
+    // Update page title
+    const pageTitle = searchResult 
+      ? `Natural Remedies for ${searchQuery} | Remedypedia`
+      : `Searching for ${searchQuery} | Remedypedia`;
+    document.title = pageTitle;
+
+    // Update meta description
+    const metaDescription = searchResult 
+      ? `Discover personalized natural remedies for ${searchQuery}. ${searchResult.remedies.length} evidence-based solutions including ${searchResult.remedies.slice(0, 2).map(r => r.name).join(', ')} and more.`
+      : `Finding natural remedies for ${searchQuery}. Personalized, evidence-based solutions for your health needs.`;
+    
+    // Update or create meta description
+    let descriptionMeta = document.querySelector('meta[name="description"]');
+    if (!descriptionMeta) {
+      descriptionMeta = document.createElement('meta');
+      descriptionMeta.setAttribute('name', 'description');
+      document.head.appendChild(descriptionMeta);
+    }
+    descriptionMeta.setAttribute('content', metaDescription);
+
+    // Update or create keywords meta tag
+    const keywords = searchResult 
+      ? [searchQuery, ...searchResult.remedies.map(r => r.name), 'natural remedies', 'herbal medicine', 'alternative medicine', 'holistic health'].join(', ')
+      : [searchQuery, 'natural remedies', 'herbal medicine', 'alternative medicine', 'holistic health'].join(', ');
+    
+    let keywordsMeta = document.querySelector('meta[name="keywords"]');
+    if (!keywordsMeta) {
+      keywordsMeta = document.createElement('meta');
+      keywordsMeta.setAttribute('name', 'keywords');
+      document.head.appendChild(keywordsMeta);
+    }
+    keywordsMeta.setAttribute('content', keywords);
+
+    // Update Open Graph tags for social sharing
+    const ogTitle = pageTitle;
+    const ogDescription = metaDescription;
+    
+    let ogTitleMeta = document.querySelector('meta[property="og:title"]');
+    if (!ogTitleMeta) {
+      ogTitleMeta = document.createElement('meta');
+      ogTitleMeta.setAttribute('property', 'og:title');
+      document.head.appendChild(ogTitleMeta);
+    }
+    ogTitleMeta.setAttribute('content', ogTitle);
+
+    let ogDescMeta = document.querySelector('meta[property="og:description"]');
+    if (!ogDescMeta) {
+      ogDescMeta = document.createElement('meta');
+      ogDescMeta.setAttribute('property', 'og:description');
+      document.head.appendChild(ogDescMeta);
+    }
+    ogDescMeta.setAttribute('content', ogDescription);
+  };
+
   const handleSearch = async (searchQuery: string) => {
     setLoading(true);
     
     // Update URL with search query
     navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+    
+    // Update basic SEO tags immediately
+    updateSEOMetaTags(searchQuery);
     
     try {
       // Get clarification answers from URL params
@@ -69,6 +127,9 @@ const Search = () => {
       
       setResult(data);
       
+      // Update SEO tags with full search result data
+      updateSEOMetaTags(searchQuery, data);
+      
     } catch (error) {
       toast({
         title: "Search Error",
@@ -86,6 +147,20 @@ const Search = () => {
       handleSearch(query);
     }
   }, [query]);
+
+  // Cleanup meta tags when component unmounts
+  useEffect(() => {
+    return () => {
+      // Reset to default title
+      document.title = "Remedypedia - Natural Remedies & Herbal Medicine Guide";
+      
+      // Reset meta description
+      const descriptionMeta = document.querySelector('meta[name="description"]');
+      if (descriptionMeta) {
+        descriptionMeta.setAttribute('content', 'Discover evidence-based natural remedies and herbal medicine solutions. Your comprehensive guide to alternative healthcare and holistic wellness treatments.');
+      }
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50/30 via-background to-primary/5 relative overflow-hidden">
