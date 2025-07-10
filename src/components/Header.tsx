@@ -91,8 +91,8 @@ const Header = () => {
                 Search Remedies
               </Button>
               
-              {/* Auth Buttons */}
-              {user ? (
+              {/* Auth Buttons - Only show sign out when authenticated */}
+              {user && (
                 <div className="flex items-center space-x-2">
                   <Button
                     variant="outline"
@@ -111,15 +111,6 @@ const Header = () => {
                     <span>Sign Out</span>
                   </Button>
                 </div>
-              ) : (
-                <Button
-                  variant="outline"
-                  onClick={() => navigate('/auth')}
-                  className="flex items-center space-x-2"
-                >
-                  <LogIn className="h-4 w-4" />
-                  <span>Admin</span>
-                </Button>
               )}
             </nav>
 
@@ -175,8 +166,8 @@ const Header = () => {
                 Search Remedies
               </Button>
               
-              {/* Mobile Auth Buttons */}
-              {user ? (
+              {/* Mobile Auth Buttons - Only show when authenticated */}
+              {user && (
                 <>
                   <Button
                     variant="ghost"
@@ -201,18 +192,6 @@ const Header = () => {
                     Sign Out
                   </Button>
                 </>
-              ) : (
-                <Button
-                  variant="ghost"
-                  onClick={() => {
-                    navigate('/auth');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full justify-start"
-                >
-                  <LogIn className="h-4 w-4 mr-2" />
-                  Admin Access
-                </Button>
               )}
             </div>
           </div>
