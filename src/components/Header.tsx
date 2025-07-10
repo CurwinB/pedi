@@ -47,7 +47,7 @@ const Header = () => {
               <img 
                 src={logo} 
                 alt="Remedypedia Logo" 
-                className="h-8 lg:h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+                className="h-32 lg:h-40 w-auto transition-transform duration-300 group-hover:scale-105"
               />
             </div>
 
