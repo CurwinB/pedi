@@ -172,15 +172,15 @@ const Search = () => {
       <Header />
 
       <main className="container mx-auto px-4 py-24 relative z-10">
-        {/* Page Header - No Search Bar */}
+        {/* Page Header with SEO-Rich H1 */}
         <div className="mb-12 text-center animate-fade-in">
+          <h1 className="text-4xl font-bold text-foreground mb-4 drop-shadow-sm">
+            Natural Remedies for {query} | Evidence-Based Solutions
+          </h1>
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="p-3 bg-gradient-primary rounded-xl shadow-glow">
               <Sparkles className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-foreground mb-2 drop-shadow-sm">
-              Your Natural Remedies
-            </h1>
           </div>
           <p className="text-lg text-muted-foreground/90 max-w-2xl mx-auto leading-relaxed font-medium">
             Personalized natural solutions based on your symptoms and health profile
@@ -233,7 +233,7 @@ const Search = () => {
 
         {result && !loading && (
           <div className="space-y-10 animate-fade-in">
-            {/* Enhanced Summary Section */}
+            {/* Enhanced Summary Section with H2 */}
             <div className="relative overflow-hidden bg-gradient-to-br from-background/95 via-background/90 to-primary/5 backdrop-blur-sm rounded-2xl border border-primary/20 p-8 shadow-elegant">
               <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-primary/10 to-transparent rounded-full -translate-y-20 translate-x-20" />
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-secondary/10 to-transparent rounded-full translate-y-16 -translate-x-16" />
@@ -244,10 +244,10 @@ const Search = () => {
                     <Sparkles className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-3xl font-bold text-foreground mb-1">
-                      Your Personalized Results
-                    </h1>
-                    <p className="text-primary/80 font-medium">Natural remedies for: "{query}"</p>
+                    <h2 className="text-3xl font-bold text-foreground mb-1">
+                      Personalized Natural Treatment Plan for {query}
+                    </h2>
+                    <p className="text-primary/80 font-medium">Evidence-based holistic medicine solutions</p>
                   </div>
                 </div>
                 <div className="bg-background/50 rounded-xl p-6 border border-primary/10">
@@ -263,21 +263,28 @@ const Search = () => {
               <AdPlaceholder size="rectangle" />
             </div>
 
-            {/* Remedies Grid */}
-            <div className="grid gap-6 md:gap-8">
-              {result.remedies.map((remedy, index) => (
-                <div key={index}>
-                  <RemedyCard remedy={remedy} index={index} />
-                  
-                  {/* Insert ads between remedy cards */}
-                  {(index + 1) % 2 === 0 && index < result.remedies.length - 1 && (
-                    <div className="flex justify-center mt-8">
-                      <AdPlaceholder size="rectangle" />
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+            {/* Remedies Section with H2 */}
+            <section className="space-y-6">
+              <h2 className="text-2xl font-bold text-foreground text-center mb-8">
+                {result.remedies.length} Natural Remedies for {query} Treatment | Alternative Medicine Options
+              </h2>
+              
+              {/* Remedies Grid */}
+              <div className="grid gap-6 md:gap-8">
+                {result.remedies.map((remedy, index) => (
+                  <div key={index}>
+                    <RemedyCard remedy={remedy} index={index} />
+                    
+                    {/* Insert ads between remedy cards */}
+                    {(index + 1) % 2 === 0 && index < result.remedies.length - 1 && (
+                      <div className="flex justify-center mt-8">
+                        <AdPlaceholder size="rectangle" />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
 
             {/* Final Ad before disclaimer */}
             <div className="flex justify-center">

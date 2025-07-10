@@ -24,9 +24,11 @@ export const RemedyCard = ({ remedy, index }: RemedyCardProps) => {
             <Leaf className="h-5 w-5 text-primary" />
           </div>
           <div className="flex-1">
-            <CardTitle className="text-lg text-foreground">{remedy.name}</CardTitle>
+            <h3 className="text-xl font-bold text-foreground mb-1">
+              {remedy.name} | Natural Remedy Solution
+            </h3>
             <Badge variant="outline" className="mt-1 text-xs">
-              Remedy #{index + 1}
+              Evidence-Based Treatment #{index + 1}
             </Badge>
           </div>
         </div>
