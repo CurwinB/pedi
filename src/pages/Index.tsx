@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { SearchBar } from "@/components/SearchBar";
-import { AdPlaceholder } from "@/components/AdPlaceholder";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Leaf, Heart, Shield, Search, Sparkles, Book, Users } from "lucide-react";
@@ -109,12 +109,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Top Ad */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-center">
-          <AdPlaceholder size="leaderboard" />
-        </div>
-      </div>
 
       {/* Categories Section */}
       <section className="container mx-auto px-4 py-20">
@@ -150,10 +144,6 @@ const Index = () => {
           })}
         </div>
 
-        {/* Middle Ad */}
-        <div className="flex justify-center mb-16">
-          <AdPlaceholder size="rectangle" />
-        </div>
       </section>
 
       {/* Features Section */}
@@ -306,12 +296,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Bottom Ad */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-center">
-          <AdPlaceholder size="leaderboard" />
-        </div>
-      </div>
 
       <Footer />
     </div>
