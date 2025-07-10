@@ -69,21 +69,6 @@ const Index = () => {
               </p>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto pt-6">
-              <div className="text-center animate-fade-in" style={{ animationDelay: '0.5s' }}>
-                <div className="text-3xl font-bold text-primary-glow">1000+</div>
-                <div className="text-sm opacity-80">Natural Remedies</div>
-              </div>
-              <div className="text-center animate-fade-in" style={{ animationDelay: '0.7s' }}>
-                <div className="text-3xl font-bold text-primary-glow">50+</div>
-                <div className="text-sm opacity-80">Health Categories</div>
-              </div>
-              <div className="text-center animate-fade-in" style={{ animationDelay: '0.9s' }}>
-                <div className="text-3xl font-bold text-primary-glow">24/7</div>
-                <div className="text-sm opacity-80">Available Access</div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
