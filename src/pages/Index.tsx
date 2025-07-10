@@ -321,9 +321,9 @@ const Index = () => {
       </section>
 
       {/* SEO Introduction Section */}
-      <section className="container mx-auto px-4 py-16 border-b border-border/20">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-lg text-foreground leading-relaxed">
+      <section className="container mx-auto px-4 py-12">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-muted-foreground leading-relaxed">
             Remedypedia is your trusted natural health resource, featuring thousands of evidence-based herbal remedies, 
             traditional medicine treatments, and holistic healing solutions. From natural pain relief and digestive health 
             remedies to immune system boosters and stress management techniques, we provide comprehensive information on 
