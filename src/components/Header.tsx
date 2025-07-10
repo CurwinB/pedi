@@ -34,7 +34,7 @@ const Header = () => {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled || !isHomePage
             ? "bg-background/95 backdrop-blur-md border-b border-border shadow-soft" 
-            : "bg-black/20 backdrop-blur-sm border-b border-white/10"
+            : "bg-white/95 backdrop-blur-sm border-b border-border/20 shadow-soft"
         }`}
       >
         <div className="container mx-auto px-4">
@@ -59,9 +59,7 @@ const Header = () => {
                 className={`transition-colors duration-300 ${
                   location.pathname === "/" 
                     ? "text-primary font-semibold" 
-                    : !isHomePage || isScrolled 
-                      ? "text-foreground hover:text-primary" 
-                      : "text-white hover:text-white/90"
+                    : "text-foreground hover:text-primary"
                 }`}
               >
                 Home
@@ -69,11 +67,7 @@ const Header = () => {
               <Button
                 variant="ghost"
                 onClick={() => setIsSearchOpen(true)}
-                className={`transition-colors duration-300 ${
-                  !isHomePage || isScrolled 
-                    ? "text-muted-foreground hover:text-foreground" 
-                    : "text-white hover:text-white/90"
-                }`}
+                className="text-muted-foreground hover:text-foreground"
               >
                 <SearchIcon className="h-4 w-4 mr-2" />
                 Search Remedies
@@ -81,11 +75,7 @@ const Header = () => {
               <Button
                 variant="outline"
                 onClick={() => navigate("/search?q=popular")}
-                className={`transition-all duration-300 ${
-                  !isHomePage || isScrolled
-                    ? "bg-gradient-card border-primary/20 hover:border-primary/40"
-                    : "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/40"
-                }`}
+                className="bg-gradient-card border-primary/20 hover:border-primary/40"
               >
                 Browse All
               </Button>
@@ -95,11 +85,7 @@ const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              className={`md:hidden ${
-                !isHomePage || isScrolled 
-                  ? "text-foreground hover:text-primary" 
-                  : "text-white hover:text-white/80"
-              }`}
+              className="md:hidden text-foreground hover:text-primary"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? (
