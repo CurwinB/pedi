@@ -103,11 +103,11 @@ const Search = () => {
             <div className="p-3 bg-gradient-primary rounded-xl shadow-glow">
               <Sparkles className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold text-foreground mb-2 drop-shadow-sm">
               Your Natural Remedies
             </h1>
           </div>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-muted-foreground/90 max-w-2xl mx-auto leading-relaxed font-medium">
             Personalized natural solutions based on your symptoms and health profile
           </p>
           
