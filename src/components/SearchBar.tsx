@@ -32,7 +32,7 @@ export const SearchBar = ({ onSearch, placeholder = "Describe your symptoms or s
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={placeholder}
-            className={`pl-12 pr-4 ${inputSize} border-border bg-background/80 backdrop-blur-sm shadow-soft focus:shadow-natural transition-all duration-300`}
+            className={`pl-12 pr-4 ${inputSize} border-border bg-white/95 backdrop-blur-sm shadow-soft focus:shadow-natural transition-all duration-300 text-foreground placeholder:text-muted-foreground`}
           />
         </div>
         <Button 
