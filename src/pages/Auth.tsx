@@ -88,7 +88,7 @@ const Auth = () => {
           title: "Welcome back!",
           description: "You have been successfully signed in."
         });
-        navigate('/');
+        navigate('/admin');
       }
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred");
@@ -106,7 +106,7 @@ const Auth = () => {
           <Card className="shadow-natural">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl font-bold text-foreground">
-                Welcome to RemedyPedia
+                Admin Access
               </CardTitle>
               <p className="text-muted-foreground">
                 Sign in to access the admin panel and manage blog posts
@@ -117,36 +117,36 @@ const Auth = () => {
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="signin" className="flex items-center space-x-2">
                     <LogIn className="h-4 w-4" />
-                    <span>Sign In</span>
+                    <span>Admin Sign In</span>
                   </TabsTrigger>
                   <TabsTrigger value="signup" className="flex items-center space-x-2">
                     <UserPlus className="h-4 w-4" />
-                    <span>Sign Up</span>
+                    <span>Admin Sign Up</span>
                   </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="signin">
                   <form onSubmit={handleSignIn} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="signin-email">Email</Label>
+                      <Label htmlFor="signin-email">Admin Email</Label>
                       <Input
                         id="signin-email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        placeholder="Enter your email"
+                        placeholder="Enter your admin email"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="signin-password">Password</Label>
+                      <Label htmlFor="signin-password">Admin Password</Label>
                       <Input
                         id="signin-password"
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        placeholder="Enter your password"
+                        placeholder="Enter your admin password"
                       />
                     </div>
                     {error && (
@@ -163,7 +163,7 @@ const Auth = () => {
                       ) : (
                         <>
                           <LogIn className="mr-2 h-4 w-4" />
-                          Sign In
+                          Sign In to Admin
                         </>
                       )}
                     </Button>
@@ -173,25 +173,25 @@ const Auth = () => {
                 <TabsContent value="signup">
                   <form onSubmit={handleSignUp} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="signup-email">Email</Label>
+                      <Label htmlFor="signup-email">Admin Email</Label>
                       <Input
                         id="signup-email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        placeholder="Enter your email"
+                        placeholder="Enter your admin email"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="signup-password">Password</Label>
+                      <Label htmlFor="signup-password">Admin Password</Label>
                       <Input
                         id="signup-password"
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        placeholder="Create a password"
+                        placeholder="Create admin password"
                         minLength={6}
                       />
                       <p className="text-xs text-muted-foreground">
@@ -212,7 +212,7 @@ const Auth = () => {
                       ) : (
                         <>
                           <UserPlus className="mr-2 h-4 w-4" />
-                          Create Account
+                          Create Admin Account
                         </>
                       )}
                     </Button>

@@ -118,7 +118,7 @@ const Header = () => {
                   className="flex items-center space-x-2"
                 >
                   <LogIn className="h-4 w-4" />
-                  <span>Sign In</span>
+                  <span>Admin</span>
                 </Button>
               )}
             </nav>
@@ -211,7 +211,7 @@ const Header = () => {
                   className="w-full justify-start"
                 >
                   <LogIn className="h-4 w-4 mr-2" />
-                  Sign In
+                  Admin Access
                 </Button>
               )}
             </div>
