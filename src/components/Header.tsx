@@ -66,6 +66,17 @@ const Header = () => {
               </Button>
               <Button
                 variant="ghost"
+                onClick={() => navigate("/blog")}
+                className={`transition-colors duration-300 ${
+                  location.pathname === "/blog" 
+                    ? "text-primary font-semibold" 
+                    : "text-foreground hover:text-primary"
+                }`}
+              >
+                Blog
+              </Button>
+              <Button
+                variant="ghost"
                 onClick={() => setIsSearchOpen(true)}
                 className="text-muted-foreground hover:text-foreground"
               >
@@ -110,6 +121,16 @@ const Header = () => {
                 className="w-full justify-start"
               >
                 Home
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  navigate("/blog");
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full justify-start"
+              >
+                Blog
               </Button>
               <Button
                 variant="ghost"
