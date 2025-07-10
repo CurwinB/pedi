@@ -42,9 +42,9 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Natural Health Links */}
+            {/* Navigation Links */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Natural Health</h3>
+              <h3 className="text-lg font-semibold mb-4">Navigation</h3>
               <div className="space-y-3">
                 <button 
                   onClick={() => navigate("/")}
@@ -53,22 +53,10 @@ const Footer = () => {
                   Home
                 </button>
                 <button 
-                  onClick={() => navigate("/search?category=herbal")}
-                  className="block text-muted-foreground hover:text-foreground transition-colors text-left"
-                >
-                  Herbal Remedies
-                </button>
-                <button 
-                  onClick={() => navigate("/search?category=conditions")}
-                  className="block text-muted-foreground hover:text-foreground transition-colors text-left"
-                >
-                  Health Conditions
-                </button>
-                <button 
                   onClick={() => navigate("/blog")}
                   className="block text-muted-foreground hover:text-foreground transition-colors text-left"
                 >
-                  Wellness Blog
+                  Blog
                 </button>
               </div>
             </div>
