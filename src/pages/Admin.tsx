@@ -56,20 +56,22 @@ const Admin = () => {
 
   useEffect(() => {
     checkAuth();
-    fetchPosts();
-  }, []);
+    if (user) {
+      fetchPosts();
+    }
+  }, [user]);
 
   const checkAuth = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        navigate('/');
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate('/auth');
         return;
       }
-      setUser(user);
+      setUser(session.user);
     } catch (error) {
       console.error('Auth error:', error);
-      navigate('/');
+      navigate('/auth');
     } finally {
       setLoading(false);
     }

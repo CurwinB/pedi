@@ -2,15 +2,22 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SearchBar } from "@/components/SearchBar";
-import { Menu, X, Search as SearchIcon } from "lucide-react";
+import { Menu, X, Search as SearchIcon, LogIn, LogOut, User } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 import logo from "/lovable-uploads/123aadee-f061-4367-8c78-1a4ec06bf1d9.png";
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, signOut } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,6 +90,37 @@ const Header = () => {
                 <SearchIcon className="h-4 w-4 mr-2" />
                 Search Remedies
               </Button>
+              
+              {/* Auth Buttons */}
+              {user ? (
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => navigate('/admin')}
+                    className="flex items-center space-x-2"
+                  >
+                    <User className="h-4 w-4" />
+                    <span>Admin</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={handleSignOut}
+                    className="flex items-center space-x-2"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span>Sign Out</span>
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  variant="outline"
+                  onClick={() => navigate('/auth')}
+                  className="flex items-center space-x-2"
+                >
+                  <LogIn className="h-4 w-4" />
+                  <span>Sign In</span>
+                </Button>
+              )}
             </nav>
 
             {/* Mobile Menu Button */}
@@ -136,6 +174,46 @@ const Header = () => {
                 <SearchIcon className="h-4 w-4 mr-2" />
                 Search Remedies
               </Button>
+              
+              {/* Mobile Auth Buttons */}
+              {user ? (
+                <>
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      navigate('/admin');
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full justify-start"
+                  >
+                    <User className="h-4 w-4 mr-2" />
+                    Admin Panel
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      handleSignOut();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full justify-start"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    navigate('/auth');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full justify-start"
+                >
+                  <LogIn className="h-4 w-4 mr-2" />
+                  Sign In
+                </Button>
+              )}
             </div>
           </div>
         )}
