@@ -207,7 +207,7 @@ const Index = () => {
                   <img 
                     src={logo} 
                     alt="Remedypedia Logo" 
-                    className="h-12 w-auto"
+                    className="h-48 w-auto"
                   />
                 </div>
                 <p className="text-primary-foreground/90 leading-relaxed max-w-md">
