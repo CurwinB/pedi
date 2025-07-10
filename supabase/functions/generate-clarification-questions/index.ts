@@ -34,49 +34,45 @@ serve(async (req) => {
       throw new Error('Gemini API key not configured');
     }
 
-    const prompt = `You are a medical professional creating clarification questions for someone seeking natural remedies for "${query}". Generate 3-6 relevant questions that a doctor would ask to better understand the patient's condition and provide more targeted natural remedy recommendations.
+    const prompt = `You are a healthcare professional creating exactly 6 follow-up questions for someone seeking natural remedies for "${query}". Generate questions that a doctor would ask to better understand the patient's condition.
 
-Focus on questions that would help determine:
-- Specific symptoms and their severity/duration
-- Triggers or patterns (environmental, dietary, stress-related)
-- Current medications or treatments being used
-- Age group and any relevant health conditions
-- Lifestyle factors that might influence remedy selection
-- Allergies or sensitivities to consider
+You MUST create exactly these 6 questions in this exact order:
 
-Each question should be medically relevant and help narrow down the most appropriate natural remedies. Always include "This is for general knowledge only" as an option in at least one question.
+1. ALLERGIES QUESTION: Ask about known allergies. Include "None" as an option. If they select anything other than "None," this should trigger follow-up details.
 
-Examples of good doctor-like questions:
-- "How long have you been experiencing these symptoms?" 
-- "What seems to trigger or worsen your condition?"
-- "Are you currently taking any medications?"
-- "Do you have any known allergies or food sensitivities?"
-- "What is your age group?" (to determine age-appropriate remedies)
-- "How would you rate the severity of your symptoms?"
+2. AGE GROUP QUESTION: Ask about age group to ensure age-appropriate remedies (child, adult, senior).
 
-Return ONLY a valid JSON array with this exact structure:
+3. DURATION/FREQUENCY QUESTION: Ask how long they've had the issue or how often it occurs.
+
+4. ACCOMPANYING SYMPTOMS/CONTEXT QUESTION: Ask about related symptoms or context factors (stress, sleep, digestion, etc.) that might be relevant to "${query}".
+
+5. DESIRED OUTCOME QUESTION: Ask what outcome they're hoping for. MUST include "General knowledge only" as an option to allow users to proceed without personal details.
+
+6. CONDITION-SPECIFIC QUESTION: Ask a specific question about "${query}" (e.g., if headache - ask about location/triggers, if stomach pain - ask about timing/food relation).
+
+Requirements:
+- Each question should have 4-6 relevant options
+- Use "radio" type for single-choice questions, "checkbox" for multiple-choice
+- Make questions medically relevant and specific to "${query}"
+- Always include "General knowledge only" in the desired outcome question
+- Questions should sound like what a healthcare provider would ask
+
+Return ONLY a valid JSON array with exactly 6 questions in this structure:
 [
   {
-    "title": "How long have you been experiencing symptoms related to ${query}?",
-    "type": "radio",
-    "options": ["Less than 1 week", "1-4 weeks", "1-6 months", "More than 6 months", "This is for general knowledge only"]
+    "title": "Do you have any known allergies or sensitivities?",
+    "type": "checkbox",
+    "options": ["Medication allergies", "Food allergies", "Environmental allergies", "Skin sensitivities", "Plant/herb allergies", "None"]
   },
   {
-    "title": "What seems to trigger or worsen your condition?",
-    "type": "checkbox", 
-    "options": ["Stress", "Certain foods", "Weather changes", "Physical activity", "Environmental factors", "This is for general knowledge only"]
+    "title": "What is your age group?",
+    "type": "radio", 
+    "options": ["Child (under 12)", "Teen (12-17)", "Adult (18-64)", "Senior (65+)"]
   }
+  ... (continue with remaining 4 questions)
 ]
 
-Make sure:
-- 3-6 questions maximum
-- Questions are specific to "${query}" and medically relevant
-- Include both "checkbox" and "radio" types as appropriate
-- 4-6 options per question
-- Include "This is for general knowledge only" as an option
-- Questions help determine the best natural remedies
-- Use medical terminology when appropriate but keep accessible
-- Return valid JSON only, no other text`;
+Make the questions specific to "${query}" and medically appropriate. Return valid JSON only.`;
 
     console.log('Making request to Gemini API...');
     
@@ -92,7 +88,7 @@ Make sure:
           }]
         }],
         generationConfig: {
-          temperature: 0.7,
+          temperature: 0.3,
           topK: 40,
           topP: 0.95,
           maxOutputTokens: 1024,
@@ -115,32 +111,57 @@ Make sure:
     // Parse the JSON response from Gemini
     let questions: ClarificationQuestion[];
     try {
-      questions = JSON.parse(generatedText.trim());
+      // Clean up the response to extract JSON
+      const jsonMatch = generatedText.match(/\[[\s\S]*\]/);
+      const jsonText = jsonMatch ? jsonMatch[0] : generatedText.trim();
+      questions = JSON.parse(jsonText);
       console.log('Successfully parsed questions:', questions.length, 'questions');
+      
+      // Ensure we have exactly 6 questions
+      if (questions.length !== 6) {
+        console.warn(`Expected 6 questions, got ${questions.length}. Using fallback.`);
+        throw new Error('Incorrect number of questions generated');
+      }
     } catch (parseError) {
       console.error('Failed to parse Gemini response:', generatedText);
       console.error('Parse error:', parseError);
-      // Fallback questions - more medical/doctor-like
+      
+      // Fallback questions - exactly 6 structured questions
       questions = [
         {
-          title: "How long have you been experiencing these symptoms?",
-          type: "radio",
-          options: ["Less than 1 week", "1-4 weeks", "1-6 months", "More than 6 months", "This is for general knowledge only"]
+          title: "Do you have any known allergies or sensitivities?",
+          type: "checkbox",
+          options: ["Medication allergies", "Food allergies", "Environmental allergies", "Skin sensitivities", "Plant/herb allergies", "None"]
         },
         {
           title: "What is your age group?",
           type: "radio",
-          options: ["Under 18", "18-30 years", "31-50 years", "51-65 years", "Over 65", "This is for general knowledge only"]
+          options: ["Child (under 12)", "Teen (12-17)", "Adult (18-64)", "Senior (65+)"]
         },
         {
-          title: "Do you have any known allergies or sensitivities?",
+          title: "How long have you been experiencing this condition?",
+          type: "radio",
+          options: ["Less than 1 week", "1-4 weeks", "1-6 months", "More than 6 months", "This is recurring/ongoing"]
+        },
+        {
+          title: "Are you experiencing any accompanying symptoms or factors?",
           type: "checkbox",
-          options: ["Food allergies", "Environmental allergies", "Medication sensitivities", "Skin sensitivities", "No known allergies", "This is for general knowledge only"]
+          options: ["Stress or anxiety", "Sleep issues", "Digestive problems", "Fatigue", "Changes in appetite", "None of these"]
+        },
+        {
+          title: "What outcome are you hoping for?",
+          type: "radio",
+          options: ["Quick symptom relief", "Long-term management", "Prevention strategies", "Natural alternatives to medication", "General knowledge only"]
+        },
+        {
+          title: `What best describes your experience with ${query}?`,
+          type: "radio",
+          options: ["First time experiencing this", "Happens occasionally", "Chronic/ongoing issue", "Getting worse recently", "Varies in intensity"]
         }
       ];
     }
 
-    console.log('Generated questions for query:', query, questions);
+    console.log('Final questions for query:', query, questions);
 
     return new Response(JSON.stringify({ questions }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
