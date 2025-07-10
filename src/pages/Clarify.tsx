@@ -130,7 +130,7 @@ const Clarify = () => {
             </div>
             <p className="text-muted-foreground leading-relaxed mb-4">
               To provide you with the most accurate and relevant natural remedy recommendations for "{query}", 
-              we need to understand your specific situation better. These clarifying questions help our AI 
+              we need to understand your specific situation better. These clarifying questions help us 
               generate more personalized suggestions tailored to your unique circumstances.
             </p>
             <p className="text-muted-foreground leading-relaxed">
@@ -252,7 +252,7 @@ const Clarify = () => {
                     personalized recommendations based on your specific circumstances are essential.
                   </p>
                   <p className="text-amber-800 dark:text-amber-200 text-sm leading-relaxed">
-                    The information provided by our AI system is generated based on general knowledge 
+                    The information provided is generated based on general knowledge 
                     and should never replace professional medical advice. Always consult with a licensed 
                     healthcare provider before starting any new treatment, especially if you have 
                     underlying health conditions, are pregnant or nursing, or are taking other medications.
@@ -282,8 +282,8 @@ const Clarify = () => {
                 />
                 <Label htmlFor="disclaimer" className="text-sm leading-relaxed cursor-pointer">
                   <span className="font-medium">Required:</span> I understand that this is not medical advice 
-                  and I should consult a licensed healthcare provider. The information provided is AI-generated 
-                  and for educational purposes only.
+                  and I should consult a licensed healthcare provider. The information provided is 
+                  for educational purposes only.
                 </Label>
               </div>
             </div>
