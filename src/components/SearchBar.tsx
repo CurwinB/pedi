@@ -41,7 +41,7 @@ export const SearchBar = ({ onSearch, placeholder = "Describe your symptoms or s
           <Button 
             type="submit" 
             variant="hero" 
-            className={`${buttonSize} w-full bg-green-600 hover:bg-green-700 text-white font-bold shadow-lg hover:shadow-xl transition-all duration-300`}
+            className={`${buttonSize} w-full bg-white text-green-700 hover:bg-gray-50 border-2 border-green-600 hover:border-green-700 font-bold shadow-lg hover:shadow-xl transition-all duration-300`}
             disabled={!query.trim()}
           >
             Search
@@ -63,7 +63,7 @@ export const SearchBar = ({ onSearch, placeholder = "Describe your symptoms or s
           <Button 
             type="submit" 
             variant="hero" 
-            className={`${buttonSize} bg-green-600 hover:bg-green-700 text-white font-bold`}
+            className={`${buttonSize} bg-white text-green-700 hover:bg-gray-50 border-2 border-green-600 hover:border-green-700 font-bold shadow-lg hover:shadow-xl transition-all duration-300`}
             disabled={!query.trim()}
           >
             Search
