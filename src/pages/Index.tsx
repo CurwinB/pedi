@@ -45,9 +45,114 @@ const Index = () => {
   ];
 
   const healthConditions = [
-    "Headaches and Migraines", "Common Cold and Flu", "Digestive Issues", "Sleep Disorders",
-    "Anxiety and Stress", "Skin Conditions", "Respiratory Problems", "Joint Pain and Arthritis",
-    "High Blood Pressure", "Diabetes Management", "Weight Management", "Hormonal Imbalances"
+    {
+      title: "Headaches and Migraines",
+      description: "Headaches and migraines affect millions of people worldwide and can significantly impact quality of life. Natural approaches focus on identifying triggers, reducing inflammation, and supporting the nervous system. Many effective remedies work by improving blood circulation, reducing muscle tension, or addressing nutritional deficiencies that contribute to headache frequency. Stress management, dietary modifications, and herbal remedies have shown considerable success in both preventing and treating various types of headaches naturally.",
+      remedies: [
+        "Feverfew: Take 100-300mg daily to prevent migraines and reduce frequency",
+        "Magnesium: 400-600mg daily can help prevent tension headaches and migraines",
+        "Peppermint oil: Apply diluted oil to temples for immediate tension headache relief"
+      ]
+    },
+    {
+      title: "Common Cold and Flu",
+      description: "The common cold and flu are viral infections that affect the respiratory system, causing symptoms like congestion, cough, fever, and fatigue. Natural remedies focus on supporting the immune system, reducing inflammation, and helping the body fight off the infection more effectively. Many traditional herbs and nutrients have antiviral properties and can significantly reduce the duration and severity of symptoms when used at the first sign of illness.",
+      remedies: [
+        "Elderberry: Take 15ml syrup or 300mg extract 3 times daily during illness",
+        "Zinc lozenges: Use within 24 hours of symptoms, 13-23mg every 2 hours while awake",
+        "Echinacea: 300mg standardized extract 3 times daily for immune support"
+      ]
+    },
+    {
+      title: "Digestive Issues",
+      description: "Digestive problems including bloating, gas, indigestion, and irregular bowel movements are increasingly common due to stress, poor diet, and lifestyle factors. Natural approaches emphasize restoring gut health through probiotics, digestive enzymes, and anti-inflammatory herbs. Many traditional remedies work by soothing the digestive tract, improving nutrient absorption, and supporting healthy gut bacteria balance for long-term digestive wellness.",
+      remedies: [
+        "Ginger: 1-3g daily for nausea, bloating, and general digestive support",
+        "Probiotics: 10-50 billion CFU daily to restore healthy gut bacteria",
+        "Digestive bitters: Take 10-15 drops before meals to stimulate digestion"
+      ]
+    },
+    {
+      title: "Sleep Disorders",
+      description: "Sleep disorders including insomnia, restless sleep, and difficulty falling asleep affect millions and can have serious health consequences. Natural sleep aids work by calming the nervous system, regulating circadian rhythms, and addressing underlying causes like stress and anxiety. Herbal remedies, lifestyle modifications, and relaxation techniques can effectively improve sleep quality without the side effects associated with prescription sleep medications.",
+      remedies: [
+        "Melatonin: 0.5-3mg taken 30 minutes before desired bedtime",
+        "Valerian root: 300-600mg extract taken 1-2 hours before bed",
+        "Passionflower: Drink as tea or take 250mg extract for anxiety-related insomnia"
+      ]
+    },
+    {
+      title: "Anxiety and Stress",
+      description: "Chronic anxiety and stress have become widespread health concerns that can impact both mental and physical wellbeing. Natural approaches focus on supporting the nervous system, balancing stress hormones, and promoting relaxation responses. Adaptogenic herbs, nutritional supplements, and mind-body practices can effectively reduce anxiety symptoms and improve stress resilience without the dependency issues associated with pharmaceutical alternatives.",
+      remedies: [
+        "Ashwagandha: 300-500mg twice daily to reduce cortisol and anxiety",
+        "L-theanine: 100-200mg for calm alertness without drowsiness",
+        "Lemon balm: Drink as tea or take 300mg extract for nervous tension"
+      ]
+    },
+    {
+      title: "Skin Conditions",
+      description: "Skin conditions like eczema, acne, psoriasis, and dermatitis often have underlying causes related to inflammation, immune function, and gut health. Natural treatments address both topical symptoms and internal factors contributing to skin problems. Many plant-based remedies have anti-inflammatory, antimicrobial, and healing properties that can effectively treat various skin conditions while supporting overall skin health and preventing future outbreaks.",
+      remedies: [
+        "Aloe vera gel: Apply pure gel 2-3 times daily for inflammation and healing",
+        "Tea tree oil: Dilute 5-10% in carrier oil for acne and fungal infections",
+        "Calendula cream: Apply to wounds, rashes, and irritated skin for healing"
+      ]
+    },
+    {
+      title: "Respiratory Problems",
+      description: "Respiratory issues including asthma, bronchitis, allergies, and chronic cough can significantly impact breathing and quality of life. Natural remedies focus on reducing inflammation in the airways, supporting lung function, and addressing underlying triggers. Many herbs have expectorant, bronchodilator, and anti-inflammatory properties that help clear congestion, ease breathing, and support overall respiratory health naturally.",
+      remedies: [
+        "Eucalyptus oil: Inhale steam with 3-5 drops for congestion relief",
+        "Thyme: Drink as tea or use 200mg extract for cough and bronchial support",
+        "N-acetylcysteine (NAC): 600mg twice daily to thin mucus and support lung function"
+      ]
+    },
+    {
+      title: "Joint Pain and Arthritis",
+      description: "Joint pain and arthritis involve inflammation and degeneration of cartilage, causing pain, stiffness, and reduced mobility. Natural anti-inflammatory approaches can significantly reduce symptoms and slow disease progression. Many herbs and supplements work by reducing inflammatory markers, supporting cartilage repair, and improving joint lubrication. These natural treatments often provide relief comparable to conventional medications without the associated side effects.",
+      remedies: [
+        "Turmeric: 500-1000mg curcumin with black pepper for anti-inflammatory effects",
+        "Glucosamine sulfate: 1500mg daily to support cartilage repair and joint health",
+        "Boswellia: 300-400mg standardized extract for pain and inflammation reduction"
+      ]
+    },
+    {
+      title: "High Blood Pressure",
+      description: "High blood pressure is a silent condition that increases risk of heart disease and stroke. Natural approaches focus on lifestyle modifications, stress reduction, and cardiovascular-supporting nutrients. Many herbs and supplements have been shown to help lower blood pressure by improving blood vessel flexibility, reducing inflammation, and supporting healthy circulation. These natural methods work best when combined with dietary changes and regular exercise.",
+      remedies: [
+        "Hawthorn berry: 160-1800mg daily to support cardiovascular health",
+        "Garlic extract: 600-1200mg aged garlic daily for blood pressure support",
+        "Magnesium: 400-800mg daily to relax blood vessels and support heart health"
+      ]
+    },
+    {
+      title: "Diabetes Management",
+      description: "Type 2 diabetes involves insulin resistance and blood sugar dysregulation that can be significantly improved through natural approaches. Dietary modifications, herbal remedies, and targeted supplements can help improve insulin sensitivity, regulate glucose metabolism, and prevent complications. Many traditional plants have glucose-lowering properties and can be valuable additions to conventional diabetes management when used under proper supervision.",
+      remedies: [
+        "Cinnamon: 1-6g daily to help improve insulin sensitivity and glucose control",
+        "Chromium picolinate: 200-400mcg daily to support healthy blood sugar levels",
+        "Bitter melon: 2-4g daily as extract or fresh juice for glucose regulation"
+      ]
+    },
+    {
+      title: "Weight Management",
+      description: "Healthy weight management involves addressing metabolism, appetite regulation, and underlying factors that contribute to weight gain. Natural approaches focus on supporting thyroid function, balancing hormones, and enhancing fat metabolism. Many herbs and nutrients can help increase energy expenditure, reduce cravings, and support healthy body composition when combined with appropriate diet and exercise modifications.",
+      remedies: [
+        "Green tea extract: 400-500mg EGCG daily to boost metabolism and fat burning",
+        "Garcinia cambogia: 500-1000mg before meals for appetite suppression",
+        "L-carnitine: 1-3g daily to support fat metabolism and energy production"
+      ]
+    },
+    {
+      title: "Hormonal Imbalances",
+      description: "Hormonal imbalances affecting thyroid, reproductive, and stress hormones can cause a wide range of symptoms including fatigue, mood changes, and metabolic dysfunction. Natural hormone balancing approaches focus on supporting endocrine gland function, reducing hormone-disrupting toxins, and providing nutrients needed for hormone production. Many adaptogenic herbs help the body naturally regulate hormone levels and improve overall endocrine health.",
+      remedies: [
+        "Maca root: 1.5-3g daily to support overall hormonal balance and energy",
+        "Vitex (Chasteberry): 20-40mg daily for women's reproductive hormone balance",
+        "Rhodiola: 200-400mg daily to support adrenal function and stress hormones"
+      ]
+    }
   ];
 
   const popularRemedies = [
@@ -329,16 +434,32 @@ const Index = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-16">
+        <Accordion type="single" collapsible className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-16">
           {healthConditions.map((condition, index) => (
-            <div 
-              key={index}
-              className="p-4 bg-card rounded-xl border border-border hover:shadow-soft transition-all duration-300 text-center cursor-pointer hover:scale-105"
-            >
-              <p className="text-foreground font-medium">{condition}</p>
-            </div>
+            <AccordionItem key={index} value={`condition-${index}`} className="bg-card rounded-xl border border-border hover:shadow-soft transition-all duration-300">
+              <AccordionTrigger className="p-4 hover:no-underline hover:bg-muted/50 rounded-t-xl text-center">
+                <h3 className="text-foreground font-medium">{condition.title}</h3>
+              </AccordionTrigger>
+              <AccordionContent className="p-4 pt-0">
+                <div className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed text-sm">{condition.description}</p>
+                  
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-2 text-sm">Natural Treatment Options:</h4>
+                    <ul className="space-y-2">
+                      {condition.remedies.map((remedy, idx) => (
+                        <li key={idx} className="text-xs text-muted-foreground flex items-start space-x-2">
+                          <span className="text-primary mt-1">•</span>
+                          <span>{remedy}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </section>
 
       {/* Popular Remedies Section */}
