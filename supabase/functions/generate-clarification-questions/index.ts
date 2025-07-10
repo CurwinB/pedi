@@ -46,7 +46,7 @@ You MUST create exactly these 6 questions in this exact order:
 
 4. ACCOMPANYING SYMPTOMS/CONTEXT QUESTION: Ask about related symptoms or context factors (stress, sleep, digestion, etc.) that might be relevant to "${query}".
 
-5. DESIRED OUTCOME QUESTION: Ask what outcome they're hoping for. MUST include "General knowledge only" as an option to allow users to proceed without personal details.
+5. TREATMENT HISTORY QUESTION: Ask what treatments or remedies they've already tried, including any current medications or natural remedies they're using.
 
 6. CONDITION-SPECIFIC QUESTION: Ask a specific question about "${query}" (e.g., if headache - ask about location/triggers, if stomach pain - ask about timing/food relation).
 
@@ -54,7 +54,6 @@ Requirements:
 - Each question should have 4-6 relevant options
 - Use "radio" type for single-choice questions, "checkbox" for multiple-choice
 - Make questions medically relevant and specific to "${query}"
-- Always include "General knowledge only" in the desired outcome question
 - Questions should sound like what a healthcare provider would ask
 
 Return ONLY a valid JSON array with exactly 6 questions in this structure:
@@ -149,9 +148,9 @@ Make the questions specific to "${query}" and medically appropriate. Return vali
           options: ["Stress or anxiety", "Sleep issues", "Digestive problems", "Fatigue", "Changes in appetite", "None of these"]
         },
         {
-          title: "What outcome are you hoping for?",
-          type: "radio",
-          options: ["Quick symptom relief", "Long-term management", "Prevention strategies", "Natural alternatives to medication", "General knowledge only"]
+          title: "Have you tried any treatments or remedies for this condition?",
+          type: "checkbox",
+          options: ["Over-the-counter medications", "Prescription medications", "Natural remedies", "Home remedies", "Alternative therapies", "No previous treatments"]
         },
         {
           title: `What best describes your experience with ${query}?`,
