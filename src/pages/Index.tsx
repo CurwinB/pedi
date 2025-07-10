@@ -17,10 +17,42 @@ const Index = () => {
   };
 
   const categories = [
-    { name: "Digestive Health", description: "Natural remedies for stomach issues, bloating, and digestive wellness", icon: Heart },
-    { name: "Pain & Inflammation", description: "Natural approaches to managing pain and reducing inflammation", icon: Shield },
-    { name: "Mental Wellness", description: "Herbs and natural solutions for stress, anxiety, and mental clarity", icon: Leaf },
-    { name: "Immune Support", description: "Natural ways to boost immunity and support overall health", icon: Shield }
+    { 
+      name: "Digestive Health", 
+      description: "Discover time-tested natural remedies for digestive issues including acid reflux, bloating, IBS, constipation, and stomach ulcers. Learn about herbal treatments, dietary solutions, and traditional medicine approaches.", 
+      icon: Heart,
+      keywords: "digestive health, stomach remedies, acid reflux treatment, bloating relief, IBS natural treatment"
+    },
+    { 
+      name: "Pain & Inflammation", 
+      description: "Explore natural pain relief methods for arthritis, headaches, muscle pain, joint inflammation, and chronic pain conditions using herbs, essential oils, and traditional healing practices.", 
+      icon: Shield,
+      keywords: "natural pain relief, arthritis remedies, headache treatment, anti-inflammatory herbs, muscle pain relief"
+    },
+    { 
+      name: "Mental Wellness", 
+      description: "Find natural solutions for anxiety, depression, stress management, insomnia, and mental clarity using adaptogenic herbs, meditation techniques, and holistic wellness approaches.", 
+      icon: Leaf,
+      keywords: "anxiety relief, natural antidepressants, stress management, insomnia remedies, mental health herbs"
+    },
+    { 
+      name: "Immune Support", 
+      description: "Strengthen your immune system naturally with proven remedies for cold prevention, flu treatment, respiratory health, and overall immunity using medicinal plants and supplements.", 
+      icon: Shield,
+      keywords: "immune system boosters, cold remedies, flu prevention, respiratory health, natural antibiotics"
+    }
+  ];
+
+  const healthConditions = [
+    "Headaches and Migraines", "Common Cold and Flu", "Digestive Issues", "Sleep Disorders",
+    "Anxiety and Stress", "Skin Conditions", "Respiratory Problems", "Joint Pain and Arthritis",
+    "High Blood Pressure", "Diabetes Management", "Weight Management", "Hormonal Imbalances"
+  ];
+
+  const popularRemedies = [
+    "Turmeric for inflammation", "Ginger for nausea", "Echinacea for immunity", "Chamomile for sleep",
+    "Garlic for infections", "Aloe vera for skin", "Peppermint for digestion", "Lavender for anxiety",
+    "Green tea for antioxidants", "Honey for coughs", "Apple cider vinegar for digestion", "Ginkgo for memory"
   ];
 
   return (
@@ -55,8 +87,7 @@ const Index = () => {
                 Welcome to <span className="text-white font-bold drop-shadow-lg">Remedypedia</span>
               </h1>
               <p className="text-xl md:text-2xl opacity-90 leading-relaxed max-w-3xl mx-auto">
-                Find evidence-based information about natural treatments for common health conditions. 
-                Our comprehensive search provides detailed remedy information with usage instructions and safety warnings.
+                Your comprehensive AI-powered natural health database featuring over 10,000 evidence-based remedies, herbal treatments, and traditional medicine solutions for common health conditions. Discover safe, effective natural alternatives with detailed usage instructions, dosage guidelines, and safety warnings backed by scientific research and centuries of traditional wisdom.
               </p>
             </div>
             
@@ -188,6 +219,88 @@ const Index = () => {
                   <p className="text-muted-foreground">Remedies reviewed and validated by health experts</p>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Health Conditions Section */}
+      <section className="container mx-auto px-4 py-20">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-foreground mb-6">Common Health Conditions We Cover</h2>
+          <p className="text-muted-foreground text-xl max-w-4xl mx-auto leading-relaxed">
+            Find natural treatment options for the most searched health conditions. Our database includes evidence-based remedies for both acute and chronic conditions, helping you explore safe alternatives to conventional treatments.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-16">
+          {healthConditions.map((condition, index) => (
+            <div 
+              key={index}
+              className="p-4 bg-card rounded-xl border border-border hover:shadow-soft transition-all duration-300 text-center cursor-pointer hover:scale-105"
+            >
+              <p className="text-foreground font-medium">{condition}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Popular Remedies Section */}
+      <section className="bg-muted/30 py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-6">Most Popular Natural Remedies</h2>
+            <p className="text-muted-foreground text-xl max-w-4xl mx-auto leading-relaxed">
+              Discover the most researched and trusted natural remedies used by millions worldwide. Each remedy includes detailed preparation methods, dosage recommendations, and safety guidelines based on traditional use and modern research.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {popularRemedies.map((remedy, index) => (
+              <div 
+                key={index}
+                className="p-6 bg-card rounded-2xl border border-border hover:shadow-natural transition-all duration-300 cursor-pointer group hover:scale-105"
+              >
+                <div className="flex items-center space-x-3">
+                  <div className="p-2 bg-primary-soft rounded-lg group-hover:shadow-glow transition-all duration-300">
+                    <Leaf className="h-5 w-5 text-primary" />
+                  </div>
+                  <p className="text-foreground font-medium capitalize">{remedy}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO Content Section */}
+      <section className="container mx-auto px-4 py-20">
+        <div className="max-w-4xl mx-auto prose prose-lg">
+          <h2 className="text-3xl font-bold text-foreground mb-8">Understanding Natural Medicine and Herbal Remedies</h2>
+          
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <div className="space-y-6">
+              <h3 className="text-2xl font-semibold text-foreground">What Are Natural Remedies?</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Natural remedies encompass traditional healing practices, herbal medicine, nutritional therapy, and lifestyle interventions that support the body's natural healing processes. These time-tested approaches have been used across cultures for thousands of years to treat various health conditions safely and effectively.
+              </p>
+              
+              <h3 className="text-2xl font-semibold text-foreground">Evidence-Based Approach</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Our database combines traditional knowledge with modern scientific research to provide you with reliable information about natural treatments. Each remedy is evaluated for safety, efficacy, and potential interactions with conventional medications.
+              </p>
+            </div>
+            
+            <div className="space-y-6">
+              <h3 className="text-2xl font-semibold text-foreground">Holistic Health Benefits</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Natural remedies often provide multiple health benefits beyond treating specific symptoms. They support overall wellness, boost immune function, improve energy levels, and promote long-term health without the side effects commonly associated with synthetic medications.
+              </p>
+              
+              <h3 className="text-2xl font-semibold text-foreground">Safety First</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                While natural doesn't always mean safe, our platform provides comprehensive safety information, dosage guidelines, and contraindications for each remedy. We always recommend consulting with healthcare professionals before starting any new treatment regimen.
+              </p>
             </div>
           </div>
         </div>
