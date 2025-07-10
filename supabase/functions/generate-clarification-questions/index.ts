@@ -55,6 +55,8 @@ Requirements:
 - Use "radio" type for single-choice questions, "checkbox" for multiple-choice
 - Make questions medically relevant and specific to "${query}"
 - Questions should sound like what a healthcare provider would ask
+- DO NOT reference "comments section" or other UI elements that don't exist
+- Keep options simple and direct without referencing additional input methods
 
 Return ONLY a valid JSON array with exactly 6 questions in this structure:
 [
@@ -150,7 +152,7 @@ Make the questions specific to "${query}" and medically appropriate. Return vali
         {
           title: "Have you tried any treatments or remedies for this condition?",
           type: "checkbox",
-          options: ["Over-the-counter medications", "Prescription medications", "Natural remedies", "Home remedies", "Alternative therapies", "No previous treatments"]
+          options: ["Over-the-counter medications", "Prescription medications", "Natural/herbal remedies", "Home remedies", "Alternative therapies", "No previous treatments"]
         },
         {
           title: `What best describes your experience with ${query}?`,
