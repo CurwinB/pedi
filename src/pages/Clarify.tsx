@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Loader2, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Loader2, AlertTriangle, Sparkles, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 interface ClarificationQuestion {
   title: string;
@@ -115,20 +116,29 @@ const Clarify = () => {
 
       <main className="container mx-auto px-4 py-24 max-w-4xl">
         {/* Introduction */}
-        <div className="bg-background/80 backdrop-blur-sm rounded-lg border border-border p-6 shadow-soft mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-4">
-            Help Us Understand Your Needs
-          </h1>
-          <p className="text-muted-foreground leading-relaxed mb-4">
-            To provide you with the most accurate and relevant natural remedy recommendations for "{query}", 
-            we need to understand your specific situation better. These clarifying questions help our AI 
-            generate more personalized suggestions tailored to your unique circumstances.
-          </p>
-          <p className="text-muted-foreground leading-relaxed">
-            Personalized recommendations are significantly more effective than generic advice. By understanding 
-            your symptoms, timeline, and health context, we can suggest remedies that are most likely to be 
-            helpful for your specific situation while avoiding potential contraindications.
-          </p>
+        <div className="bg-gradient-to-br from-primary/5 via-background/90 to-secondary/5 backdrop-blur-sm rounded-xl border border-primary/20 p-8 shadow-elegant mb-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-full -translate-y-16 translate-x-16" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-secondary/10 to-transparent rounded-full translate-y-12 -translate-x-12" />
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Sparkles className="h-6 w-6 text-primary" />
+              </div>
+              <h1 className="text-3xl font-bold text-foreground">
+                Help Us Understand Your Needs
+              </h1>
+            </div>
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              To provide you with the most accurate and relevant natural remedy recommendations for "{query}", 
+              we need to understand your specific situation better. These clarifying questions help our AI 
+              generate more personalized suggestions tailored to your unique circumstances.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Personalized recommendations are significantly more effective than generic advice. By understanding 
+              your symptoms, timeline, and health context, we can suggest remedies that are most likely to be 
+              helpful for your specific situation while avoiding potential contraindications.
+            </p>
+          </div>
         </div>
 
         {/* Ad Slot 1 */}
@@ -154,8 +164,13 @@ const Clarify = () => {
           <form onSubmit={handleSubmit} className="space-y-8">
             {questions.map((question, questionIndex) => (
               <div key={questionIndex}>
-                <div className="bg-background/80 backdrop-blur-sm rounded-lg border border-border p-6 shadow-soft">
-                  <h2 className="text-xl font-semibold text-foreground mb-4">{question.title}</h2>
+                <div className="bg-gradient-to-br from-background/90 via-background/95 to-primary/5 backdrop-blur-sm rounded-xl border border-primary/20 p-6 shadow-elegant hover:shadow-glow transition-all duration-300 group">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center text-white text-sm font-medium">
+                      {questionIndex + 1}
+                    </div>
+                    <h2 className="text-xl font-semibold text-foreground group-hover:text-primary/90 transition-colors">{question.title}</h2>
+                  </div>
                   
                   {question.type === 'checkbox' ? (
                     <div className="space-y-3">
@@ -295,6 +310,8 @@ const Clarify = () => {
           </form>
         )}
       </main>
+      
+      <Footer />
     </div>
   );
 };
