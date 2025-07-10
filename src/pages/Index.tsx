@@ -3,6 +3,7 @@ import { SearchBar } from "@/components/SearchBar";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Leaf, Heart, Shield, Search, Sparkles, Book, Users } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -50,9 +51,114 @@ const Index = () => {
   ];
 
   const popularRemedies = [
-    "Turmeric for inflammation", "Ginger for nausea", "Echinacea for immunity", "Chamomile for sleep",
-    "Garlic for infections", "Aloe vera for skin", "Peppermint for digestion", "Lavender for anxiety",
-    "Green tea for antioxidants", "Honey for coughs", "Apple cider vinegar for digestion", "Ginkgo for memory"
+    {
+      title: "Turmeric For Inflammation",
+      description: "Turmeric contains curcumin, a powerful anti-inflammatory compound that has been used for thousands of years in traditional medicine. It helps reduce inflammation markers in the body, supports joint health, and may help alleviate symptoms of arthritis. The active compounds in turmeric work by inhibiting inflammatory enzymes and reducing oxidative stress. Regular consumption can help manage chronic inflammation naturally.",
+      useCases: [
+        "Joint pain and arthritis: Take 500-1000mg curcumin extract daily with black pepper for better absorption",
+        "General inflammation: Add 1-2 teaspoons of ground turmeric to warm milk or smoothies",
+        "Safety note: May interact with blood thinners; consult healthcare provider if taking medications"
+      ]
+    },
+    {
+      title: "Ginger For Nausea",
+      description: "Ginger has been scientifically proven to reduce nausea and vomiting through its active compounds gingerol and shogaol. These compounds affect the digestive system and brain pathways that control nausea. It's particularly effective for motion sickness, morning sickness during pregnancy, and chemotherapy-induced nausea. Ginger also aids overall digestion and has anti-inflammatory properties.",
+      useCases: [
+        "Motion sickness: Take 1g dried ginger powder 30 minutes before travel",
+        "Morning sickness: Sip ginger tea made with 1 inch fresh ginger root steeped in hot water",
+        "Dosage limit: Maximum 4g daily; pregnant women should limit to 1g daily"
+      ]
+    },
+    {
+      title: "Echinacea For Immunity",
+      description: "Echinacea is a purple coneflower that stimulates the immune system and helps the body fight off infections. Research shows it can reduce the duration and severity of cold symptoms when taken at the first sign of illness. The herb works by increasing white blood cell activity and supporting the body's natural defense mechanisms. It's been used by Native Americans for centuries as a natural remedy.",
+      useCases: [
+        "Cold prevention: Take 300mg standardized extract 3 times daily during cold season",
+        "Active infection: Increase to 400mg every 2-3 hours for first 48 hours of symptoms",
+        "Caution: Avoid long-term use (more than 8 weeks) and don't use if allergic to ragweed family plants"
+      ]
+    },
+    {
+      title: "Chamomile For Sleep",
+      description: "Chamomile contains apigenin, a compound that binds to brain receptors to promote sleepiness and reduce insomnia. This gentle herb has mild sedative effects and helps calm anxiety that often interferes with sleep. German chamomile is particularly effective for promoting relaxation and improving sleep quality. It's safe for most people and has been used as a natural sleep aid for centuries.",
+      useCases: [
+        "Bedtime routine: Drink 1 cup chamomile tea 30-45 minutes before bed",
+        "Sleep disorders: Take 400-1600mg chamomile extract daily in divided doses",
+        "Generally safe: May cause drowsiness; avoid before driving or operating machinery"
+      ]
+    },
+    {
+      title: "Garlic For Infections",
+      description: "Garlic contains allicin, a powerful antimicrobial compound that fights bacteria, viruses, and fungi. When garlic is crushed or chopped, it releases allicin which has been shown to be effective against various pathogens including antibiotic-resistant strains. It also supports cardiovascular health and boosts immune function. Fresh garlic is most potent when consumed raw or lightly cooked.",
+      useCases: [
+        "Immune support: Eat 1-2 fresh garlic cloves daily, crushed and mixed with honey",
+        "Respiratory infections: Make garlic tea by steeping 3-4 crushed cloves in hot water",
+        "Precautions: May cause stomach upset on empty stomach; can thin blood and interact with medications"
+      ]
+    },
+    {
+      title: "Aloe Vera For Skin",
+      description: "Aloe vera gel contains over 75 active compounds including vitamins, minerals, amino acids, and anti-inflammatory substances. It accelerates wound healing, soothes burns, and provides deep moisturization for dry or damaged skin. The clear gel has cooling properties and helps reduce inflammation while promoting cell regeneration. It's particularly effective for sunburns, minor cuts, and inflammatory skin conditions.",
+      useCases: [
+        "Sunburn relief: Apply pure aloe gel directly to affected areas 3-4 times daily",
+        "Dry skin: Use as a daily moisturizer, especially effective when applied to damp skin",
+        "Quality matters: Use 100% pure aloe gel without added chemicals; patch test before first use"
+      ]
+    },
+    {
+      title: "Peppermint For Digestion",
+      description: "Peppermint contains menthol and other volatile oils that relax the smooth muscles of the digestive tract, helping to relieve digestive discomfort. It's particularly effective for irritable bowel syndrome (IBS), indigestion, and gas. The herb has antispasmodic properties that can reduce cramping and bloating. Peppermint also has antimicrobial properties that help maintain healthy gut flora.",
+      useCases: [
+        "IBS symptoms: Take 0.2-0.4ml enteric-coated peppermint oil capsules 3 times daily",
+        "Indigestion: Drink peppermint tea after meals using 1 tablespoon dried leaves per cup",
+        "Caution: Avoid with GERD as it may worsen heartburn; don't give to infants or young children"
+      ]
+    },
+    {
+      title: "Lavender For Anxiety",
+      description: "Lavender essential oil has clinically proven anxiolytic (anxiety-reducing) effects through its interaction with neurotransmitters in the brain. The herb promotes relaxation, reduces stress hormones, and can improve mood disorders. Inhaling lavender aromatherapy has been shown to lower cortisol levels and activate the parasympathetic nervous system. It's gentle enough for daily use and well-tolerated by most people.",
+      useCases: [
+        "Daily stress: Add 3-4 drops lavender oil to a diffuser or inhale directly from bottle",
+        "Sleep anxiety: Place dried lavender sachets under pillow or drink lavender tea before bed",
+        "Safe usage: Generally well-tolerated; may cause skin sensitivity in some individuals when applied topically"
+      ]
+    },
+    {
+      title: "Green Tea For Antioxidants",
+      description: "Green tea is rich in catechins, particularly EGCG (epigallocatechin gallate), which are powerful antioxidants that protect cells from damage caused by free radicals. These compounds support cardiovascular health, brain function, and may help prevent certain cancers. Green tea also contains L-theanine, an amino acid that promotes calm alertness and can improve mental focus when combined with the tea's natural caffeine.",
+      useCases: [
+        "Daily antioxidant support: Drink 2-3 cups of high-quality green tea throughout the day",
+        "Concentrated benefits: Take 300-400mg EGCG supplement with meals if preferred over tea",
+        "Caffeine content: Contains 25-50mg caffeine per cup; limit intake if sensitive to caffeine"
+      ]
+    },
+    {
+      title: "Honey For Coughs",
+      description: "Raw honey has natural antimicrobial properties and forms a protective coating in the throat that soothes irritation and suppresses cough reflexes. Studies show honey is as effective as over-the-counter cough suppressants for nighttime coughs in children and adults. The thick consistency helps coat the throat while its natural sugars provide quick energy. Manuka honey has particularly strong antibacterial properties.",
+      useCases: [
+        "Nighttime cough: Take 1-2 tablespoons raw honey before bedtime, let it coat throat slowly",
+        "Sore throat: Mix honey with warm water and lemon juice, gargle and swallow slowly",
+        "Age restriction: Never give honey to children under 12 months due to risk of infant botulism"
+      ]
+    },
+    {
+      title: "Apple Cider Vinegar For Digestion",
+      description: "Apple cider vinegar with 'the mother' contains beneficial bacteria and enzymes that support digestive health. It helps increase stomach acid production, which aids in breaking down proteins and absorbing nutrients. The acetic acid in ACV may help regulate blood sugar levels and support healthy gut bacteria. It also has antimicrobial properties that can help maintain digestive balance.",
+      useCases: [
+        "Digestive support: Mix 1-2 tablespoons in 8oz water and drink 15-30 minutes before meals",
+        "Blood sugar management: Take diluted ACV with high-carbohydrate meals to help moderate glucose response",
+        "Tooth protection: Always dilute and drink through a straw; rinse mouth afterward to protect tooth enamel"
+      ]
+    },
+    {
+      title: "Ginkgo For Memory",
+      description: "Ginkgo biloba improves blood circulation to the brain and acts as an antioxidant, potentially supporting cognitive function and memory. The herb contains flavonoids and terpenoids that help protect nerve cells and improve neural transmission. Some studies suggest it may help with age-related cognitive decline and improve focus and mental clarity. It's been used in traditional Chinese medicine for thousands of years.",
+      useCases: [
+        "Cognitive support: Take 120-240mg standardized ginkgo extract daily, divided into 2-3 doses",
+        "Memory enhancement: Use consistently for 6-8 weeks to see potential benefits",
+        "Drug interactions: Can interact with blood thinners and seizure medications; consult healthcare provider first"
+      ]
+    }
   ];
 
   return (
@@ -245,21 +351,37 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <Accordion type="single" collapsible className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             {popularRemedies.map((remedy, index) => (
-              <div 
-                key={index}
-                className="p-6 bg-card rounded-2xl border border-border hover:shadow-natural transition-all duration-300 cursor-pointer group hover:scale-105"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-primary-soft rounded-lg group-hover:shadow-glow transition-all duration-300">
-                    <Leaf className="h-5 w-5 text-primary" />
+              <AccordionItem key={index} value={`remedy-${index}`} className="bg-card rounded-2xl border border-border hover:shadow-natural transition-all duration-300">
+                <AccordionTrigger className="p-6 hover:no-underline hover:bg-muted/50 rounded-t-2xl">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-primary-soft rounded-lg">
+                      <Leaf className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="text-foreground font-medium text-left">{remedy.title}</h3>
                   </div>
-                  <p className="text-foreground font-medium capitalize">{remedy}</p>
-                </div>
-              </div>
+                </AccordionTrigger>
+                <AccordionContent className="p-6 pt-0">
+                  <div className="space-y-4">
+                    <p className="text-muted-foreground leading-relaxed">{remedy.description}</p>
+                    
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2">Usage & Safety:</h4>
+                      <ul className="space-y-2">
+                        {remedy.useCases.map((useCase, idx) => (
+                          <li key={idx} className="text-sm text-muted-foreground flex items-start space-x-2">
+                            <span className="text-primary mt-1">•</span>
+                            <span>{useCase}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
         </div>
       </section>
 
