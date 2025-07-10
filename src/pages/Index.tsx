@@ -59,16 +59,19 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="bg-background/10 backdrop-blur-md rounded-3xl p-8 border border-primary-foreground/20 shadow-glow animate-slide-up">
+            <div className="bg-background/10 backdrop-blur-md rounded-3xl p-6 md:p-8 border border-primary-foreground/20 shadow-glow animate-slide-up mb-8">
               <SearchBar 
                 onSearch={handleSearch}
                 placeholder="Try: 'headache relief' or 'trouble sleeping' or 'digestive issues'"
                 size="large"
               />
-              <p className="text-sm opacity-75 mt-4">
+              <p className="text-sm opacity-75 mt-4 text-center">
                 Search in natural language - describe your symptoms or health concerns
               </p>
             </div>
+
+            {/* Extra spacing for mobile ad space */}
+            <div className="h-16 md:h-0"></div>
 
           </div>
         </div>
