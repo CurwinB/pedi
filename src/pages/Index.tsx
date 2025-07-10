@@ -197,7 +197,7 @@ const Index = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gradient-accent/40 text-foreground py-16">
+      <footer className="bg-green-100 text-foreground py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-4 gap-8 mb-12">
