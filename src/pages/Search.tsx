@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import Header from "@/components/Header";
 
 interface Remedy {
   name: string;
@@ -87,28 +88,21 @@ const Search = () => {
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
-      {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-4 mb-4">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate("/")}
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Home
-            </Button>
+      <Header />
+
+      <main className="container mx-auto px-4 py-24">
+        {/* Search Bar Section */}
+        <div className="mb-8">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-bold text-foreground mb-2">Search Natural Remedies</h1>
+            <p className="text-muted-foreground">Find natural solutions for your health concerns</p>
           </div>
-          
           <SearchBar 
             onSearch={handleSearch}
             placeholder="Search for symptoms or natural remedies..."
+            size="large"
           />
         </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-8">
         {/* Top Ad */}
         <div className="flex justify-center mb-8">
           <AdPlaceholder size="leaderboard" />

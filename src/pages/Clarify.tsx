@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft, Loader2, AlertTriangle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import Header from "@/components/Header";
 
 interface ClarificationQuestion {
   title: string;
@@ -110,21 +111,9 @@ const Clarify = () => {
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
-      {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Search
-          </Button>
-        </div>
-      </header>
+      <Header />
 
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
+      <main className="container mx-auto px-4 py-24 max-w-4xl">
         {/* Introduction */}
         <div className="bg-background/80 backdrop-blur-sm rounded-lg border border-border p-6 shadow-soft mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-4">
