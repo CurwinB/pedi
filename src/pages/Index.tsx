@@ -87,7 +87,7 @@ const Index = () => {
                 Welcome to <span className="text-white font-bold drop-shadow-lg">Remedypedia</span>
               </h1>
               <p className="text-xl md:text-2xl opacity-90 leading-relaxed max-w-3xl mx-auto">
-                Your comprehensive AI-powered natural health database featuring over 10,000 evidence-based remedies, herbal treatments, and traditional medicine solutions for common health conditions. Discover safe, effective natural alternatives with detailed usage instructions, dosage guidelines, and safety warnings backed by scientific research and centuries of traditional wisdom.
+                Your comprehensive natural health database featuring over 10,000 evidence-based remedies, herbal treatments, and traditional medicine solutions for common health conditions. Discover safe, effective natural alternatives with detailed usage instructions, dosage guidelines, and safety warnings backed by scientific research and centuries of traditional wisdom.
               </p>
             </div>
             
