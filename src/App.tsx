@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Clarify from "./pages/Clarify";
 import Search from "./pages/Search";
 import Blog from "./pages/Blog";
+import Admin from "./pages/Admin";
 import Contact from "./pages/Contact";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/clarify" element={<Clarify />} />
           <Route path="/search" element={<Search />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
