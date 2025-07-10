@@ -55,8 +55,7 @@ Requirements:
 - Use "radio" type for single-choice questions, "checkbox" for multiple-choice
 - Make questions medically relevant and specific to "${query}"
 - Questions should sound like what a healthcare provider would ask
-- DO NOT reference "comments section" or other UI elements that don't exist
-- Keep options simple and direct without referencing additional input methods
+- For questions requiring additional detail, you can reference "comments section" or "additional details section"
 
 Return ONLY a valid JSON array with exactly 6 questions in this structure:
 [

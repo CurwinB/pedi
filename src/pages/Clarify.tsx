@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, Loader2, AlertTriangle, Sparkles, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -23,6 +24,7 @@ const Clarify = () => {
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState<ClarificationQuestion[]>([]);
   const [answers, setAnswers] = useState<Record<number, string[]>>({});
+  const [additionalComments, setAdditionalComments] = useState("");
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   
@@ -102,6 +104,11 @@ const Clarify = () => {
         params.set(paramKey, selectedOptions.join(','));
       }
     });
+
+    // Add additional comments if provided
+    if (additionalComments.trim()) {
+      params.set('additional_details', additionalComments.trim());
+    }
 
     navigate(`/search?${params.toString()}`);
   };
@@ -269,6 +276,26 @@ const Clarify = () => {
                   <div className="text-xs opacity-70">Google AdSense</div>
                 </div>
               </div>
+            </div>
+
+            {/* Additional Comments Section */}
+            <div className="bg-gradient-to-br from-background/90 via-background/95 to-secondary/5 backdrop-blur-sm rounded-xl border border-primary/20 p-6 shadow-elegant">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-secondary/10 rounded-lg">
+                  <Heart className="h-5 w-5 text-secondary" />
+                </div>
+                <h3 className="text-lg font-semibold text-foreground">Additional Details (Optional)</h3>
+              </div>
+              <p className="text-muted-foreground text-sm mb-4">
+                Please share any additional information about your condition, treatments you've tried, 
+                or specific details that might help us provide better recommendations.
+              </p>
+              <Textarea
+                placeholder="e.g., I've tried over-the-counter pain relievers but they upset my stomach. The nausea gets worse in the morning and seems related to stress..."
+                value={additionalComments}
+                onChange={(e) => setAdditionalComments(e.target.value)}
+                className="min-h-[100px] resize-none"
+              />
             </div>
 
             {/* Disclaimer */}
