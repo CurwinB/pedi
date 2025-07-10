@@ -111,14 +111,20 @@ REQUIREMENTS FOR PERSONALIZED RESPONSE:
    - Tailor urgency of care based on duration
    - Adapt remedy intensity to age group
 
-3. CONDITION-SPECIFIC:
+3. REMEDY TYPES TO INCLUDE:
+   - Individual remedies (single herbs/substances)
+   - Combination remedies (2-3 synergistic ingredients working together)
+   - Lifestyle combinations (remedy + lifestyle change)
+   - Sequential protocols (what to try first, then what to add)
+
+4. CONDITION-SPECIFIC:
    - Reference their specific symptom details
    - Consider the context factors they mentioned
    - Address root causes when possible
 
-4. MEANINGFUL REMEDIES:
+5. MEANINGFUL REMEDIES:
    - Prioritize remedies most suitable for their profile
-   - Explain WHY each remedy is chosen for THEIR situation
+   - Explain WHY each remedy/combination is chosen for THEIR situation
    - Include realistic timelines for their specific case
    - Provide alternatives if primary options are contraindicated
 

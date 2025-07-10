@@ -97,43 +97,33 @@ const Search = () => {
       <Header />
 
       <main className="container mx-auto px-4 py-24 relative z-10">
-        {/* Enhanced Search Bar Section */}
-        <div className="mb-12">
-          <div className="text-center mb-8 animate-fade-in">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="p-3 bg-gradient-primary rounded-xl shadow-glow">
-                <Sparkles className="h-6 w-6 text-white" />
-              </div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
-                Natural Remedy Search
-              </h1>
+        {/* Page Header - No Search Bar */}
+        <div className="mb-12 text-center animate-fade-in">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="p-3 bg-gradient-primary rounded-xl shadow-glow">
+              <Sparkles className="h-6 w-6 text-white" />
             </div>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Discover personalized natural solutions backed by traditional wisdom and modern research
-            </p>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+              Your Natural Remedies
+            </h1>
           </div>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Personalized natural solutions based on your symptoms and health profile
+          </p>
           
-          <div className="max-w-3xl mx-auto">
-            <SearchBar 
-              onSearch={handleSearch}
-              placeholder="Describe your symptoms or condition..."
-              size="large"
-            />
-            
-            {/* Quick stats */}
-            <div className="grid grid-cols-3 gap-4 mt-6 max-w-2xl mx-auto">
-              <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
-                <Shield className="h-5 w-5 text-primary mx-auto mb-1" />
-                <p className="text-xs text-muted-foreground">Safety First</p>
-              </div>
-              <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
-                <Zap className="h-5 w-5 text-secondary mx-auto mb-1" />
-                <p className="text-xs text-muted-foreground">Personalized</p>
-              </div>
-              <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
-                <Clock className="h-5 w-5 text-green-600 mx-auto mb-1" />
-                <p className="text-xs text-muted-foreground">Research-Based</p>
-              </div>
+          {/* Quick stats */}
+          <div className="grid grid-cols-3 gap-4 mt-6 max-w-2xl mx-auto">
+            <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
+              <Shield className="h-5 w-5 text-primary mx-auto mb-1" />
+              <p className="text-xs text-muted-foreground">Safety First</p>
+            </div>
+            <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
+              <Zap className="h-5 w-5 text-secondary mx-auto mb-1" />
+              <p className="text-xs text-muted-foreground">Personalized</p>
+            </div>
+            <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
+              <Clock className="h-5 w-5 text-green-600 mx-auto mb-1" />
+              <p className="text-xs text-muted-foreground">Research-Based</p>
             </div>
           </div>
         </div>
