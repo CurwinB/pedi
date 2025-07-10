@@ -83,13 +83,6 @@ const Header = () => {
                 <SearchIcon className="h-4 w-4 mr-2" />
                 Search Remedies
               </Button>
-              <Button
-                variant="outline"
-                onClick={() => navigate("/search?q=popular")}
-                className="bg-gradient-card border-primary/20 hover:border-primary/40"
-              >
-                Browse All
-              </Button>
             </nav>
 
             {/* Mobile Menu Button */}
@@ -142,16 +135,6 @@ const Header = () => {
               >
                 <SearchIcon className="h-4 w-4 mr-2" />
                 Search Remedies
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  navigate("/search?q=popular");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-full justify-start"
-              >
-                Browse All
               </Button>
             </div>
           </div>
