@@ -34,7 +34,7 @@ const Header = () => {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled || !isHomePage
             ? "bg-background/95 backdrop-blur-md border-b border-border shadow-soft" 
-            : "bg-background/90 backdrop-blur-sm border-b border-white/10"
+            : "bg-black/20 backdrop-blur-sm border-b border-white/10"
         }`}
       >
         <div className="container mx-auto px-4">
@@ -61,7 +61,7 @@ const Header = () => {
                     ? "text-primary font-semibold" 
                     : !isHomePage || isScrolled 
                       ? "text-foreground hover:text-primary" 
-                      : "text-white/90 hover:text-white"
+                      : "text-white hover:text-white/90"
                 }`}
               >
                 Home
@@ -72,7 +72,7 @@ const Header = () => {
                 className={`transition-colors duration-300 ${
                   !isHomePage || isScrolled 
                     ? "text-muted-foreground hover:text-foreground" 
-                    : "text-white/90 hover:text-white"
+                    : "text-white hover:text-white/90"
                 }`}
               >
                 <SearchIcon className="h-4 w-4 mr-2" />
