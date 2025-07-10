@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { SearchBar } from "@/components/SearchBar";
 import { RemedyCard } from "@/components/RemedyCard";
 import { Disclaimer } from "@/components/Disclaimer";
-import { AdPlaceholder } from "@/components/AdPlaceholder";
+
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Loader2, Sparkles, Zap, Shield, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -30,8 +30,6 @@ const Search = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<SearchResult | null>(null);
-  const [contentLoaded, setContentLoaded] = useState(false);
-  const [adsVisible, setAdsVisible] = useState(false);
   
   const query = searchParams.get("q") || "";
 
@@ -92,8 +90,6 @@ const Search = () => {
 
   const handleSearch = async (searchQuery: string) => {
     setLoading(true);
-    setContentLoaded(false);
-    setAdsVisible(false);
     
     // Update URL with search query
     navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
@@ -133,15 +129,6 @@ const Search = () => {
       
       // Update SEO tags with full search result data
       updateSEOMetaTags(searchQuery, data);
-      
-      // Mark content as loaded and defer ads
-      setTimeout(() => {
-        setContentLoaded(true);
-        // Show ads after a brief delay to ensure content is stable
-        setTimeout(() => {
-          setAdsVisible(true);
-        }, 500);
-      }, 100);
       
     } catch (error) {
       toast({
@@ -215,12 +202,6 @@ const Search = () => {
             </div>
           </div>
         </div>
-        {/* Top Ad - Deferred */}
-        {adsVisible && (
-          <div className="flex justify-center mb-8 animate-fade-in">
-            <AdPlaceholder size="leaderboard" />
-          </div>
-        )}
 
         {loading && (
           <div className="flex items-center justify-center py-16">
@@ -273,12 +254,6 @@ const Search = () => {
               </div>
             </div>
 
-            {/* First Ad - Deferred */}
-            {adsVisible && (
-              <div className="flex justify-center animate-fade-in">
-                <AdPlaceholder size="rectangle" />
-              </div>
-            )}
 
             {/* Remedies Section with H2 */}
             <section className="space-y-6">
@@ -292,23 +267,11 @@ const Search = () => {
                   <div key={index}>
                     <RemedyCard remedy={remedy} index={index} />
                     
-                    {/* Insert ads between remedy cards - Deferred */}
-                    {(index + 1) % 2 === 0 && index < result.remedies.length - 1 && adsVisible && (
-                      <div className="flex justify-center mt-8 animate-fade-in">
-                        <AdPlaceholder size="rectangle" />
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* Final Ad before disclaimer - Deferred */}
-            {adsVisible && (
-              <div className="flex justify-center animate-fade-in">
-                <AdPlaceholder size="leaderboard" />
-              </div>
-            )}
 
             {/* Disclaimer */}
             <Disclaimer />
