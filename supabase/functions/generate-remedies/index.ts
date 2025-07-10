@@ -51,7 +51,10 @@ serve(async (req) => {
     Object.entries(clarificationAnswers).forEach(([key, value]) => {
       const valueStr = Array.isArray(value) ? value.join(', ') : value;
       
-      if (key.toLowerCase().includes('allerg')) {
+      if (key === 'allergy_details') {
+        // Specific allergy details from the text field
+        extractedInfo.allergies.push(valueStr);
+      } else if (key.toLowerCase().includes('allerg')) {
         if (!valueStr.toLowerCase().includes('none') && !valueStr.toLowerCase().includes('no known')) {
           extractedInfo.allergies.push(valueStr);
         }

@@ -24,6 +24,7 @@ const Clarify = () => {
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState<ClarificationQuestion[]>([]);
   const [answers, setAnswers] = useState<Record<number, string[]>>({});
+  const [allergyDetails, setAllergyDetails] = useState("");
   const [additionalComments, setAdditionalComments] = useState("");
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -104,6 +105,11 @@ const Clarify = () => {
         params.set(paramKey, selectedOptions.join(','));
       }
     });
+
+    // Add allergy details if provided
+    if (allergyDetails.trim()) {
+      params.set('allergy_details', allergyDetails.trim());
+    }
 
     // Add additional comments if provided
     if (additionalComments.trim()) {
@@ -221,6 +227,29 @@ const Clarify = () => {
                     </RadioGroup>
                   )}
                 </div>
+
+                {/* Conditional Allergy Details Input */}
+                {questionIndex === 0 && question.title.toLowerCase().includes('allerg') && 
+                 (answers[questionIndex] || []).some(answer => 
+                   !answer.toLowerCase().includes('none') && 
+                   !answer.toLowerCase().includes('no known')
+                 ) && (
+                  <div className="mt-4 bg-orange-50 dark:bg-orange-950/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4">
+                    <Label htmlFor="allergy-details" className="text-sm font-medium text-orange-900 dark:text-orange-100 mb-2 block">
+                      Please specify your exact allergies:
+                    </Label>
+                    <Textarea
+                      id="allergy-details"
+                      placeholder="e.g., shellfish, peanuts, penicillin, ragweed pollen, latex..."
+                      value={allergyDetails}
+                      onChange={(e) => setAllergyDetails(e.target.value)}
+                      className="min-h-[80px] resize-none bg-background border-orange-300 dark:border-orange-700"
+                    />
+                    <p className="text-xs text-orange-700 dark:text-orange-300 mt-2">
+                      Being specific helps us avoid recommending remedies that contain these allergens.
+                    </p>
+                  </div>
+                )}
 
                 {/* Ad Slot 2 - After second question */}
                 {questionIndex === 1 && (
