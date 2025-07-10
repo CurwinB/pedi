@@ -289,6 +289,12 @@ const Index = () => {
                   >
                     Contact Us
                   </button>
+                  <button 
+                    onClick={() => navigate("/disclaimer")}
+                    className="block text-muted-foreground hover:text-foreground transition-colors text-left"
+                  >
+                    Medical Disclaimer
+                  </button>
                 </div>
               </div>
             </div>
