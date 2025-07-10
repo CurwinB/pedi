@@ -53,8 +53,8 @@ const Index = () => {
                 Welcome to <span className="text-white font-bold drop-shadow-lg">Remedypedia</span>
               </h1>
               <p className="text-xl md:text-2xl opacity-90 leading-relaxed max-w-3xl mx-auto">
-                Discover the power of natural healing with AI-powered insights. Get personalized remedies 
-                backed by centuries of traditional wisdom and modern research.
+                Find evidence-based information about natural treatments for common health conditions. 
+                Our comprehensive search provides detailed remedy information with usage instructions and safety warnings.
               </p>
             </div>
             
@@ -81,7 +81,7 @@ const Index = () => {
               </div>
               <div className="text-center animate-fade-in" style={{ animationDelay: '0.9s' }}>
                 <div className="text-3xl font-bold text-primary-glow">24/7</div>
-                <div className="text-sm opacity-80">AI Assistant</div>
+                <div className="text-sm opacity-80">Available Access</div>
               </div>
             </div>
           </div>
@@ -142,7 +142,7 @@ const Index = () => {
             <div className="text-center mb-16 animate-fade-in">
               <h2 className="text-4xl font-bold text-foreground mb-6">Why Choose Remedypedia?</h2>
               <p className="text-muted-foreground text-xl max-w-3xl mx-auto">
-                Discover the benefits of traditional healing backed by modern research and AI technology
+                Discover the benefits of traditional healing backed by modern research and comprehensive safety information
               </p>
             </div>
 
@@ -161,9 +161,9 @@ const Index = () => {
                 <div className="mx-auto w-20 h-20 bg-gradient-hero rounded-2xl flex items-center justify-center shadow-glow">
                   <Sparkles className="h-10 w-10 text-primary-foreground" />
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">AI-Powered Intelligence</h3>
+                <h3 className="text-2xl font-bold text-foreground">Evidence-Based Research</h3>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Advanced AI understands your symptoms and provides personalized natural remedy recommendations tailored to your unique situation.
+                  Comprehensive database of natural remedies backed by scientific research and traditional knowledge with detailed usage and safety information.
                 </p>
               </div>
 
@@ -217,8 +217,8 @@ const Index = () => {
             <div className="space-y-4">
               <h3 className="text-2xl font-bold text-foreground">Remedypedia</h3>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                Discover the power of natural healing with AI-powered insights. Your trusted companion 
-                for traditional remedies backed by modern research.
+                Find evidence-based information about natural treatments for common health conditions. 
+                Your trusted companion for traditional remedies backed by modern research.
               </p>
             </div>
             
