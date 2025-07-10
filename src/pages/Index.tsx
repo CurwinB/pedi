@@ -50,7 +50,7 @@ const Index = () => {
           <div className="max-w-5xl mx-auto text-center space-y-10">
             <div className="space-y-6 animate-fade-in">
               <h1 className="text-5xl md:text-7xl font-bold leading-tight bg-gradient-to-r from-white to-white/90 bg-clip-text">
-                Welcome to <span className="text-primary-glow">Remedypedia</span>
+                Welcome to <span className="text-white font-bold drop-shadow-lg">Remedypedia</span>
               </h1>
               <p className="text-xl md:text-2xl opacity-90 leading-relaxed max-w-3xl mx-auto">
                 Discover the power of natural healing with AI-powered insights. Get personalized remedies 
