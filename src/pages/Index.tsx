@@ -269,8 +269,14 @@ const Index = () => {
 
               {/* Support & Legal Links */}
               <div>
-                <h3 className="text-lg font-semibold mb-4">Support & Legal</h3>
+                <h3 className="text-lg font-semibold mb-4">About & Legal</h3>
                 <div className="space-y-3">
+                  <button 
+                    onClick={() => navigate("/about")}
+                    className="block text-muted-foreground hover:text-foreground transition-colors text-left"
+                  >
+                    About Us
+                  </button>
                   <button 
                     onClick={() => navigate("/privacy")}
                     className="block text-muted-foreground hover:text-foreground transition-colors text-left"
