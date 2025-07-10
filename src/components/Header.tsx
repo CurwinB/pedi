@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SearchBar } from "@/components/SearchBar";
 import { Menu, X, Search as SearchIcon } from "lucide-react";
-import logo from "/lovable-uploads/691daaa3-cce8-4929-935b-09ac88e6b4ef.png";
+import logo from "/lovable-uploads/123aadee-f061-4367-8c78-1a4ec06bf1d9.png";
 
 const Header = () => {
   const navigate = useNavigate();

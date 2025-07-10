@@ -7,7 +7,7 @@ import { Leaf, Heart, Shield, Search, Sparkles, Book, Users } from "lucide-react
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import heroImage from "@/assets/hero-wellness.jpg";
-import logo from "/lovable-uploads/691daaa3-cce8-4929-935b-09ac88e6b4ef.png";
+import logo from "/lovable-uploads/123aadee-f061-4367-8c78-1a4ec06bf1d9.png";
 
 const Index = () => {
   const navigate = useNavigate();
