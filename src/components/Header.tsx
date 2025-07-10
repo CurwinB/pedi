@@ -90,28 +90,6 @@ const Header = () => {
                 <SearchIcon className="h-4 w-4 mr-2" />
                 Search Remedies
               </Button>
-              
-              {/* Auth Buttons - Only show sign out when authenticated */}
-              {user && (
-                <div className="flex items-center space-x-2">
-                  <Button
-                    variant="outline"
-                    onClick={() => navigate('/admin')}
-                    className="flex items-center space-x-2"
-                  >
-                    <User className="h-4 w-4" />
-                    <span>Admin</span>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    onClick={handleSignOut}
-                    className="flex items-center space-x-2"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    <span>Sign Out</span>
-                  </Button>
-                </div>
-              )}
             </nav>
 
             {/* Mobile Menu Button */}
@@ -165,34 +143,6 @@ const Header = () => {
                 <SearchIcon className="h-4 w-4 mr-2" />
                 Search Remedies
               </Button>
-              
-              {/* Mobile Auth Buttons - Only show when authenticated */}
-              {user && (
-                <>
-                  <Button
-                    variant="ghost"
-                    onClick={() => {
-                      navigate('/admin');
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="w-full justify-start"
-                  >
-                    <User className="h-4 w-4 mr-2" />
-                    Admin Panel
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    onClick={() => {
-                      handleSignOut();
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className="w-full justify-start"
-                  >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Sign Out
-                  </Button>
-                </>
-              )}
             </div>
           </div>
         )}
