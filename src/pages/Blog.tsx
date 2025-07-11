@@ -59,10 +59,8 @@ const Blog = () => {
 
   const featuredPost = blogPosts.find(post => post.featured);
   
-  // Show all posts if searching/filtering, otherwise exclude featured from regular grid
-  const postsToDisplay = searchTerm || selectedCategory !== "All" 
-    ? filteredPosts 
-    : filteredPosts.filter(post => !post.featured);
+  // Show all filtered posts in the main grid
+  const postsToDisplay = filteredPosts;
   
   // Reset to page 1 when search/category changes
   useEffect(() => {
