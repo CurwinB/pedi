@@ -18,6 +18,121 @@ const BlogPost = () => {
     fetchPost();
   }, [slug]);
 
+  useEffect(() => {
+    if (post) {
+      updateMetaTags(post);
+    }
+    
+    // Cleanup function to reset meta tags when component unmounts
+    return () => {
+      document.title = "Natural Remedies AI - Discover Natural Health Solutions";
+      
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute('content', 'AI-powered search engine for natural remedies. Get personalized natural health solutions, discover time-tested remedies backed by research for your symptoms and health concerns.');
+      }
+    };
+  }, [post]);
+
+  const updateMetaTags = (blogPost: any) => {
+    // Use custom meta_title if available, otherwise use post title
+    const title = blogPost.meta_title || `${blogPost.title} | Natural Remedies Blog`;
+    
+    // Use custom meta_description if available, otherwise use excerpt
+    const description = blogPost.meta_description || blogPost.excerpt;
+    
+    // Update document title
+    document.title = title;
+    
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', description);
+    }
+    
+    // Update keywords based on tags and category
+    const keywords = [
+      blogPost.category,
+      ...(blogPost.tags || []),
+      'natural remedies',
+      'herbal medicine',
+      'health blog',
+      'alternative medicine'
+    ].join(', ');
+    
+    let keywordsMeta = document.querySelector('meta[name="keywords"]');
+    if (!keywordsMeta) {
+      keywordsMeta = document.createElement('meta');
+      keywordsMeta.setAttribute('name', 'keywords');
+      document.head.appendChild(keywordsMeta);
+    }
+    keywordsMeta.setAttribute('content', keywords);
+    
+    // Update Open Graph tags
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) {
+      ogTitle = document.createElement('meta');
+      ogTitle.setAttribute('property', 'og:title');
+      document.head.appendChild(ogTitle);
+    }
+    ogTitle.setAttribute('content', title);
+    
+    let ogDescription = document.querySelector('meta[property="og:description"]');
+    if (!ogDescription) {
+      ogDescription = document.createElement('meta');
+      ogDescription.setAttribute('property', 'og:description');
+      document.head.appendChild(ogDescription);
+    }
+    ogDescription.setAttribute('content', description);
+    
+    // Update og:image if blog post has an image
+    if (blogPost.image_url) {
+      let ogImage = document.querySelector('meta[property="og:image"]');
+      if (!ogImage) {
+        ogImage = document.createElement('meta');
+        ogImage.setAttribute('property', 'og:image');
+        document.head.appendChild(ogImage);
+      }
+      ogImage.setAttribute('content', blogPost.image_url);
+    }
+    
+    // Update og:type for articles
+    let ogType = document.querySelector('meta[property="og:type"]');
+    if (!ogType) {
+      ogType = document.createElement('meta');
+      ogType.setAttribute('property', 'og:type');
+      document.head.appendChild(ogType);
+    }
+    ogType.setAttribute('content', 'article');
+    
+    // Update Twitter Card tags
+    let twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    if (!twitterTitle) {
+      twitterTitle = document.createElement('meta');
+      twitterTitle.setAttribute('name', 'twitter:title');
+      document.head.appendChild(twitterTitle);
+    }
+    twitterTitle.setAttribute('content', title);
+    
+    let twitterDescription = document.querySelector('meta[name="twitter:description"]');
+    if (!twitterDescription) {
+      twitterDescription = document.createElement('meta');
+      twitterDescription.setAttribute('name', 'twitter:description');
+      document.head.appendChild(twitterDescription);
+    }
+    twitterDescription.setAttribute('content', description);
+    
+    if (blogPost.image_url) {
+      let twitterImage = document.querySelector('meta[name="twitter:image"]');
+      if (!twitterImage) {
+        twitterImage = document.createElement('meta');
+        twitterImage.setAttribute('name', 'twitter:image');
+        document.head.appendChild(twitterImage);
+      }
+      twitterImage.setAttribute('content', blogPost.image_url);
+    }
+  };
+
   const fetchPost = async () => {
     if (!slug) {
       setNotFound(true);
