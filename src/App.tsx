@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Clarify from "./pages/Clarify";
 import Search from "./pages/Search";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth";
 import Contact from "./pages/Contact";
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/clarify" element={<Clarify />} />
             <Route path="/search" element={<Search />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/contact" element={<Contact />} />
