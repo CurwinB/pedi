@@ -56,6 +56,9 @@ const Admin = () => {
 
   useEffect(() => {
     checkAuth();
+  }, []);
+
+  useEffect(() => {
     if (user) {
       fetchPosts();
     }
