@@ -48,33 +48,10 @@ const BlogPost = () => {
     }
   };
 
-  const renderContentWithAds = (content: string) => {
-    // Simple approach: split content by major section breaks and insert ads
-    const paragraphs = content.split('</p>').filter(p => p.trim());
-    const elements = [];
-    
-    paragraphs.forEach((paragraph, index) => {
-      // Add the paragraph back
-      elements.push(
-        <div 
-          key={`content-${index}`}
-          dangerouslySetInnerHTML={{ 
-            __html: paragraph.includes('<p>') ? `${paragraph}</p>` : `<p>${paragraph}</p>` 
-          }} 
-        />
-      );
-      
-      // Insert ad after every 3 paragraphs (but not at the very end)
-      if ((index + 1) % 3 === 0 && index < paragraphs.length - 1) {
-        elements.push(
-          <div key={`ad-${index}`} className="my-8 flex justify-center">
-            <AdPlaceholder size="banner" />
-          </div>
-        );
-      }
-    });
-    
-    return elements;
+  const renderContent = (content: string) => {
+    return (
+      <div dangerouslySetInnerHTML={{ __html: content }} />
+    );
   };
 
   if (loading) {
@@ -171,8 +148,7 @@ const BlogPost = () => {
               prose-thead:bg-muted prose-th:border prose-th:border-border prose-th:p-3 prose-th:text-left
               prose-td:border prose-td:border-border prose-td:p-3">
               
-              {/* Split content into sections for ad insertion */}
-              {renderContentWithAds(post.content)}
+              {renderContent(post.content)}
             </div>
           </div>
 
