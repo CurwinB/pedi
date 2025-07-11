@@ -137,6 +137,39 @@ const Admin = () => {
     });
   };
 
+  const autoFormatContent = (text: string) => {
+    // Convert plain text to HTML while preserving formatting
+    return text
+      // Convert double line breaks to paragraph breaks
+      .split('\n\n')
+      .map(paragraph => paragraph.trim())
+      .filter(paragraph => paragraph.length > 0)
+      .map(paragraph => {
+        // Convert single line breaks within paragraphs to <br> tags
+        const formattedParagraph = paragraph.replace(/\n/g, '<br>');
+        // Wrap in <p> tags if not already HTML
+        if (!formattedParagraph.includes('<') && !formattedParagraph.includes('>')) {
+          return `<p>${formattedParagraph}</p>`;
+        }
+        return formattedParagraph;
+      })
+      .join('\n\n');
+  };
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newContent = e.target.value;
+    setFormData({...formData, content: newContent});
+  };
+
+  const formatTextContent = () => {
+    const formatted = autoFormatContent(formData.content);
+    setFormData({...formData, content: formatted});
+    toast({
+      title: "Success", 
+      description: "Text formatting applied"
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -334,13 +367,22 @@ const Admin = () => {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <Label htmlFor="content">Content * (HTML supported)</Label>
-                      <Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
-                        <DialogTrigger asChild>
-                          <Button type="button" variant="outline" size="sm">
-                            <Link className="h-4 w-4 mr-2" />
-                            Add Link
-                          </Button>
-                        </DialogTrigger>
+                      <div className="flex space-x-2">
+                        <Button 
+                          type="button" 
+                          variant="outline" 
+                          size="sm"
+                          onClick={formatTextContent}
+                        >
+                          Auto-Format Text
+                        </Button>
+                        <Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
+                          <DialogTrigger asChild>
+                            <Button type="button" variant="outline" size="sm">
+                              <Link className="h-4 w-4 mr-2" />
+                              Add Link
+                            </Button>
+                          </DialogTrigger>
                         <DialogContent>
                           <DialogHeader>
                             <DialogTitle>Insert Hyperlink</DialogTitle>
@@ -371,19 +413,20 @@ const Admin = () => {
                         </DialogContent>
                       </Dialog>
                     </div>
+                    </div>
                     <Textarea
                       id="content"
                       value={formData.content}
-                      onChange={(e) => setFormData({...formData, content: e.target.value})}
+                      onChange={handleContentChange}
                       rows={12}
                       required
-                      placeholder="Write your blog content here. You can use HTML tags like <h2>, <p>, <strong>, <em>, <blockquote>, etc."
+                      placeholder="Write your blog content here. Paste your text and click 'Auto-Format Text' to preserve line breaks and paragraphs automatically."
                     />
                     <div className="text-sm text-muted-foreground">
-                      <p className="mb-2">HTML formatting tips:</p>
+                      <p className="mb-2"><strong>Quick formatting options:</strong></p>
                       <ul className="list-disc list-inside space-y-1">
+                        <li><strong>Auto-Format Text:</strong> Converts line breaks to paragraphs and preserves formatting</li>
                         <li><code>&lt;h2&gt;Heading&lt;/h2&gt;</code> for section headings</li>
-                        <li><code>&lt;p&gt;Paragraph&lt;/p&gt;</code> for paragraphs</li>
                         <li><code>&lt;strong&gt;Bold text&lt;/strong&gt;</code> for emphasis</li>
                         <li><code>&lt;blockquote&gt;Quote&lt;/blockquote&gt;</code> for quotes</li>
                         <li>Use the "Add Link" button above to insert hyperlinks</li>
