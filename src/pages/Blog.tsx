@@ -53,7 +53,7 @@ const Blog = () => {
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+                         (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())));
     return matchesCategory && matchesSearch;
   });
 
@@ -240,7 +240,7 @@ const Blog = () => {
                         <span className="text-xs text-muted-foreground">{post.author}</span>
                       </div>
                       <div className="flex flex-wrap gap-1">
-                        {post.tags.slice(0, 2).map(tag => (
+                        {post.tags && post.tags.slice(0, 2).map(tag => (
                           <Badge key={tag} variant="outline" className="text-xs">
                             {tag}
                           </Badge>
