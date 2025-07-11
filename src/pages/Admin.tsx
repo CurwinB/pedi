@@ -8,7 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Plus, Edit, Trash2, Eye } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Plus, Edit, Trash2, Eye, Link } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -37,6 +38,9 @@ const Admin = () => {
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [isLinkDialogOpen, setIsLinkDialogOpen] = useState(false);
+  const [linkText, setLinkText] = useState("");
+  const [linkUrl, setLinkUrl] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -105,6 +109,32 @@ const Admin = () => {
       .replace(/[^a-z0-9\s]/g, '')
       .replace(/\s+/g, '-')
       .trim();
+  };
+
+  const insertHyperlink = () => {
+    if (!linkText || !linkUrl) {
+      toast({
+        title: "Error",
+        description: "Please enter both link text and URL",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const hyperlink = `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
+    setFormData({
+      ...formData,
+      content: formData.content + hyperlink
+    });
+    
+    setLinkText("");
+    setLinkUrl("");
+    setIsLinkDialogOpen(false);
+    
+    toast({
+      title: "Success",
+      description: "Hyperlink inserted into content"
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -207,6 +237,8 @@ const Admin = () => {
     });
     setIsCreating(false);
     setEditingPost(null);
+    setLinkText("");
+    setLinkUrl("");
   };
 
   if (loading) {
@@ -300,14 +332,63 @@ const Admin = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="content">Content * (Markdown supported)</Label>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="content">Content * (HTML supported)</Label>
+                      <Dialog open={isLinkDialogOpen} onOpenChange={setIsLinkDialogOpen}>
+                        <DialogTrigger asChild>
+                          <Button type="button" variant="outline" size="sm">
+                            <Link className="h-4 w-4 mr-2" />
+                            Add Link
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Insert Hyperlink</DialogTitle>
+                          </DialogHeader>
+                          <div className="space-y-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="linkText">Link Text</Label>
+                              <Input
+                                id="linkText"
+                                value={linkText}
+                                onChange={(e) => setLinkText(e.target.value)}
+                                placeholder="e.g. Visit our website"
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="linkUrl">URL</Label>
+                              <Input
+                                id="linkUrl"
+                                value={linkUrl}
+                                onChange={(e) => setLinkUrl(e.target.value)}
+                                placeholder="https://example.com"
+                              />
+                            </div>
+                            <Button onClick={insertHyperlink} className="w-full">
+                              Insert Link
+                            </Button>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
                     <Textarea
                       id="content"
                       value={formData.content}
                       onChange={(e) => setFormData({...formData, content: e.target.value})}
-                      rows={10}
+                      rows={12}
                       required
+                      placeholder="Write your blog content here. You can use HTML tags like <h2>, <p>, <strong>, <em>, <blockquote>, etc."
                     />
+                    <div className="text-sm text-muted-foreground">
+                      <p className="mb-2">HTML formatting tips:</p>
+                      <ul className="list-disc list-inside space-y-1">
+                        <li><code>&lt;h2&gt;Heading&lt;/h2&gt;</code> for section headings</li>
+                        <li><code>&lt;p&gt;Paragraph&lt;/p&gt;</code> for paragraphs</li>
+                        <li><code>&lt;strong&gt;Bold text&lt;/strong&gt;</code> for emphasis</li>
+                        <li><code>&lt;blockquote&gt;Quote&lt;/blockquote&gt;</code> for quotes</li>
+                        <li>Use the "Add Link" button above to insert hyperlinks</li>
+                      </ul>
+                    </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
