@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar, Clock, User, Search, Leaf, Heart, Shield, Brain } from "lucide-react";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,6 +13,8 @@ const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 9;
 
   useEffect(() => {
     fetchPosts();
@@ -55,7 +58,23 @@ const Blog = () => {
   });
 
   const featuredPost = blogPosts.find(post => post.featured);
-  const regularPosts = filteredPosts.filter(post => !post.featured);
+  
+  // Show all posts if searching/filtering, otherwise exclude featured from regular grid
+  const postsToDisplay = searchTerm || selectedCategory !== "All" 
+    ? filteredPosts 
+    : filteredPosts.filter(post => !post.featured);
+  
+  // Reset to page 1 when search/category changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedCategory]);
+  
+  // Pagination calculations
+  const totalPosts = postsToDisplay.length;
+  const totalPages = Math.ceil(totalPosts / postsPerPage);
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const endIndex = startIndex + postsPerPage;
+  const currentPosts = postsToDisplay.slice(startIndex, endIndex);
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
@@ -177,8 +196,9 @@ const Blog = () => {
               <p className="text-muted-foreground text-lg">No articles found matching your criteria.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {regularPosts.map((post, index) => (
+            <>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                {currentPosts.map((post, index) => (
                 <Card 
                   key={post.id} 
                   className="overflow-hidden hover:shadow-natural transition-all duration-300 cursor-pointer group bg-card border-border animate-fade-in"
@@ -230,7 +250,46 @@ const Blog = () => {
                   </CardContent>
                 </Card>
               ))}
-            </div>
+              </div>
+              
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex justify-center">
+                  <Pagination>
+                    <PaginationContent>
+                      <PaginationItem>
+                        <PaginationPrevious 
+                          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                          className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                        />
+                      </PaginationItem>
+                      
+                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                        const pageNumber = i + 1;
+                        return (
+                          <PaginationItem key={pageNumber}>
+                            <PaginationLink
+                              onClick={() => setCurrentPage(pageNumber)}
+                              isActive={currentPage === pageNumber}
+                              className="cursor-pointer"
+                            >
+                              {pageNumber}
+                            </PaginationLink>
+                          </PaginationItem>
+                        );
+                      })}
+                      
+                      <PaginationItem>
+                        <PaginationNext 
+                          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                          className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                        />
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
