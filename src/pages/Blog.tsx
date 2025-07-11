@@ -150,7 +150,9 @@ const Blog = () => {
                       <User className="h-4 w-4 text-muted-foreground" />
                       <span className="text-sm text-muted-foreground">{featuredPost.author}</span>
                     </div>
-                    <Button>Read Article</Button>
+                    <Button onClick={() => window.open(`/blog/${featuredPost.slug}`, '_self')}>
+                      Read Article
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -181,6 +183,7 @@ const Blog = () => {
                   key={post.id} 
                   className="overflow-hidden hover:shadow-natural transition-all duration-300 cursor-pointer group bg-card border-border animate-fade-in"
                   style={{ animationDelay: `${index * 0.1}s` }}
+                  onClick={() => window.open(`/blog/${post.slug}`, '_self')}
                 >
                   <div className="relative overflow-hidden">
                     <img 
