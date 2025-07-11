@@ -229,6 +229,18 @@ const Search = () => {
 
         {result && !loading && (
           <div className="space-y-10 animate-fade-in">
+            {/* How We Choose These Remedies Section */}
+            <div className="bg-background/80 backdrop-blur-sm rounded-xl border border-border p-6 shadow-soft mb-8">
+              <h3 className="text-xl font-semibold text-foreground mb-4">How We Choose These Remedies</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Our remedies are curated using advanced AI technology and sourced from trusted herbal medicine 
+                databases, traditional health systems, and peer-reviewed research. Each recommendation is carefully 
+                matched to your specific symptoms, health profile, and personal preferences to ensure the most 
+                relevant and safe suggestions. We prioritize remedies with strong historical use and modern 
+                scientific support while considering potential interactions and contraindications.
+              </p>
+            </div>
+
             {/* Enhanced Summary Section with H2 */}
             <div className="relative overflow-hidden bg-gradient-to-br from-background/95 via-background/90 to-primary/5 backdrop-blur-sm rounded-2xl border border-primary/20 p-8 shadow-elegant">
               <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-primary/10 to-transparent rounded-full -translate-y-20 translate-x-20" />
@@ -272,6 +284,68 @@ const Search = () => {
               </div>
             </section>
 
+            {/* When a Remedy Isn't Enough Section */}
+            <div className="bg-background/80 backdrop-blur-sm rounded-xl border border-border p-6 shadow-soft mb-8">
+              <h3 className="text-xl font-semibold text-foreground mb-4">When a Remedy Isn't Enough</h3>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Natural remedies work best when paired with lifestyle adjustments that address root causes. 
+                Consider combining these recommendations with:
+              </p>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-medium text-foreground mb-2">Essential Foundations</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    <li>• Adequate hydration (8-10 glasses daily)</li>
+                    <li>• Quality sleep (7-9 hours nightly)</li>
+                    <li>• Stress management techniques</li>
+                    <li>• Regular gentle exercise</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-medium text-foreground mb-2">Trigger Avoidance</h4>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    <li>• Identifying and avoiding dietary triggers</li>
+                    <li>• Limiting screen time and blue light exposure</li>
+                    <li>• Creating a calm, toxin-free environment</li>
+                    <li>• Maintaining consistent daily routines</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* People Also Explore Section */}
+            <div className="bg-background/80 backdrop-blur-sm rounded-xl border border-border p-6 shadow-soft mb-8">
+              <h3 className="text-xl font-semibold text-foreground mb-4">People Also Explore</h3>
+              <p className="text-muted-foreground mb-4">
+                Discover other natural remedies and wellness topics frequently explored by our community:
+              </p>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
+                  <h4 className="font-medium text-foreground mb-2">Chamomile for Stress</h4>
+                  <p className="text-sm text-muted-foreground">Gentle nervine herb for anxiety and sleep support</p>
+                </div>
+                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
+                  <h4 className="font-medium text-foreground mb-2">Magnesium-Rich Foods</h4>
+                  <p className="text-sm text-muted-foreground">Natural migraine relief through mineral supplementation</p>
+                </div>
+                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
+                  <h4 className="font-medium text-foreground mb-2">Lavender Aromatherapy</h4>
+                  <p className="text-sm text-muted-foreground">Essential oil therapy for relaxation and sleep</p>
+                </div>
+                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
+                  <h4 className="font-medium text-foreground mb-2">Turmeric Anti-Inflammatory</h4>
+                  <p className="text-sm text-muted-foreground">Golden spice for pain and inflammation management</p>
+                </div>
+                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
+                  <h4 className="font-medium text-foreground mb-2">Ginger for Digestion</h4>
+                  <p className="text-sm text-muted-foreground">Traditional remedy for nausea and digestive issues</p>
+                </div>
+                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
+                  <h4 className="font-medium text-foreground mb-2">Herbal Tea Blends</h4>
+                  <p className="text-sm text-muted-foreground">Therapeutic combinations for various health goals</p>
+                </div>
+              </div>
+            </div>
 
             {/* Disclaimer */}
             <Disclaimer />

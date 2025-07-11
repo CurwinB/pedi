@@ -193,6 +193,80 @@ const Clarify = () => {
           </div>
         </div>
 
+        {/* Common Misdiagnoses Section */}
+        <div className="bg-background/80 backdrop-blur-sm rounded-xl border border-border p-6 shadow-soft mb-8">
+          <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-amber-500" />
+            Common Misdiagnoses to Watch Out For
+          </h3>
+          <p className="text-muted-foreground leading-relaxed">
+            Many people confuse similar symptoms, which can lead to ineffective treatments. For example, 
+            migraines are often mistaken for sinus issues, while tension headaches might be confused with 
+            eye strain. This clarification tool helps uncover overlooked causes like dehydration, nutrient 
+            deficiencies, hormonal imbalances, or stress-related factors that conventional diagnosis might miss. 
+            By understanding the subtle differences in your symptoms, we can guide you toward more targeted 
+            and effective natural remedies.
+          </p>
+        </div>
+
+        {/* Ask Yourself Section */}
+        <div className="bg-background/80 backdrop-blur-sm rounded-xl border border-border p-6 shadow-soft mb-8">
+          <h3 className="text-xl font-semibold text-foreground mb-4">Ask Yourself</h3>
+          <p className="text-muted-foreground mb-4">
+            Before we begin, take a moment to reflect on these important factors that often influence symptoms:
+          </p>
+          <ul className="space-y-2 text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+              Have you changed your sleep schedule or diet recently?
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+              Are you drinking enough water throughout the day?
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+              Have you been exposed to unusual stress, allergens, or increased screen time?
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+              Did symptoms start after starting new medications, supplements, or activities?
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+              Is there a pattern to when symptoms occur (time of day, weather changes, certain foods)?
+            </li>
+          </ul>
+        </div>
+
+        {/* What to Track Section */}
+        <div className="bg-background/80 backdrop-blur-sm rounded-xl border border-border p-6 shadow-soft mb-8">
+          <h3 className="text-xl font-semibold text-foreground mb-4">What to Track If Symptoms Persist</h3>
+          <p className="text-muted-foreground mb-4">
+            If natural remedies don't provide relief or symptoms worsen, keep a detailed record for your healthcare provider:
+          </p>
+          <div className="grid md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <h4 className="font-medium text-foreground mb-2">Symptom Details</h4>
+              <ul className="space-y-1 text-muted-foreground">
+                <li>• Exact timing and duration</li>
+                <li>• Pain or discomfort intensity (1-10 scale)</li>
+                <li>• Triggers or patterns you notice</li>
+                <li>• What makes symptoms better or worse</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium text-foreground mb-2">Lifestyle Factors</h4>
+              <ul className="space-y-1 text-muted-foreground">
+                <li>• Daily water intake and food consumed</li>
+                <li>• Sleep quality and duration</li>
+                <li>• Stress levels and activities</li>
+                <li>• Natural remedies tried and their effects</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         {/* Ad Slot 1 */}
         <div className="flex justify-center mb-8">
           <div className="w-full max-w-2xl h-24 bg-muted/50 border border-border rounded-lg flex items-center justify-center text-muted-foreground text-sm">
