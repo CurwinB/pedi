@@ -1,9 +1,30 @@
+import { useLocation } from "react-router-dom";
+
 interface AdPlaceholderProps {
   size?: "banner" | "rectangle" | "leaderboard" | "mobile-banner";
   className?: string;
 }
 
+// Routes where ads should not be displayed (compliance pages)
+const NO_ADS_ROUTES = [
+  '/about',
+  '/privacy',
+  '/terms', 
+  '/contact',
+  '/disclaimer'
+];
+
+const shouldHideAds = (pathname: string): boolean => {
+  return NO_ADS_ROUTES.includes(pathname);
+};
+
 export const AdPlaceholder = ({ size = "rectangle", className = "" }: AdPlaceholderProps) => {
+  const location = useLocation();
+  
+  // Don't render ads on compliance pages
+  if (shouldHideAds(location.pathname)) {
+    return null;
+  }
   const dimensions = {
     banner: "w-full h-16",
     rectangle: "w-80 h-64",

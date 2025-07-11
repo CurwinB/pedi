@@ -6,7 +6,6 @@ import { Calendar, Clock, User, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { AdPlaceholder } from "@/components/AdPlaceholder";
 
 const BlogPost = () => {
   const { slug } = useParams();
