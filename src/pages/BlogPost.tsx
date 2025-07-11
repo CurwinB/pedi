@@ -6,6 +6,7 @@ import { Calendar, Clock, User, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AdPlaceholder } from "@/components/AdPlaceholder";
 
 const BlogPost = () => {
   const { slug } = useParams();
@@ -45,6 +46,35 @@ const BlogPost = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const renderContentWithAds = (content: string) => {
+    // Simple approach: split content by major section breaks and insert ads
+    const paragraphs = content.split('</p>').filter(p => p.trim());
+    const elements = [];
+    
+    paragraphs.forEach((paragraph, index) => {
+      // Add the paragraph back
+      elements.push(
+        <div 
+          key={`content-${index}`}
+          dangerouslySetInnerHTML={{ 
+            __html: paragraph.includes('<p>') ? `${paragraph}</p>` : `<p>${paragraph}</p>` 
+          }} 
+        />
+      );
+      
+      // Insert ad after every 3 paragraphs (but not at the very end)
+      if ((index + 1) % 3 === 0 && index < paragraphs.length - 1) {
+        elements.push(
+          <div key={`ad-${index}`} className="my-8 flex justify-center">
+            <AdPlaceholder size="banner" />
+          </div>
+        );
+      }
+    });
+    
+    return elements;
   };
 
   if (loading) {
@@ -121,11 +151,29 @@ const BlogPost = () => {
           </header>
 
           {/* Article Content */}
-          <div className="prose prose-lg max-w-none">
-            <div 
-              className="text-foreground leading-relaxed space-y-6"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+          <div className="max-w-none">
+            <div className="prose prose-lg prose-slate dark:prose-invert max-w-none
+              prose-headings:text-foreground prose-headings:font-bold prose-headings:leading-tight
+              prose-h1:text-4xl prose-h1:mb-6 prose-h1:mt-12 prose-h1:border-b prose-h1:border-border prose-h1:pb-4
+              prose-h2:text-3xl prose-h2:mb-5 prose-h2:mt-10 prose-h2:border-b prose-h2:border-border prose-h2:pb-3
+              prose-h3:text-2xl prose-h3:mb-4 prose-h3:mt-8
+              prose-h4:text-xl prose-h4:mb-3 prose-h4:mt-6
+              prose-p:text-foreground prose-p:leading-8 prose-p:mb-6 prose-p:text-base
+              prose-strong:text-foreground prose-strong:font-semibold
+              prose-em:text-muted-foreground prose-em:italic
+              prose-a:text-primary prose-a:no-underline hover:prose-a:underline hover:prose-a:text-primary-glow
+              prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-muted-foreground prose-blockquote:bg-muted/30 prose-blockquote:py-4 prose-blockquote:my-6
+              prose-code:text-primary prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono
+              prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:rounded-lg prose-pre:p-6 prose-pre:my-6 prose-pre:overflow-x-auto
+              prose-ul:mb-6 prose-ul:mt-4 prose-ol:mb-6 prose-ol:mt-4 prose-li:mb-2 prose-li:leading-7
+              prose-img:rounded-lg prose-img:shadow-natural prose-img:my-8 prose-img:mx-auto
+              prose-table:border prose-table:border-border prose-table:my-6
+              prose-thead:bg-muted prose-th:border prose-th:border-border prose-th:p-3 prose-th:text-left
+              prose-td:border prose-td:border-border prose-td:p-3">
+              
+              {/* Split content into sections for ad insertion */}
+              {renderContentWithAds(post.content)}
+            </div>
           </div>
 
           {/* Tags */}
