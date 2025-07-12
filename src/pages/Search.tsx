@@ -149,8 +149,8 @@ const Search = () => {
       // Match based on query keywords - be very specific to the symptom/condition
       const queryLower = searchQuery.toLowerCase();
       
-      // Headache-specific remedies
-      if (queryLower.includes('headache') || queryLower.includes('migraine') || queryLower.includes('head pain')) {
+      // Headache-specific remedies (handle common typos and variations)
+      if (queryLower.includes('headache') || queryLower.includes('headche') || queryLower.includes('migraine') || queryLower.includes('head pain') || queryLower.includes('pulsing') && queryLower.includes('head')) {
         return ['willow bark', 'frankincense'].includes(remedy.name.toLowerCase());
       }
       
