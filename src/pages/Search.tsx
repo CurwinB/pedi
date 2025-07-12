@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { SearchBar } from "@/components/SearchBar";
@@ -5,7 +6,7 @@ import { RemedyCard } from "@/components/RemedyCard";
 import { Disclaimer } from "@/components/Disclaimer";
 
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Loader2, Sparkles, Zap, Shield, Clock } from "lucide-react";
+import { ArrowLeft, Loader2, Sparkles, Zap, Shield, Clock, Leaf, Heart, Sun } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
@@ -96,12 +97,6 @@ const Search = () => {
     ogDescMeta.setAttribute('content', ogDescription);
   };
 
-  const getAncientRemedies = (searchQuery: string, existingRemedies: Remedy[]): AncientRemedy[] => {
-    // This function is now deprecated - ancient remedies come from the API
-    // Return empty array as fallback since this will be replaced by API data
-    return [];
-  };
-
   const handleSearch = async (searchQuery: string) => {
     setLoading(true);
     
@@ -177,169 +172,191 @@ const Search = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50/30 via-background to-primary/5 relative overflow-hidden">
-      {/* Floating background elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-xl animate-pulse" />
-      <div className="absolute bottom-40 right-20 w-24 h-24 bg-gradient-to-br from-green-400/20 to-primary/20 rounded-full blur-lg animate-pulse delay-1000" />
-      <div className="absolute top-1/2 left-1/3 w-16 h-16 bg-gradient-to-br from-secondary/15 to-primary/15 rounded-full blur-md animate-pulse delay-500" />
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-25 to-teal-50 relative overflow-hidden">
+      {/* Organic background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-green-200/30 to-emerald-200/20 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-40 right-20 w-32 h-32 bg-gradient-to-br from-teal-200/25 to-green-300/20 rounded-full blur-2xl animate-float delay-1000" />
+        <div className="absolute top-1/3 right-1/4 w-24 h-24 bg-gradient-to-br from-emerald-300/20 to-green-200/15 rounded-full blur-xl animate-float delay-500" />
+        <div className="absolute bottom-1/4 left-1/3 w-20 h-20 bg-gradient-to-br from-green-300/15 to-teal-200/10 rounded-full blur-lg animate-float delay-700" />
+      </div>
       
       <Header />
 
-      <main className="container mx-auto px-4 py-24 relative z-10">
-        {/* Page Header with SEO-Rich H1 */}
-        <div className="mb-12 text-center animate-fade-in">
-          <h1 className="text-4xl font-bold text-foreground mb-4 drop-shadow-sm">
-            Natural Remedies for {query} | Evidence-Based Solutions
-          </h1>
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-gradient-primary rounded-xl shadow-glow">
-              <Sparkles className="h-6 w-6 text-white" />
+      <main className="container mx-auto px-4 py-16 relative z-10">
+        {/* Welcoming Header */}
+        <div className="text-center mb-16 animate-fade-in">
+          <div className="inline-flex items-center gap-3 mb-6 p-4 bg-white/70 backdrop-blur-sm rounded-full border border-green-200/50 shadow-soft">
+            <div className="p-2 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full">
+              <Leaf className="h-5 w-5 text-white" />
             </div>
+            <h1 className="text-2xl font-bold text-green-900">
+              Natural Solutions for {query}
+            </h1>
           </div>
-          <p className="text-lg text-muted-foreground/90 max-w-2xl mx-auto leading-relaxed font-medium">
-            Personalized natural solutions based on your symptoms and health profile
+          
+          <p className="text-lg text-green-800/80 max-w-2xl mx-auto leading-relaxed font-medium mb-8">
+            🌿 Gentle, time-tested remedies crafted by nature for your wellness journey
           </p>
           
-          {/* Quick stats */}
-          <div className="grid grid-cols-3 gap-4 mt-6 max-w-2xl mx-auto">
-            <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
-              <Shield className="h-5 w-5 text-primary mx-auto mb-1" />
-              <p className="text-xs text-muted-foreground">Safety First</p>
+          {/* Wellness Promise Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-green-200/30 shadow-soft hover:shadow-natural transition-all duration-300">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Shield className="h-6 w-6 text-white" />
+              </div>
+              <h3 className="font-semibold text-green-900 mb-2">Safe & Gentle</h3>
+              <p className="text-sm text-green-700/80">Nature's wisdom with your safety in mind</p>
             </div>
-            <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
-              <Zap className="h-5 w-5 text-secondary mx-auto mb-1" />
-              <p className="text-xs text-muted-foreground">Personalized</p>
+            
+            <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-green-200/30 shadow-soft hover:shadow-natural transition-all duration-300">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Heart className="h-6 w-6 text-white" />
+              </div>
+              <h3 className="font-semibold text-green-900 mb-2">Personalized</h3>
+              <p className="text-sm text-green-700/80">Tailored to your unique needs</p>
             </div>
-            <div className="text-center p-3 bg-background/60 backdrop-blur-sm rounded-xl border border-primary/20">
-              <Clock className="h-5 w-5 text-green-600 mx-auto mb-1" />
-              <p className="text-xs text-muted-foreground">Research-Based</p>
+            
+            <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-green-200/30 shadow-soft hover:shadow-natural transition-all duration-300">
+              <div className="w-12 h-12 bg-gradient-to-br from-teal-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Sun className="h-6 w-6 text-white" />
+              </div>
+              <h3 className="font-semibold text-green-900 mb-2">Time-Tested</h3>
+              <p className="text-sm text-green-700/80">Backed by generations of healing</p>
             </div>
           </div>
         </div>
 
         {loading && (
-          <div className="flex items-center justify-center py-16">
-            <div className="text-center space-y-6 animate-fade-in">
+          <div className="flex items-center justify-center py-20">
+            <div className="text-center space-y-8 animate-fade-in">
               <div className="relative">
-                <div className="w-16 h-16 bg-gradient-primary rounded-full mx-auto flex items-center justify-center shadow-glow animate-pulse">
-                  <Loader2 className="h-8 w-8 animate-spin text-white" />
+                <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full mx-auto flex items-center justify-center shadow-glow animate-pulse">
+                  <Loader2 className="h-10 w-10 animate-spin text-white" />
                 </div>
-                <div className="absolute inset-0 bg-gradient-primary rounded-full animate-ping opacity-20"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-emerald-500/20 rounded-full animate-ping"></div>
               </div>
-              <div className="space-y-2">
-                <p className="text-xl font-semibold text-foreground">Analyzing Your Symptoms</p>
-                <p className="text-muted-foreground max-w-md mx-auto">
-                  Our system is carefully selecting personalized natural remedies based on your health profile...
+              <div className="space-y-3">
+                <p className="text-2xl font-semibold text-green-900">🌱 Gathering Nature's Wisdom</p>
+                <p className="text-green-700/80 max-w-md mx-auto text-lg leading-relaxed">
+                  Carefully selecting the perfect natural remedies for your unique needs...
                 </p>
               </div>
               <div className="flex justify-center space-x-2">
-                <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-primary rounded-full animate-bounce delay-100"></div>
-                <div className="w-2 h-2 bg-primary rounded-full animate-bounce delay-200"></div>
+                <div className="w-3 h-3 bg-green-400 rounded-full animate-bounce"></div>
+                <div className="w-3 h-3 bg-emerald-400 rounded-full animate-bounce delay-100"></div>
+                <div className="w-3 h-3 bg-teal-400 rounded-full animate-bounce delay-200"></div>
               </div>
             </div>
           </div>
         )}
 
         {result && !loading && (
-          <div className="space-y-10 animate-fade-in">
-            {/* How We Choose These Remedies Section */}
-            <div className="bg-background/80 backdrop-blur-sm rounded-xl border border-border p-6 shadow-soft mb-8">
-              <h3 className="text-xl font-semibold text-foreground mb-4">How We Choose These Remedies</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Our remedies are curated using advanced AI technology and sourced from trusted herbal medicine 
-                databases, traditional health systems, and peer-reviewed research. Each recommendation is carefully 
-                matched to your specific symptoms, health profile, and personal preferences to ensure the most 
-                relevant and safe suggestions. We prioritize remedies with strong historical use and modern 
-                scientific support while considering potential interactions and contraindications.
-              </p>
+          <div className="space-y-12 animate-fade-in">
+            {/* How We Choose Section - More Welcoming */}
+            <div className="bg-white/70 backdrop-blur-sm rounded-3xl border border-green-200/50 p-8 shadow-soft">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="p-3 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl shadow-soft">
+                  <Sparkles className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-green-900 mb-2">🌿 How We Craft Your Natural Solutions</h3>
+                  <p className="text-green-700/80 leading-relaxed text-lg">
+                    Each remedy is lovingly selected from nature's pharmacy, combining ancient wisdom with modern understanding. 
+                    We consider your unique symptoms, health profile, and preferences to create a personalized wellness plan 
+                    that honors both traditional healing practices and contemporary safety standards.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            {/* Enhanced Summary Section with H2 */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-background/95 via-background/90 to-primary/5 backdrop-blur-sm rounded-2xl border border-primary/20 p-8 shadow-elegant">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-primary/10 to-transparent rounded-full -translate-y-20 translate-x-20" />
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-secondary/10 to-transparent rounded-full translate-y-16 -translate-x-16" />
+            {/* Enhanced Summary Section */}
+            <div className="relative overflow-hidden bg-gradient-to-br from-white/90 via-green-50/80 to-emerald-50/70 backdrop-blur-sm rounded-3xl border border-green-200/50 p-10 shadow-natural">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-green-300/20 to-transparent rounded-full -translate-y-24 translate-x-24" />
+              <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-emerald-300/15 to-transparent rounded-full translate-y-20 -translate-x-20" />
               
               <div className="relative z-10">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-gradient-primary rounded-xl shadow-glow">
-                    <Sparkles className="h-6 w-6 text-white" />
+                <div className="flex items-center gap-5 mb-8">
+                  <div className="p-4 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl shadow-glow">
+                    <Heart className="h-8 w-8 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold text-foreground mb-1">
-                      Personalized Natural Treatment Plan for {query}
+                    <h2 className="text-3xl font-bold text-green-900 mb-2">
+                      🌱 Your Personal Wellness Journey for {query}
                     </h2>
-                    <p className="text-primary/80 font-medium">Evidence-based holistic medicine solutions</p>
+                    <p className="text-green-600 font-medium text-lg">Gentle healing, naturally crafted for you</p>
                   </div>
                 </div>
-                <div className="bg-background/50 rounded-xl p-6 border border-primary/10">
-                  <p className="text-muted-foreground leading-relaxed text-lg">
+                <div className="bg-white/60 rounded-2xl p-8 border border-green-200/30 backdrop-blur-sm">
+                  <p className="text-green-800 leading-relaxed text-lg font-medium">
                     {result.summary}
                   </p>
                 </div>
               </div>
             </div>
 
-
-            {/* Remedies Section with H2 */}
-            <section className="space-y-6">
-              <h2 className="text-2xl font-bold text-foreground text-center mb-8">
-                {result.remedies.length} Natural Remedies for {query} Treatment | Alternative Medicine Options
-              </h2>
+            {/* Remedies Section - More Natural Feel */}
+            <section className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-green-900 mb-4">
+                  🌿 {result.remedies.length} Natural Remedies Chosen Just for You
+                </h2>
+                <p className="text-green-700/80 text-lg max-w-2xl mx-auto">
+                  Each remedy has been carefully selected to work in harmony with your body's natural healing abilities
+                </p>
+              </div>
               
-              {/* Remedies Grid */}
-              <div className="grid gap-6 md:gap-8">
+              <div className="grid gap-8 md:gap-10">
                 {result.remedies.map((remedy, index) => (
-                  <div key={index}>
+                  <div key={index} className="transform hover:scale-[1.02] transition-all duration-300">
                     <RemedyCard remedy={remedy} index={index} />
-                    
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* Ancient Remedies with Modern Backing Section */}
-            <section className="space-y-6">
-              <div className="bg-gradient-to-br from-background/95 via-background/90 to-amber-50/20 backdrop-blur-sm rounded-2xl border border-amber-200/20 p-8 shadow-elegant">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-gradient-to-br from-amber-600 to-amber-700 rounded-xl shadow-glow">
-                    <Sparkles className="h-6 w-6 text-white" />
+            {/* Ancient Remedies - More Mystical and Natural */}
+            <section className="space-y-8">
+              <div className="bg-gradient-to-br from-amber-50/80 via-orange-50/60 to-yellow-50/70 backdrop-blur-sm rounded-3xl border border-amber-200/40 p-10 shadow-natural">
+                <div className="flex items-center gap-5 mb-8">
+                  <div className="p-4 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl shadow-glow">
+                    <Sun className="h-8 w-8 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold text-foreground mb-1">
-                      Ancient Remedies with Modern Backing
+                    <h2 className="text-3xl font-bold text-amber-900 mb-2">
+                      🏛️ Ancient Wisdom, Modern Validation
                     </h2>
-                    <p className="text-amber-700/80 font-medium">Time-tested wisdom validated by contemporary science</p>
+                    <p className="text-amber-700 font-medium text-lg">Time-honored remedies blessed by science</p>
                   </div>
                 </div>
                 
                 {result.ancientRemedies && result.ancientRemedies.length > 0 ? (
                   result.ancientRemedies.map((ancientRemedy, index) => (
-                    <div key={index} className="bg-background/60 rounded-xl p-6 border border-amber-200/20 mb-6 last:mb-0">
-                      <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-                        <span className="w-8 h-8 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full flex items-center justify-center text-amber-800 text-sm font-bold">
+                    <div key={index} className="bg-white/70 rounded-2xl p-8 border border-amber-200/30 mb-8 last:mb-0 backdrop-blur-sm shadow-soft">
+                      <h3 className="text-2xl font-bold text-amber-900 mb-6 flex items-center gap-3">
+                        <span className="w-10 h-10 bg-gradient-to-br from-amber-200 to-orange-200 rounded-full flex items-center justify-center text-amber-800 text-lg font-bold shadow-soft">
                           {index + 1}
                         </span>
-                        {ancientRemedy.name}
+                        🌿 {ancientRemedy.name}
                       </h3>
                       
-                      <div className="space-y-4">
-                        <div className="p-4 bg-amber-50/50 rounded-lg border-l-4 border-amber-400">
-                          <h4 className="font-medium text-amber-900 mb-2 flex items-center gap-2">
-                            <span className="text-amber-600">🏛️</span>
-                            Ancient Wisdom: {ancientRemedy.culture}
+                      <div className="space-y-6">
+                        <div className="p-6 bg-amber-50/60 rounded-2xl border-l-4 border-amber-400 backdrop-blur-sm">
+                          <h4 className="font-bold text-amber-900 mb-3 flex items-center gap-3 text-lg">
+                            <span className="text-2xl">🏛️</span>
+                            Ancient Wisdom from {ancientRemedy.culture}
                           </h4>
-                          <p className="text-amber-800/90 leading-relaxed">
+                          <p className="text-amber-800 leading-relaxed text-lg">
                             {ancientRemedy.traditionalUse}
                           </p>
                         </div>
                         
-                        <div className="p-4 bg-green-50/50 rounded-lg border-l-4 border-green-400">
-                          <h4 className="font-medium text-green-900 mb-2 flex items-center gap-2">
-                            <span className="text-green-600">🔬</span>
-                            Modern Scientific Validation
+                        <div className="p-6 bg-green-50/60 rounded-2xl border-l-4 border-green-400 backdrop-blur-sm">
+                          <h4 className="font-bold text-green-900 mb-3 flex items-center gap-3 text-lg">
+                            <span className="text-2xl">🔬</span>
+                            Modern Science Says
                           </h4>
-                          <p className="text-green-800/90 leading-relaxed">
+                          <p className="text-green-800 leading-relaxed text-lg">
                             {ancientRemedy.modernFindings}
                           </p>
                         </div>
@@ -347,95 +364,128 @@ const Search = () => {
                     </div>
                   ))
                 ) : (
-                  <div className="bg-background/60 rounded-xl p-6 border border-amber-200/20 text-center">
-                    <p className="text-amber-800/80 leading-relaxed">
-                      No specific ancient remedies found for your condition. Our AI focuses on providing the most relevant historical treatments with strong modern scientific backing.
+                  <div className="bg-white/70 rounded-2xl p-8 border border-amber-200/30 text-center backdrop-blur-sm">
+                    <div className="text-6xl mb-4">🌿</div>
+                    <p className="text-amber-800 leading-relaxed text-lg">
+                      While ancient wisdom offers many treasures, we've focused on providing the most relevant 
+                      modern herbal solutions for your specific needs. Each remedy above carries the blessing 
+                      of both time-tested use and contemporary research.
                     </p>
                   </div>
                 )}
-                
-                <div className="bg-amber-50/30 rounded-lg p-4 border border-amber-200/30 mt-6">
-                  <p className="text-amber-800/80 text-sm leading-relaxed">
-                    <strong>Historical Note:</strong> These remedies represent the convergence of ancient healing traditions 
-                    and modern scientific research. While validated by contemporary studies, always consult healthcare 
-                    providers before incorporating new treatments, especially if you have existing health conditions.
-                  </p>
-                </div>
               </div>
             </section>
 
-            {/* When a Remedy Isn't Enough Section */}
-            <div className="bg-background/80 backdrop-blur-sm rounded-xl border border-border p-6 shadow-soft mb-8">
-              <h3 className="text-xl font-semibold text-foreground mb-4">When a Remedy Isn't Enough</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Natural remedies work best when paired with lifestyle adjustments that address root causes. 
-                Consider combining these recommendations with:
-              </p>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-medium text-foreground mb-2">Essential Foundations</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li>• Adequate hydration (8-10 glasses daily)</li>
-                    <li>• Quality sleep (7-9 hours nightly)</li>
-                    <li>• Stress management techniques</li>
-                    <li>• Regular gentle exercise</li>
-                  </ul>
+            {/* Lifestyle Section - More Nurturing */}
+            <div className="bg-white/70 backdrop-blur-sm rounded-3xl border border-green-200/50 p-8 shadow-soft">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="p-3 bg-gradient-to-br from-teal-400 to-green-500 rounded-2xl shadow-soft">
+                  <Heart className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Trigger Avoidance</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li>• Identifying and avoiding dietary triggers</li>
-                    <li>• Limiting screen time and blue light exposure</li>
-                    <li>• Creating a calm, toxin-free environment</li>
-                    <li>• Maintaining consistent daily routines</li>
+                  <h3 className="text-2xl font-bold text-green-900 mb-3">🌱 Nurturing Your Whole Self</h3>
+                  <p className="text-green-700/80 leading-relaxed text-lg mb-6">
+                    True healing happens when we care for both body and spirit. These gentle practices 
+                    can amplify your herbal remedies and support your natural healing journey.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-green-50/60 rounded-2xl p-6 border border-green-200/30">
+                  <h4 className="font-bold text-green-900 mb-4 text-lg flex items-center gap-2">
+                    <span className="text-xl">🌸</span> Daily Rituals
+                  </h4>
+                  <ul className="space-y-2 text-green-800">
+                    <li className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                      Gentle hydration with herbal teas
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                      Restorative sleep in a peaceful space
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                      Mindful breathing and gentle movement
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-400 rounded-full"></span>
+                      Time in nature's embrace
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="bg-teal-50/60 rounded-2xl p-6 border border-teal-200/30">
+                  <h4 className="font-bold text-teal-900 mb-4 text-lg flex items-center gap-2">
+                    <span className="text-xl">🕊️</span> Creating Harmony
+                  </h4>
+                  <ul className="space-y-2 text-teal-800">
+                    <li className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-teal-400 rounded-full"></span>
+                      Nourishing foods that love you back
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-teal-400 rounded-full"></span>
+                      A calm, toxin-free sanctuary
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-teal-400 rounded-full"></span>
+                      Consistent, gentle routines
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="w-2 h-2 bg-teal-400 rounded-full"></span>
+                      Listening to your body's wisdom
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            {/* People Also Explore Section */}
-            <div className="bg-background/80 backdrop-blur-sm rounded-xl border border-border p-6 shadow-soft mb-8">
-              <h3 className="text-xl font-semibold text-foreground mb-4">People Also Explore</h3>
-              <p className="text-muted-foreground mb-4">
-                Discover other natural remedies and wellness topics frequently explored by our community:
-              </p>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
-                  <h4 className="font-medium text-foreground mb-2">Chamomile for Stress</h4>
-                  <p className="text-sm text-muted-foreground">Gentle nervine herb for anxiety and sleep support</p>
+            {/* Community Section - More Welcoming */}
+            <div className="bg-white/70 backdrop-blur-sm rounded-3xl border border-green-200/50 p-8 shadow-soft">
+              <div className="flex items-start gap-4 mb-6">
+                <div className="p-3 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl shadow-soft">
+                  <Sparkles className="h-6 w-6 text-white" />
                 </div>
-                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
-                  <h4 className="font-medium text-foreground mb-2">Magnesium-Rich Foods</h4>
-                  <p className="text-sm text-muted-foreground">Natural migraine relief through mineral supplementation</p>
+                <div>
+                  <h3 className="text-2xl font-bold text-green-900 mb-3">🌿 Explore More Natural Wonders</h3>
+                  <p className="text-green-700/80 mb-6 text-lg">
+                    Join thousands discovering the gentle power of nature's pharmacy
+                  </p>
                 </div>
-                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
-                  <h4 className="font-medium text-foreground mb-2">Lavender Aromatherapy</h4>
-                  <p className="text-sm text-muted-foreground">Essential oil therapy for relaxation and sleep</p>
-                </div>
-                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
-                  <h4 className="font-medium text-foreground mb-2">Turmeric Anti-Inflammatory</h4>
-                  <p className="text-sm text-muted-foreground">Golden spice for pain and inflammation management</p>
-                </div>
-                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
-                  <h4 className="font-medium text-foreground mb-2">Ginger for Digestion</h4>
-                  <p className="text-sm text-muted-foreground">Traditional remedy for nausea and digestive issues</p>
-                </div>
-                <div className="p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
-                  <h4 className="font-medium text-foreground mb-2">Herbal Tea Blends</h4>
-                  <p className="text-sm text-muted-foreground">Therapeutic combinations for various health goals</p>
-                </div>
+              </div>
+              
+              <div className="grid md:grid-cols-3 gap-6">
+                {[
+                  { icon: "🌼", title: "Chamomile Dreams", desc: "Gentle comfort for anxious moments" },
+                  { icon: "🧿", title: "Magnesium Magic", desc: "Nature's relaxation mineral" },
+                  { icon: "💜", title: "Lavender Peace", desc: "Aromatherapy for the soul" },
+                  { icon: "✨", title: "Golden Turmeric", desc: "Ancient anti-inflammatory wisdom" },
+                  { icon: "🫚", title: "Ginger Warmth", desc: "Digestive comfort from the earth" },
+                  { icon: "🍃", title: "Herbal Blends", desc: "Therapeutic teas for every need" }
+                ].map((item, index) => (
+                  <div key={index} className="bg-gradient-to-br from-green-50/80 to-emerald-50/60 rounded-2xl p-6 border border-green-200/30 hover:shadow-soft transition-all duration-300 cursor-pointer group">
+                    <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
+                    <h4 className="font-bold text-green-900 mb-2">{item.title}</h4>
+                    <p className="text-sm text-green-700/80">{item.desc}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Disclaimer */}
-            <Disclaimer />
+            {/* Disclaimer - Softer Approach */}
+            <div className="bg-blue-50/60 backdrop-blur-sm rounded-3xl border border-blue-200/40 p-8 shadow-soft">
+              <Disclaimer />
+            </div>
           </div>
         )}
 
         {!result && !loading && query && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">
-              Start typing to search for natural remedies and health solutions.
+          <div className="text-center py-20">
+            <div className="text-6xl mb-6">🌿</div>
+            <p className="text-green-700/80 text-xl">
+              Begin your natural wellness journey by sharing your needs above
             </p>
           </div>
         )}
