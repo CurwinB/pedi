@@ -298,7 +298,7 @@ const Index = () => {
                 Welcome to <span className="text-white font-bold drop-shadow-lg">Remedypedia</span>
               </h1>
               <p className="text-xl md:text-2xl opacity-90 leading-relaxed max-w-3xl mx-auto">
-                Your comprehensive natural health database featuring over 10,000 evidence-based remedies, herbal treatments, and traditional medicine solutions for common health conditions. Discover safe, effective natural alternatives with detailed usage instructions, dosage guidelines, and safety warnings backed by scientific research and centuries of traditional wisdom.
+                Thousands of natural remedies at your fingertips. From grandmother's time-tested solutions to modern herbal treatments - find what works for real health issues that real people face every day.
               </p>
             </div>
             
@@ -320,18 +320,13 @@ const Index = () => {
         </div>
       </section>
 
-      {/* SEO Introduction Section */}
+      {/* Introduction Section */}
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-muted-foreground leading-relaxed">
-            Remedypedia is your trusted natural health resource, featuring thousands of evidence-based herbal remedies, 
-            traditional medicine treatments, and holistic healing solutions. From natural pain relief and digestive health 
-            remedies to immune system boosters and stress management techniques, we provide comprehensive information on 
-            safe, effective natural alternatives to conventional medicine. Our database covers everything from common 
-            cold remedies and anti-inflammatory herbs to natural anxiety treatments and sleep aids. Each remedy includes 
-            detailed preparation instructions, proper dosages, potential side effects, and scientific research backing. 
-            Whether you're seeking natural remedies for headaches, digestive issues, skin conditions, or chronic health 
-            concerns, Remedypedia empowers you with the knowledge to make informed decisions about your natural health journey.
+            Finding the right natural remedy shouldn't be complicated. Whether you're dealing with a headache, 
+            trouble sleeping, or digestive issues, home remedies have helped people feel better for generations. 
+            Here you'll find simple, effective herbal remedies that actually work - complete with how to use them safely.
           </p>
         </div>
       </section>
