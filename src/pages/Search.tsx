@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { SearchBar } from "@/components/SearchBar";
@@ -172,13 +171,13 @@ const Search = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 relative overflow-hidden">
       {/* Organic background elements with varied colors */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-blue-200/20 to-indigo-200/15 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-40 right-20 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-purple-200/20 to-pink-200/15 rounded-full blur-2xl animate-float delay-1000" />
-        <div className="absolute top-1/3 right-1/4 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-emerald-200/15 to-teal-200/10 rounded-full blur-xl animate-float delay-500" />
-        <div className="absolute bottom-1/4 left-1/3 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-amber-200/15 to-orange-200/10 rounded-full blur-lg animate-float delay-700" />
+        <div className="absolute top-1/3 right-1/4 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-amber-200/15 to-orange-200/10 rounded-full blur-xl animate-float delay-500" />
+        <div className="absolute bottom-1/4 left-1/3 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-slate-200/15 to-blue-200/10 rounded-full blur-lg animate-float delay-700" />
       </div>
       
       <Header />
@@ -256,7 +255,7 @@ const Search = () => {
             {/* How We Choose Section */}
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 p-6 sm:p-8 shadow-soft">
               <div className="flex items-start gap-4 mb-6">
-                <div className="p-3 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-soft flex-shrink-0">
+                <div className="p-3 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl shadow-soft flex-shrink-0">
                   <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
                 <div>
@@ -271,7 +270,7 @@ const Search = () => {
             </div>
 
             {/* Enhanced Summary Section */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-white/90 via-blue-50/80 to-indigo-50/70 backdrop-blur-sm rounded-3xl border border-blue-200/50 p-6 sm:p-10 shadow-natural">
+            <div className="relative overflow-hidden bg-gradient-to-br from-white/90 via-slate-50/80 to-blue-50/70 backdrop-blur-sm rounded-3xl border border-slate-200/50 p-6 sm:p-10 shadow-natural">
               <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 bg-gradient-to-bl from-blue-300/20 to-transparent rounded-full -translate-y-16 sm:-translate-y-24 translate-x-16 sm:translate-x-24" />
               <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-40 sm:h-40 bg-gradient-to-tr from-purple-300/15 to-transparent rounded-full translate-y-12 sm:translate-y-20 -translate-x-12 sm:-translate-x-20" />
               
@@ -287,7 +286,7 @@ const Search = () => {
                     <p className="text-indigo-600 font-medium text-base sm:text-lg">Gentle healing, naturally crafted for you</p>
                   </div>
                 </div>
-                <div className="bg-white/70 rounded-2xl p-6 sm:p-8 border border-blue-200/30 backdrop-blur-sm">
+                <div className="bg-white/70 rounded-2xl p-6 sm:p-8 border border-slate-200/30 backdrop-blur-sm">
                   <p className="text-slate-700 leading-relaxed text-base sm:text-lg font-medium">
                     {result.summary}
                   </p>
@@ -351,12 +350,12 @@ const Search = () => {
                           </p>
                         </div>
                         
-                        <div className="p-4 sm:p-6 bg-emerald-50/60 rounded-2xl border-l-4 border-emerald-400 backdrop-blur-sm">
-                          <h4 className="font-bold text-emerald-900 mb-3 flex items-center gap-3 text-base sm:text-lg">
+                        <div className="p-4 sm:p-6 bg-blue-50/60 rounded-2xl border-l-4 border-blue-400 backdrop-blur-sm">
+                          <h4 className="font-bold text-blue-900 mb-3 flex items-center gap-3 text-base sm:text-lg">
                             <span className="text-xl sm:text-2xl">🔬</span>
                             Modern Science Says
                           </h4>
-                          <p className="text-emerald-800 leading-relaxed text-sm sm:text-lg">
+                          <p className="text-blue-800 leading-relaxed text-sm sm:text-lg">
                             {ancientRemedy.modernFindings}
                           </p>
                         </div>
@@ -379,7 +378,7 @@ const Search = () => {
             {/* Lifestyle Section */}
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 p-6 sm:p-8 shadow-soft">
               <div className="flex items-start gap-4 mb-6">
-                <div className="p-3 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl shadow-soft flex-shrink-0">
+                <div className="p-3 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl shadow-soft flex-shrink-0">
                   <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
                 <div>
@@ -392,49 +391,49 @@ const Search = () => {
               </div>
               
               <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
-                <div className="bg-teal-50/60 rounded-2xl p-4 sm:p-6 border border-teal-200/30">
-                  <h4 className="font-bold text-teal-900 mb-4 text-base sm:text-lg flex items-center gap-2">
+                <div className="bg-blue-50/60 rounded-2xl p-4 sm:p-6 border border-blue-200/30">
+                  <h4 className="font-bold text-blue-900 mb-4 text-base sm:text-lg flex items-center gap-2">
                     <span className="text-lg sm:text-xl">🌸</span> Daily Rituals
                   </h4>
-                  <ul className="space-y-2 text-teal-800 text-sm sm:text-base">
+                  <ul className="space-y-2 text-blue-800 text-sm sm:text-base">
                     <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-teal-400 rounded-full flex-shrink-0"></span>
+                      <span className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"></span>
                       Gentle hydration with herbal teas
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-teal-400 rounded-full flex-shrink-0"></span>
+                      <span className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"></span>
                       Restorative sleep in a peaceful space
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-teal-400 rounded-full flex-shrink-0"></span>
+                      <span className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"></span>
                       Mindful breathing and gentle movement
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-teal-400 rounded-full flex-shrink-0"></span>
+                      <span className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"></span>
                       Time in nature's embrace
                     </li>
                   </ul>
                 </div>
                 
-                <div className="bg-indigo-50/60 rounded-2xl p-4 sm:p-6 border border-indigo-200/30">
-                  <h4 className="font-bold text-indigo-900 mb-4 text-base sm:text-lg flex items-center gap-2">
+                <div className="bg-purple-50/60 rounded-2xl p-4 sm:p-6 border border-purple-200/30">
+                  <h4 className="font-bold text-purple-900 mb-4 text-base sm:text-lg flex items-center gap-2">
                     <span className="text-lg sm:text-xl">🕊️</span> Creating Harmony
                   </h4>
-                  <ul className="space-y-2 text-indigo-800 text-sm sm:text-base">
+                  <ul className="space-y-2 text-purple-800 text-sm sm:text-base">
                     <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-indigo-400 rounded-full flex-shrink-0"></span>
+                      <span className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></span>
                       Nourishing foods that love you back
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-indigo-400 rounded-full flex-shrink-0"></span>
+                      <span className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></span>
                       A calm, toxin-free sanctuary
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-indigo-400 rounded-full flex-shrink-0"></span>
+                      <span className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></span>
                       Consistent, gentle routines
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-indigo-400 rounded-full flex-shrink-0"></span>
+                      <span className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></span>
                       Listening to your body's wisdom
                     </li>
                   </ul>
@@ -445,7 +444,7 @@ const Search = () => {
             {/* Community Section */}
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 p-6 sm:p-8 shadow-soft">
               <div className="flex items-start gap-4 mb-6">
-                <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl shadow-soft flex-shrink-0">
+                <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-soft flex-shrink-0">
                   <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
                 <div>
