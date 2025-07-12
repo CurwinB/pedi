@@ -146,32 +146,51 @@ const Search = () => {
         return false;
       }
       
-      // Match based on query keywords
+      // Match based on query keywords - be very specific to the symptom/condition
       const queryLower = searchQuery.toLowerCase();
-      const remedyText = `${remedy.name} ${remedy.traditionalUse} ${remedy.modernFindings}`.toLowerCase();
       
-      // General health keywords that match multiple remedies
-      if (queryLower.includes('pain') || queryLower.includes('inflammation') || queryLower.includes('arthritis')) {
+      // Headache-specific remedies
+      if (queryLower.includes('headache') || queryLower.includes('migraine') || queryLower.includes('head pain')) {
+        return ['willow bark', 'frankincense'].includes(remedy.name.toLowerCase());
+      }
+      
+      // Pain and inflammation remedies  
+      if (queryLower.includes('pain') || queryLower.includes('inflammation') || queryLower.includes('arthritis') || queryLower.includes('joint')) {
         return ['willow bark', 'frankincense', "cat's claw"].includes(remedy.name.toLowerCase());
       }
-      if (queryLower.includes('stress') || queryLower.includes('anxiety') || queryLower.includes('depression')) {
-        return ['rhodiola root', 'ashwagandha', 'black cumin seed'].includes(remedy.name.toLowerCase());
-      }
-      if (queryLower.includes('digestion') || queryLower.includes('stomach') || queryLower.includes('digestive')) {
-        return ['black cumin seed', 'frankincense'].includes(remedy.name.toLowerCase());
-      }
-      if (queryLower.includes('immune') || queryLower.includes('cold') || queryLower.includes('flu')) {
-        return ['black cumin seed', 'ashwagandha'].includes(remedy.name.toLowerCase());
-      }
-      if (queryLower.includes('sleep') || queryLower.includes('insomnia') || queryLower.includes('fatigue')) {
-        return ['ashwagandha', 'rhodiola root'].includes(remedy.name.toLowerCase());
-      }
-      if (queryLower.includes('joint') || queryLower.includes('muscle')) {
-        return ['willow bark', "cat's claw", 'ashwagandha'].includes(remedy.name.toLowerCase());
+      
+      // Mental health and stress remedies
+      if (queryLower.includes('stress') || queryLower.includes('anxiety') || queryLower.includes('depression') || queryLower.includes('mood')) {
+        return ['rhodiola root', 'ashwagandha'].includes(remedy.name.toLowerCase());
       }
       
-      // Default fallback - return most universally applicable
-      return ['ashwagandha', 'frankincense'].includes(remedy.name.toLowerCase());
+      // Digestive issues
+      if (queryLower.includes('digestion') || queryLower.includes('stomach') || queryLower.includes('digestive') || queryLower.includes('gut') || queryLower.includes('nausea')) {
+        return ['black cumin seed', 'frankincense'].includes(remedy.name.toLowerCase());
+      }
+      
+      // Immune system and respiratory
+      if (queryLower.includes('immune') || queryLower.includes('cold') || queryLower.includes('flu') || queryLower.includes('respiratory') || queryLower.includes('cough')) {
+        return ['black cumin seed', 'frankincense'].includes(remedy.name.toLowerCase());
+      }
+      
+      // Sleep and fatigue issues
+      if (queryLower.includes('sleep') || queryLower.includes('insomnia') || queryLower.includes('fatigue') || queryLower.includes('tired') || queryLower.includes('energy')) {
+        return ['ashwagandha', 'rhodiola root'].includes(remedy.name.toLowerCase());
+      }
+      
+      // Muscle and physical performance
+      if (queryLower.includes('muscle') || queryLower.includes('strength') || queryLower.includes('performance') || queryLower.includes('endurance')) {
+        return ['ashwagandha', 'rhodiola root'].includes(remedy.name.toLowerCase());
+      }
+      
+      // Skin conditions  
+      if (queryLower.includes('skin') || queryLower.includes('wound') || queryLower.includes('healing')) {
+        return ['frankincense'].includes(remedy.name.toLowerCase());
+      }
+      
+      // Return empty if no specific match found - don't show random remedies
+      return false;
     });
 
     // Return 1-2 most relevant remedies
