@@ -267,16 +267,6 @@ const Clarify = () => {
           </div>
         </div>
 
-        {/* Ad Slot 1 */}
-        <div className="flex justify-center mb-8">
-          <div className="w-full max-w-2xl h-24 bg-muted/50 border border-border rounded-lg flex items-center justify-center text-muted-foreground text-sm">
-            <div className="text-center">
-              <div className="font-medium">Advertisement</div>
-              <div className="text-xs opacity-70">Google AdSense</div>
-            </div>
-          </div>
-        </div>
-
         {loading && (
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
@@ -363,19 +353,6 @@ const Clarify = () => {
                     </p>
                   </div>
                 )}
-
-                {/* Ad Slot 2 - After second question */}
-                {questionIndex === 1 && (
-                  <div className="flex justify-center my-8">
-                    {/* Ad Slot 2 */}
-                    <div className="w-80 h-64 bg-muted/50 border border-border rounded-lg flex items-center justify-center text-muted-foreground text-sm">
-                      <div className="text-center">
-                        <div className="font-medium">Advertisement</div>
-                        <div className="text-xs opacity-70">Google AdSense</div>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
             ))}
 
@@ -406,16 +383,6 @@ const Clarify = () => {
                     healthcare provider before starting any new treatment, especially if you have 
                     underlying health conditions, are pregnant or nursing, or are taking other medications.
                   </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Ad Slot 3 */}
-            <div className="flex justify-center my-8">
-              <div className="w-full max-w-2xl h-24 bg-muted/50 border border-border rounded-lg flex items-center justify-center text-muted-foreground text-sm">
-                <div className="text-center">
-                  <div className="font-medium">Advertisement</div>
-                  <div className="text-xs opacity-70">Google AdSense</div>
                 </div>
               </div>
             </div>

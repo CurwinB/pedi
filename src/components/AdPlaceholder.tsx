@@ -1,3 +1,4 @@
+
 import { useLocation } from "react-router-dom";
 
 interface AdPlaceholderProps {
@@ -5,26 +6,36 @@ interface AdPlaceholderProps {
   className?: string;
 }
 
-// Routes where ads should not be displayed (compliance pages)
-const NO_ADS_ROUTES = [
-  '/about',
-  '/privacy',
-  '/terms', 
-  '/contact',
-  '/disclaimer'
+// Routes where ads ARE allowed to be displayed
+const ALLOWED_ADS_ROUTES = [
+  '/',           // homepage
+  '/clarify',    // clarify page
+  '/search',     // results page
+  '/blog',       // blog listing page
 ];
 
-const shouldHideAds = (pathname: string): boolean => {
-  return NO_ADS_ROUTES.includes(pathname);
+const shouldShowAds = (pathname: string): boolean => {
+  // Allow ads on specific routes
+  if (ALLOWED_ADS_ROUTES.includes(pathname)) {
+    return true;
+  }
+  
+  // Allow ads on individual blog posts (routes like /blog/some-slug)
+  if (pathname.startsWith('/blog/') && pathname !== '/blog') {
+    return true;
+  }
+  
+  return false;
 };
 
 export const AdPlaceholder = ({ size = "rectangle", className = "" }: AdPlaceholderProps) => {
   const location = useLocation();
   
-  // Don't render ads on compliance pages
-  if (shouldHideAds(location.pathname)) {
+  // Only render ads on approved pages
+  if (!shouldShowAds(location.pathname)) {
     return null;
   }
+
   const dimensions = {
     banner: "w-full h-16",
     rectangle: "w-80 h-64",
