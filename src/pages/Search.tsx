@@ -151,7 +151,7 @@ const Search = () => {
       
       // Headache-specific remedies (handle common typos and variations)
       if (queryLower.includes('headache') || queryLower.includes('headche') || queryLower.includes('migraine') || queryLower.includes('head pain') || queryLower.includes('pulsing') && queryLower.includes('head')) {
-        return ['willow bark', 'frankincense'].includes(remedy.name.toLowerCase());
+        return ['willow bark'].includes(remedy.name.toLowerCase());
       }
       
       // Pain and inflammation remedies  
