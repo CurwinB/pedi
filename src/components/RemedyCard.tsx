@@ -143,6 +143,6 @@ export const RemedyCard = ({ remedy, index }: RemedyCardProps) => {
           </div>
         )}
       </CardContent>
-    </div>
+    </Card>
   );
 };
