@@ -22,6 +22,7 @@ interface Remedy {
 interface SearchResult {
   summary: string;
   remedies: Remedy[];
+  ancientRemedies?: AncientRemedy[];
 }
 
 interface AncientRemedy {
@@ -96,105 +97,9 @@ const Search = () => {
   };
 
   const getAncientRemedies = (searchQuery: string, existingRemedies: Remedy[]): AncientRemedy[] => {
-    // Get existing remedy names to avoid duplicates
-    const existingNames = existingRemedies.map(r => r.name.toLowerCase());
-    
-    // Database of ancient remedies with modern backing
-    const ancientRemedyDatabase: AncientRemedy[] = [
-      {
-        name: "Willow Bark",
-        culture: "Ancient Egyptian and Greek Medicine",
-        traditionalUse: "The ancient Egyptians and Greeks used willow bark as early as 400 BCE to treat pain and inflammation. Greek physician Hippocrates prescribed willow bark tea to women in childbirth to ease pain, while Egyptian papyrus texts describe its use for treating fever and joint pain. The bark was typically prepared as a tea or chewed directly.",
-        modernFindings: "Modern research has validated willow bark's effectiveness, identifying salicin as the active compound that converts to salicylic acid in the body - the same mechanism as aspirin. Clinical studies show willow bark extract significantly reduces lower back pain, osteoarthritis symptoms, and inflammation with fewer gastrointestinal side effects than synthetic alternatives."
-      },
-      {
-        name: "Frankincense",
-        culture: "Ancient Persian and Middle Eastern Traditions",
-        traditionalUse: "Dating back over 5,000 years, Persian and Arabian healers burned frankincense resin to treat respiratory conditions, joint pain, and digestive issues. Ancient Persian medical texts describe frankincense oil applied topically for wound healing and taken internally for stomach ailments and anxiety. It was considered so valuable it was traded alongside gold.",
-        modernFindings: "Contemporary studies demonstrate frankincense contains boswellic acids that significantly reduce inflammation markers and support joint health. Research published in clinical journals shows frankincense extract improves symptoms of osteoarthritis, reduces inflammatory bowel disease symptoms, and may support cognitive function through neuroprotective compounds."
-      },
-      {
-        name: "Cat's Claw",
-        culture: "Ancient Incan Empire",
-        traditionalUse: "The Incas called this vine 'uña de gato' and used it for over 2,000 years to treat arthritis, wounds, and digestive problems. Incan healers prepared the inner bark as teas and poultices, believing it could 'clean the whole body' and enhance vitality. It was particularly revered for treating joint pain in elderly warriors and workers.",
-        modernFindings: "Modern immunological research reveals cat's claw contains powerful alkaloids that modulate immune system function and reduce inflammation. Clinical trials show significant improvement in rheumatoid arthritis symptoms, with studies demonstrating reduced joint swelling and pain. Research also indicates potential benefits for digestive health and cellular repair mechanisms."
-      },
-      {
-        name: "Black Cumin Seed",
-        culture: "Ancient Egyptian and Islamic Medicine",
-        traditionalUse: "Known as 'the seed of blessing,' black cumin was found in Tutankhamun's tomb and mentioned in Islamic traditions as a cure for everything except death. Ancient Egyptian physicians used it for digestive issues, respiratory problems, and to boost overall health. The seeds were typically ground and mixed with honey or consumed as oil.",
-        modernFindings: "Extensive modern research confirms black cumin's therapeutic properties, with over 650 peer-reviewed studies validating its benefits. Studies show significant improvements in asthma symptoms, blood sugar regulation, and immune system support. The active compound thymoquinone demonstrates potent anti-inflammatory, antioxidant, and antimicrobial properties in clinical trials."
-      },
-      {
-        name: "Rhodiola Root",
-        culture: "Ancient Siberian and Scandinavian Medicine",
-        traditionalUse: "For over 3,000 years, Siberian shamans and Scandinavian healers used rhodiola root to combat fatigue and enhance physical endurance during harsh winters. Vikings consumed rhodiola tea before long journeys and battles, while Siberian folk medicine prescribed it for depression and altitude sickness. The golden root was often traded for wine and fruit.",
-        modernFindings: "Clinical research demonstrates rhodiola's adaptogenic properties significantly reduce stress-related fatigue and improve mental performance. Double-blind studies show meaningful improvements in depression symptoms, cognitive function, and physical endurance. Research confirms rhodiola helps regulate cortisol levels and supports the hypothalamic-pituitary-adrenal axis during stress."
-      },
-      {
-        name: "Ashwagandha",
-        culture: "Ancient Ayurvedic Medicine (India)",
-        traditionalUse: "Used for over 3,000 years in Ayurvedic medicine, ashwagandha was called 'rasayana,' meaning it promoted longevity and vitality. Ancient Indian texts describe its use for enhancing strength, improving sleep, and supporting reproductive health. Practitioners prepared the root as powders, pastes, and teas, often combining it with milk and honey.",
-        modernFindings: "Comprehensive clinical studies validate ashwagandha's stress-reducing properties, showing significant decreases in cortisol levels and anxiety scores. Research demonstrates improvements in sleep quality, muscle strength, and testosterone levels in men. Studies also confirm its neuroprotective effects and potential benefits for thyroid function and blood sugar regulation."
-      }
-    ];
-
-    // Filter relevant remedies based on query and exclude existing ones
-    const relevantRemedies = ancientRemedyDatabase.filter(remedy => {
-      // Don't include if already in main recommendations
-      if (existingNames.includes(remedy.name.toLowerCase())) {
-        return false;
-      }
-      
-      // Match based on query keywords - be very specific to the symptom/condition
-      const queryLower = searchQuery.toLowerCase();
-      
-      // Headache-specific remedies (handle common typos and variations)
-      if (queryLower.includes('headache') || queryLower.includes('headche') || queryLower.includes('migraine') || queryLower.includes('head pain') || queryLower.includes('pulsing') && queryLower.includes('head')) {
-        return ['willow bark'].includes(remedy.name.toLowerCase());
-      }
-      
-      // Pain and inflammation remedies  
-      if (queryLower.includes('pain') || queryLower.includes('inflammation') || queryLower.includes('arthritis') || queryLower.includes('joint')) {
-        return ['willow bark', 'frankincense', "cat's claw"].includes(remedy.name.toLowerCase());
-      }
-      
-      // Mental health and stress remedies
-      if (queryLower.includes('stress') || queryLower.includes('anxiety') || queryLower.includes('depression') || queryLower.includes('mood')) {
-        return ['rhodiola root', 'ashwagandha'].includes(remedy.name.toLowerCase());
-      }
-      
-      // Digestive issues
-      if (queryLower.includes('digestion') || queryLower.includes('stomach') || queryLower.includes('digestive') || queryLower.includes('gut') || queryLower.includes('nausea')) {
-        return ['black cumin seed', 'frankincense'].includes(remedy.name.toLowerCase());
-      }
-      
-      // Immune system and respiratory
-      if (queryLower.includes('immune') || queryLower.includes('cold') || queryLower.includes('flu') || queryLower.includes('respiratory') || queryLower.includes('cough')) {
-        return ['black cumin seed', 'frankincense'].includes(remedy.name.toLowerCase());
-      }
-      
-      // Sleep and fatigue issues
-      if (queryLower.includes('sleep') || queryLower.includes('insomnia') || queryLower.includes('fatigue') || queryLower.includes('tired') || queryLower.includes('energy')) {
-        return ['ashwagandha', 'rhodiola root'].includes(remedy.name.toLowerCase());
-      }
-      
-      // Muscle and physical performance
-      if (queryLower.includes('muscle') || queryLower.includes('strength') || queryLower.includes('performance') || queryLower.includes('endurance')) {
-        return ['ashwagandha', 'rhodiola root'].includes(remedy.name.toLowerCase());
-      }
-      
-      // Skin conditions  
-      if (queryLower.includes('skin') || queryLower.includes('wound') || queryLower.includes('healing')) {
-        return ['frankincense'].includes(remedy.name.toLowerCase());
-      }
-      
-      // Return empty if no specific match found - don't show random remedies
-      return false;
-    });
-
-    // Return 1-2 most relevant remedies
-    return relevantRemedies.slice(0, 2);
+    // This function is now deprecated - ancient remedies come from the API
+    // Return empty array as fallback since this will be replaced by API data
+    return [];
   };
 
   const handleSearch = async (searchQuery: string) => {
@@ -408,38 +313,46 @@ const Search = () => {
                   </div>
                 </div>
                 
-                {getAncientRemedies(query, result.remedies).map((ancientRemedy, index) => (
-                  <div key={index} className="bg-background/60 rounded-xl p-6 border border-amber-200/20 mb-6 last:mb-0">
-                    <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-                      <span className="w-8 h-8 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full flex items-center justify-center text-amber-800 text-sm font-bold">
-                        {index + 1}
-                      </span>
-                      {ancientRemedy.name}
-                    </h3>
-                    
-                    <div className="space-y-4">
-                      <div className="p-4 bg-amber-50/50 rounded-lg border-l-4 border-amber-400">
-                        <h4 className="font-medium text-amber-900 mb-2 flex items-center gap-2">
-                          <span className="text-amber-600">🏛️</span>
-                          Ancient Wisdom: {ancientRemedy.culture}
-                        </h4>
-                        <p className="text-amber-800/90 leading-relaxed">
-                          {ancientRemedy.traditionalUse}
-                        </p>
-                      </div>
+                {result.ancientRemedies && result.ancientRemedies.length > 0 ? (
+                  result.ancientRemedies.map((ancientRemedy, index) => (
+                    <div key={index} className="bg-background/60 rounded-xl p-6 border border-amber-200/20 mb-6 last:mb-0">
+                      <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+                        <span className="w-8 h-8 bg-gradient-to-br from-amber-100 to-amber-200 rounded-full flex items-center justify-center text-amber-800 text-sm font-bold">
+                          {index + 1}
+                        </span>
+                        {ancientRemedy.name}
+                      </h3>
                       
-                      <div className="p-4 bg-green-50/50 rounded-lg border-l-4 border-green-400">
-                        <h4 className="font-medium text-green-900 mb-2 flex items-center gap-2">
-                          <span className="text-green-600">🔬</span>
-                          Modern Scientific Validation
-                        </h4>
-                        <p className="text-green-800/90 leading-relaxed">
-                          {ancientRemedy.modernFindings}
-                        </p>
+                      <div className="space-y-4">
+                        <div className="p-4 bg-amber-50/50 rounded-lg border-l-4 border-amber-400">
+                          <h4 className="font-medium text-amber-900 mb-2 flex items-center gap-2">
+                            <span className="text-amber-600">🏛️</span>
+                            Ancient Wisdom: {ancientRemedy.culture}
+                          </h4>
+                          <p className="text-amber-800/90 leading-relaxed">
+                            {ancientRemedy.traditionalUse}
+                          </p>
+                        </div>
+                        
+                        <div className="p-4 bg-green-50/50 rounded-lg border-l-4 border-green-400">
+                          <h4 className="font-medium text-green-900 mb-2 flex items-center gap-2">
+                            <span className="text-green-600">🔬</span>
+                            Modern Scientific Validation
+                          </h4>
+                          <p className="text-green-800/90 leading-relaxed">
+                            {ancientRemedy.modernFindings}
+                          </p>
+                        </div>
                       </div>
                     </div>
+                  ))
+                ) : (
+                  <div className="bg-background/60 rounded-xl p-6 border border-amber-200/20 text-center">
+                    <p className="text-amber-800/80 leading-relaxed">
+                      No specific ancient remedies found for your condition. Our AI focuses on providing the most relevant historical treatments with strong modern scientific backing.
+                    </p>
                   </div>
-                ))}
+                )}
                 
                 <div className="bg-amber-50/30 rounded-lg p-4 border border-amber-200/30 mt-6">
                   <p className="text-amber-800/80 text-sm leading-relaxed">

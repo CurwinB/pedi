@@ -14,9 +14,17 @@ interface Remedy {
   sources?: string[];
 }
 
+interface AncientRemedy {
+  name: string;
+  culture: string;
+  traditionalUse: string;
+  modernFindings: string;
+}
+
 interface RemedyResponse {
   summary: string;
   remedies: Remedy[];
+  ancientRemedies: AncientRemedy[];
 }
 
 serve(async (req) => {
@@ -128,6 +136,13 @@ REQUIREMENTS FOR PERSONALIZED RESPONSE:
    - Include realistic timelines for their specific case
    - Provide alternatives if primary options are contraindicated
 
+6. ANCIENT REMEDIES SECTION:
+   - Include 1-2 ancient remedies that are specifically relevant to their condition
+   - Each remedy must have been historically used by ancient civilizations for this EXACT condition
+   - Must be supported by modern scientific research for this specific symptom
+   - Should be distinct from the main remedies listed above
+   - Focus on remedies with documented historical use for headaches, pain relief, or similar conditions
+
 Return ONLY a valid JSON object with this structure:
 {
   "summary": "Personalized summary addressing their specific situation, timeline, and needs",
@@ -138,6 +153,14 @@ Return ONLY a valid JSON object with this structure:
       "usage": "Age-appropriate dosages and methods specific to their needs",
       "warnings": "Personalized warnings considering their allergies, treatments, and profile",
       "sources": ["Credible research sources"]
+    }
+  ],
+  "ancientRemedies": [
+    {
+      "name": "Ancient Remedy Name",
+      "culture": "Specific ancient civilization (e.g., Ancient Egyptian Medicine, Persian Traditions, etc.)",
+      "traditionalUse": "How this remedy was traditionally used by the ancient culture for this specific condition",
+      "modernFindings": "Modern scientific research that validates its effectiveness for this condition"
     }
   ]
 }
@@ -249,6 +272,14 @@ function createPersonalizedFallback(query: string, info: any): RemedyResponse {
         usage: gingerUsage,
         warnings,
         sources: ["Journal of Pain Research", "Phytotherapy Research"]
+      }
+    ],
+    ancientRemedies: [
+      {
+        name: "Willow Bark",
+        culture: "Ancient Egyptian Medicine",
+        traditionalUse: "Used by ancient Egyptians for pain relief and inflammation, particularly for headaches and joint pain.",
+        modernFindings: "Contains salicin, which converts to salicylic acid (similar to aspirin) and is scientifically proven to reduce pain and inflammation."
       }
     ]
   };
