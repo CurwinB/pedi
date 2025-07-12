@@ -138,10 +138,13 @@ REQUIREMENTS FOR PERSONALIZED RESPONSE:
 
 6. ANCIENT REMEDIES SECTION:
    - Include 1-2 ancient remedies that are specifically relevant to their condition
+   - MUST ONLY include herbal, root, spice, or natural ingredient preparations
+   - NO acupuncture, massage, meditation, or non-herbal practices
+   - Focus on preparations like teas, poultices, decoctions, oils, or infusions
+   - Include basic preparation instructions (e.g., "Boil 1 tsp in water for 10 minutes and drink as tea")
    - Each remedy must have been historically used by ancient civilizations for this EXACT condition
    - Must be supported by modern scientific research for this specific symptom
    - Should be distinct from the main remedies listed above
-   - Focus on remedies with documented historical use for headaches, pain relief, or similar conditions
 
 Return ONLY a valid JSON object with this structure:
 {
