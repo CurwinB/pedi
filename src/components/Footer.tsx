@@ -99,7 +99,16 @@ const Footer = () => {
           </div>
           
           {/* Copyright */}
-          <div className="pt-8 border-t border-border text-center">
+          <div className="pt-8 border-t border-border text-center space-y-4">
+            <a href="https://orynth.dev/projects/remedypedia" target="_blank" rel="noopener">
+              <img 
+                src="https://orynth.dev/api/badge/remedypedia?theme=light&style=default" 
+                alt="Featured on Orynth" 
+                width="260" 
+                height="80" 
+                className="mx-auto"
+              />
+            </a>
             <p className="text-sm text-muted-foreground">
               © 2025 Remedypedia. All rights reserved. | Nurturing natural wellness through knowledge.
             </p>
