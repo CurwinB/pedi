@@ -123,9 +123,9 @@ MANDATORY SAFETY RULES:
 5. Address the specific symptoms and duration mentioned`;
 
     // Interpret the query to extract the underlying health concern
-+    const interpretedCondition = interpretHealthQuery(query);
-+    
-+    const prompt = `You are a clinical herbalist and natural medicine expert. A person is seeking natural remedies for ${interpretedCondition}. You MUST use the detailed personal information provided to generate truly personalized, safe recommendations.
+    const interpretedCondition = interpretHealthQuery(query);
+    
+    const prompt = `You are a clinical herbalist and natural medicine expert. A person is seeking natural remedies for ${interpretedCondition}. You MUST use the detailed personal information provided to generate truly personalized, safe recommendations.
 
 ${personalizedContext}
 
