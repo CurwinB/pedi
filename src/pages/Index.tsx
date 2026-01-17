@@ -4,7 +4,7 @@ import { SearchBar } from "@/components/SearchBar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Leaf, Heart, Shield, Search, Sparkles, Book, Users } from "lucide-react";
+import { Leaf, Heart, Shield, Search, Sparkle, Book, Users } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import heroImage from "@/assets/hero-wellness.jpg";
@@ -285,7 +285,7 @@ const Index = () => {
           <Leaf className="h-12 w-12 text-primary-foreground" />
         </div>
         <div className="absolute top-40 right-20 opacity-20 animate-float" style={{ animationDelay: '1s' }}>
-          <Sparkles className="h-8 w-8 text-primary-foreground" />
+          <Sparkle className="h-8 w-8 text-primary-foreground" />
         </div>
         <div className="absolute bottom-32 left-1/4 opacity-20 animate-float" style={{ animationDelay: '2s' }}>
           <Heart className="h-10 w-10 text-primary-foreground" />
@@ -391,7 +391,7 @@ const Index = () => {
 
               <div className="text-center space-y-6 animate-slide-up" style={{ animationDelay: '0.4s' }}>
                 <div className="mx-auto w-20 h-20 bg-gradient-hero rounded-2xl flex items-center justify-center shadow-glow">
-                  <Sparkles className="h-10 w-10 text-primary-foreground" />
+                  <Sparkle className="h-10 w-10 text-primary-foreground" />
                 </div>
                 <h3 className="text-2xl font-bold text-foreground">Actually Researched</h3>
                 <p className="text-muted-foreground text-lg leading-relaxed">
