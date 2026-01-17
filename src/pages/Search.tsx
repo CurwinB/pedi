@@ -5,7 +5,7 @@ import { RemedyCard } from "@/components/RemedyCard";
 import { Disclaimer } from "@/components/Disclaimer";
 
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Loader2, Sparkles, Zap, Shield, Clock, Leaf, Heart, Sun } from "lucide-react";
+import { ArrowLeft, Loader2, Shield, Clock, Leaf, Heart, Sun, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
@@ -262,7 +262,7 @@ const Search = () => {
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 p-6 sm:p-8 shadow-soft">
               <div className="flex items-start gap-4 mb-6">
                 <div className="p-3 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl shadow-soft flex-shrink-0">
-                  <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                  <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2">How We Craft Your Natural Solutions</h3>
@@ -444,7 +444,7 @@ const Search = () => {
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-slate-200/50 p-6 sm:p-8 shadow-soft">
               <div className="flex items-start gap-4 mb-6">
                 <div className="p-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-soft flex-shrink-0">
-                  <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                  <Leaf className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-3">Explore More Natural Wonders</h3>

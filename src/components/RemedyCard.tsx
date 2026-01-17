@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Info, Leaf, Sparkles } from "lucide-react";
+import { AlertTriangle, Info, Leaf } from "lucide-react";
 
 interface Remedy {
   name: string;
@@ -99,10 +99,6 @@ export const RemedyCard = ({ remedy, index }: RemedyCardProps) => {
               <Badge variant="outline" className={`text-xs ${colors.badge}`}>
                 Natural Solution #{index + 1}
               </Badge>
-              <div className={`flex items-center gap-1 ${colors.accent}`}>
-                <Sparkles className="h-3 w-3" />
-                <span className="text-xs font-medium">Carefully Selected</span>
-              </div>
             </div>
           </div>
         </div>
