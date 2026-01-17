@@ -122,9 +122,19 @@ MANDATORY SAFETY RULES:
 4. Avoid recommending things they've already tried unsuccessfully
 5. Address the specific symptoms and duration mentioned`;
 
-    const prompt = `You are a clinical herbalist and natural medicine expert. A person is seeking natural remedies for "${query}". You MUST use the detailed personal information provided to generate truly personalized, safe recommendations.
+    // Interpret the query to extract the underlying health concern
++    const interpretedCondition = interpretHealthQuery(query);
++    
++    const prompt = `You are a clinical herbalist and natural medicine expert. A person is seeking natural remedies for ${interpretedCondition}. You MUST use the detailed personal information provided to generate truly personalized, safe recommendations.
 
 ${personalizedContext}
+
+CRITICAL WRITING RULES (MUST FOLLOW):
+1. NEVER copy or echo the user's exact words, spelling, or phrasing in ANY response text
+2. ALWAYS interpret and rephrase conditions using proper medical/wellness terminology
+3. Write professionally and grammatically correct - no typos, no awkward phrasing
+4. Describe symptoms using clinical terms (e.g., "sleep difficulties" not "triuble sleeping", "digestive discomfort" not "tummy hurts")
+5. Do NOT include phrases like "your specific [query] symptoms" - instead describe the actual condition professionally
 
 REQUIREMENTS FOR PERSONALIZED RESPONSE:
 
@@ -169,11 +179,11 @@ REQUIREMENTS FOR PERSONALIZED RESPONSE:
 
 Return ONLY a valid JSON object with this structure:
 {
-  "summary": "Personalized summary addressing their specific situation, timeline, and needs",
+  "summary": "Personalized summary addressing their specific situation, timeline, and needs - written professionally without echoing user input",
   "remedies": [
     {
       "name": "Remedy Name",
-      "description": "Why this remedy is specifically chosen for THEIR situation and profile",
+      "description": "Why this remedy is specifically chosen for THEIR situation and profile - professionally written",
       "usage": "Age-appropriate dosages and methods specific to their needs",
       "warnings": "Personalized warnings considering their allergies, treatments, and profile",
       "sources": ["Credible research sources"]
@@ -189,11 +199,14 @@ Return ONLY a valid JSON object with this structure:
   ]
 }
 
-EXAMPLE OF PERSONALIZATION:
-Instead of: "Ginger may help with nausea"
-Write: "Given your morning nausea that worsens with stress and your tolerance to previous OTC medications, ginger root is particularly suitable because..."
+EXAMPLE OF GOOD vs BAD WRITING:
+BAD: "Ginger may help with your specific i have had triuble sleeping symptoms"
+GOOD: "Ginger contains compounds that promote relaxation and may help address sleep difficulties and restlessness"
 
-Make every recommendation specific to THEIR reported situation, not generic advice.`;
+BAD: "Based on your search for i have headache everyday"
+GOOD: "Based on your experience with chronic headaches"
+
+Make every recommendation specific to THEIR reported situation using professional, clinical language.`;
 
     console.log('Generating personalized remedies...');
 
@@ -282,19 +295,71 @@ Make every recommendation specific to THEIR reported situation, not generic advi
   }
 });
 
+// Interpret raw user query into a clean, clinical description
+function interpretHealthQuery(query: string): string {
+  const lowerQuery = query.toLowerCase();
+  
+  // Common condition mappings
+  const conditionMap: Record<string, string> = {
+    'sleep': 'sleep difficulties and insomnia',
+    'sleeping': 'sleep difficulties and insomnia',
+    'insomnia': 'insomnia and sleep disturbances',
+    'headache': 'headaches and head pain',
+    'migraine': 'migraines and severe headaches',
+    'anxiety': 'anxiety and nervous tension',
+    'stress': 'stress and tension',
+    'stomach': 'digestive discomfort',
+    'digestion': 'digestive issues',
+    'nausea': 'nausea and upset stomach',
+    'pain': 'pain relief and discomfort',
+    'inflammation': 'inflammation and swelling',
+    'cold': 'cold and flu symptoms',
+    'flu': 'cold and flu symptoms',
+    'cough': 'cough and respiratory issues',
+    'sore throat': 'sore throat and throat irritation',
+    'energy': 'low energy and fatigue',
+    'fatigue': 'fatigue and tiredness',
+    'tired': 'fatigue and low energy',
+    'skin': 'skin health concerns',
+    'acne': 'acne and skin blemishes',
+    'allergy': 'allergy symptoms',
+    'joint': 'joint pain and stiffness',
+    'muscle': 'muscle tension and soreness',
+    'blood pressure': 'blood pressure support',
+    'immune': 'immune system support',
+    'depression': 'mood support and emotional wellness',
+    'mood': 'mood and emotional balance',
+  };
+  
+  // Find matching condition
+  for (const [keyword, clinical] of Object.entries(conditionMap)) {
+    if (lowerQuery.includes(keyword)) {
+      return clinical;
+    }
+  }
+  
+  // Default: create a generic but grammatical description
+  return 'general wellness concerns';
+}
+
 function createPersonalizedFallback(query: string, info: ExtractedInfo): RemedyResponse {
-  // Create a basic personalized response even in fallback
-  let summary = `Based on your search for "${query}"`;
+  // Interpret the query into a clean condition description
+  const condition = interpretHealthQuery(query);
+  
+  // Create a professional summary without raw query interpolation
+  let summary = `Based on your health concerns regarding ${condition}`;
   
   if (info.duration) {
-    summary += ` and the ${info.duration.toLowerCase()} duration you've experienced`;
+    summary += ` over the ${info.duration.toLowerCase()} period you've experienced`;
   }
   
   if (info.ageGroup) {
     summary += `, here are natural remedies appropriate for your ${info.ageGroup.toLowerCase()} age group`;
+  } else {
+    summary += `, here are carefully selected natural remedies`;
   }
   
-  summary += '. These recommendations consider your personal health profile. Always consult a healthcare professional for persistent symptoms.';
+  summary += '. These recommendations consider your personal health profile and prioritize safety. Always consult a healthcare professional for persistent or severe symptoms.';
   
   // Age-appropriate ginger recommendation
   let gingerUsage = "Fresh ginger tea (1-2 grams per cup) or supplement (250-500mg daily)";
@@ -314,21 +379,21 @@ function createPersonalizedFallback(query: string, info: ExtractedInfo): RemedyR
     remedies: [
       {
         name: "Ginger Root",
-        description: `Ginger contains anti-inflammatory gingerols that may help with your specific ${query.toLowerCase()} symptoms. Chosen for your profile based on general safety and effectiveness.`,
+        description: "Ginger contains anti-inflammatory gingerols that may help reduce inflammation and promote relaxation. Selected for its well-documented safety profile and broad therapeutic benefits.",
         usage: gingerUsage,
         warnings,
         sources: ["Journal of Pain Research", "Phytotherapy Research"]
       },
       {
         name: "Chamomile",
-        description: "A gentle, calming herb suitable for most age groups that can help with stress-related symptoms and promote relaxation.",
+        description: "A gentle, calming herb suitable for most age groups that can help with stress-related symptoms, promote relaxation, and support restful sleep.",
         usage: "Steep 1-2 teaspoons of dried chamomile flowers in hot water for 5-10 minutes. Drink up to 3 cups daily.",
         warnings: "Avoid if allergic to ragweed or related plants. May cause drowsiness.",
         sources: ["Molecular Medicine Reports", "Traditional herbal medicine"]
       },
       {
         name: "Peppermint",
-        description: "Known for its soothing properties on the digestive system and ability to ease tension.",
+        description: "Known for its soothing properties on the digestive and nervous systems, peppermint can help ease tension and promote comfort.",
         usage: "Steep fresh or dried peppermint leaves in hot water for 5-7 minutes. Can also use diluted peppermint oil topically.",
         warnings: "May worsen acid reflux in some people. Not recommended for infants.",
         sources: ["Journal of Clinical Gastroenterology"]
@@ -338,13 +403,13 @@ function createPersonalizedFallback(query: string, info: ExtractedInfo): RemedyR
       {
         name: "Willow Bark",
         culture: "Ancient Egyptian Medicine",
-        traditionalUse: "Used by ancient Egyptians for pain relief and inflammation, particularly for headaches and joint pain. Prepared as a tea by boiling the bark.",
+        traditionalUse: "Used by ancient Egyptians for pain relief and inflammation, particularly for headaches and joint discomfort. Prepared as a tea by boiling the bark in water.",
         modernFindings: "Contains salicin, which converts to salicylic acid (similar to aspirin) and is scientifically proven to reduce pain and inflammation."
       },
       {
         name: "Turmeric Golden Milk",
         culture: "Ayurvedic Medicine (Ancient India)",
-        traditionalUse: "Mixed with warm milk and black pepper, turmeric was used for thousands of years to reduce inflammation and support overall health.",
+        traditionalUse: "Mixed with warm milk and black pepper, turmeric was used for thousands of years to reduce inflammation, support digestion, and promote overall wellness.",
         modernFindings: "Curcumin, the active compound, has been extensively studied for its anti-inflammatory and antioxidant properties."
       }
     ]
