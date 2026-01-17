@@ -122,12 +122,22 @@ MANDATORY SAFETY RULES:
 4. Avoid recommending things they've already tried unsuccessfully
 5. Address the specific symptoms and duration mentioned`;
 
-    // Interpret the query to extract the underlying health concern
+// Interpret the query to extract the underlying health concern
     const interpretedCondition = interpretHealthQuery(query);
     
     const prompt = `You are a clinical herbalist and natural medicine expert. A person is seeking natural remedies for ${interpretedCondition}. You MUST use the detailed personal information provided to generate truly personalized, safe recommendations.
 
 ${personalizedContext}
+
+CRITICAL RELEVANCE REQUIREMENTS (HIGHEST PRIORITY - VIOLATING THESE WILL RESULT IN REJECTION):
+1. EVERY remedy you recommend MUST directly address "${interpretedCondition}" - NO EXCEPTIONS
+2. DO NOT recommend generic wellness herbs (like Ashwagandha, Rhodiola for "general wellness") UNLESS they specifically treat ${interpretedCondition}
+3. If the condition includes "fever" - recommend remedies KNOWN to reduce fever (like Elder, Yarrow, Willow)
+4. If the condition includes "digestive" or "stool" - recommend remedies that ADDRESS digestive issues (like Ginger, Peppermint, Fennel)
+5. NEVER use phrases like "lack of specific symptoms" - the user HAS provided specific symptoms: ${interpretedCondition}
+6. Each remedy's description MUST explain HOW it specifically helps with ${interpretedCondition}
+7. REJECT any remedy that would only provide "general wellness" or "adaptogenic" benefits without direct symptom relief
+8. The original search query was: "${query}" - use this context but write professionally
 
 CRITICAL WRITING RULES (MUST FOLLOW):
 1. NEVER copy or echo the user's exact words, spelling, or phrasing in ANY response text
@@ -299,43 +309,97 @@ Make every recommendation specific to THEIR reported situation using professiona
 function interpretHealthQuery(query: string): string {
   const lowerQuery = query.toLowerCase();
   
-  // Common condition mappings
+  // Expanded condition mappings
   const conditionMap: Record<string, string> = {
+    // Sleep issues
     'sleep': 'sleep difficulties and insomnia',
     'sleeping': 'sleep difficulties and insomnia',
     'insomnia': 'insomnia and sleep disturbances',
+    // Head issues
     'headache': 'headaches and head pain',
     'migraine': 'migraines and severe headaches',
+    'dizzy': 'dizziness and balance issues',
+    'vertigo': 'vertigo and dizziness',
+    // Mental/emotional
     'anxiety': 'anxiety and nervous tension',
     'stress': 'stress and tension',
-    'stomach': 'digestive discomfort',
+    'depression': 'mood support and emotional wellness',
+    'mood': 'mood and emotional balance',
+    // Digestive issues - EXPANDED
+    'stomach': 'digestive discomfort and stomach issues',
     'digestion': 'digestive issues',
+    'digestive': 'digestive problems',
     'nausea': 'nausea and upset stomach',
+    'stool': 'bowel irregularities and digestive issues',
+    'diarrhea': 'diarrhea and loose stools',
+    'loose stool': 'loose stools and digestive upset',
+    'soft stool': 'soft stools and digestive irregularity',
+    'constipation': 'constipation and bowel irregularity',
+    'bloat': 'bloating and gas',
+    'gas': 'gas and bloating',
+    'cramp': 'abdominal cramping',
+    'vomit': 'nausea and vomiting',
+    'indigestion': 'indigestion and dyspepsia',
+    // Fever and temperature
+    'fever': 'fever and elevated body temperature',
+    'temperature': 'elevated temperature and fever',
+    'chills': 'chills and temperature fluctuations',
+    'sweat': 'sweating and temperature regulation',
+    // Pain and inflammation
     'pain': 'pain relief and discomfort',
+    'ache': 'aches and body pain',
+    'sore': 'soreness and irritation',
     'inflammation': 'inflammation and swelling',
+    // Respiratory
     'cold': 'cold and flu symptoms',
     'flu': 'cold and flu symptoms',
     'cough': 'cough and respiratory issues',
     'sore throat': 'sore throat and throat irritation',
+    'throat': 'throat irritation and discomfort',
+    'breath': 'respiratory and breathing issues',
+    'congestion': 'nasal congestion and sinus issues',
+    'sinus': 'sinus congestion and pressure',
+    // Energy
     'energy': 'low energy and fatigue',
     'fatigue': 'fatigue and tiredness',
     'tired': 'fatigue and low energy',
+    'exhaust': 'exhaustion and fatigue',
+    // Skin
     'skin': 'skin health concerns',
     'acne': 'acne and skin blemishes',
+    'rash': 'skin rashes and irritation',
+    'itch': 'itching and skin discomfort',
+    'eczema': 'eczema and skin inflammation',
+    'burn': 'burning sensation and irritation',
+    // Other common issues
     'allergy': 'allergy symptoms',
     'joint': 'joint pain and stiffness',
     'muscle': 'muscle tension and soreness',
     'blood pressure': 'blood pressure support',
+    'blood': 'circulation and blood health',
+    'heart': 'cardiovascular wellness',
     'immune': 'immune system support',
-    'depression': 'mood support and emotional wellness',
-    'mood': 'mood and emotional balance',
+    'weight': 'weight management concerns',
+    'infection': 'infection and immune response',
   };
   
-  // Find matching condition
+  // Find ALL matching conditions (multi-symptom support)
+  const matchedConditions: string[] = [];
+  
   for (const [keyword, clinical] of Object.entries(conditionMap)) {
     if (lowerQuery.includes(keyword)) {
-      return clinical;
+      // Avoid duplicates with similar meanings
+      if (!matchedConditions.some(c => c.includes(clinical.split(' ')[0]))) {
+        matchedConditions.push(clinical);
+      }
     }
+  }
+  
+  // Return combined conditions if multiple found
+  if (matchedConditions.length > 1) {
+    return matchedConditions.slice(0, 3).join(' combined with ');
+  } else if (matchedConditions.length === 1) {
+    return matchedConditions[0];
   }
   
   // Default: create a generic but grammatical description
@@ -345,6 +409,7 @@ function interpretHealthQuery(query: string): string {
 function createPersonalizedFallback(query: string, info: ExtractedInfo): RemedyResponse {
   // Interpret the query into a clean condition description
   const condition = interpretHealthQuery(query);
+  const lowerQuery = query.toLowerCase();
   
   // Create a professional summary without raw query interpolation
   let summary = `Based on your health concerns regarding ${condition}`;
@@ -361,26 +426,92 @@ function createPersonalizedFallback(query: string, info: ExtractedInfo): RemedyR
   
   summary += '. These recommendations consider your personal health profile and prioritize safety. Always consult a healthcare professional for persistent or severe symptoms.';
   
-  // Age-appropriate ginger recommendation
-  let gingerUsage = "Fresh ginger tea (1-2 grams per cup) or supplement (250-500mg daily)";
-  if (info.ageGroup.toLowerCase().includes('senior') || info.ageGroup.toLowerCase().includes('65')) {
-    gingerUsage = "Gentle ginger tea (0.5-1 gram per cup) or low-dose supplement (125-250mg daily)";
-  } else if (info.ageGroup.toLowerCase().includes('child')) {
-    gingerUsage = "Very mild ginger tea (0.25 gram per cup) under parental guidance";
-  }
-  
-  let warnings = "May interact with blood thinners. Consult healthcare provider before use.";
+  let warnings = "Consult healthcare provider before use.";
   if (info.allergies.length > 0) {
     warnings += ` Note: Avoid if allergic to any mentioned substances (${info.allergies.join(', ')}).`;
   }
   
-  return {
-    summary,
-    remedies: [
+  // Condition-specific fallback remedies
+  let remedies: Remedy[] = [];
+  let ancientRemedies: AncientRemedy[] = [];
+  
+  // Fever-specific remedies
+  if (lowerQuery.includes('fever') || lowerQuery.includes('temperature')) {
+    remedies = [
+      {
+        name: "Elderflower",
+        description: "Elderflower is traditionally used to reduce fever by promoting sweating and helping the body naturally regulate temperature. Its diaphoretic properties make it ideal for fever management.",
+        usage: "Steep 2 teaspoons dried elderflower in hot water for 10 minutes. Drink 3-4 cups daily during fever.",
+        warnings: warnings + " Ensure proper identification - raw elderberries are toxic.",
+        sources: ["Journal of Ethnopharmacology", "European Journal of Medical Research"]
+      },
+      {
+        name: "Yarrow",
+        description: "Known as 'nature's fever remedy,' yarrow helps open pores to promote sweating, which helps reduce elevated body temperature naturally.",
+        usage: "Make tea with 1-2 teaspoons dried yarrow flowers in hot water. Drink warm, up to 3 times daily.",
+        warnings: warnings + " Avoid during pregnancy. May cause skin sensitivity.",
+        sources: ["Phytomedicine", "Traditional European Herbalism"]
+      },
+      {
+        name: "Peppermint",
+        description: "Peppermint provides cooling relief during fever, helps reduce body temperature, and soothes accompanying symptoms like headache and body aches.",
+        usage: "Steep fresh or dried peppermint leaves for 5-7 minutes. Drink warm or apply cooled tea as compress.",
+        warnings: "May worsen acid reflux. Not recommended for infants.",
+        sources: ["Journal of Clinical Gastroenterology"]
+      }
+    ];
+    ancientRemedies = [
+      {
+        name: "Willow Bark Tea",
+        culture: "Ancient Greek Medicine",
+        traditionalUse: "Hippocrates prescribed willow bark tea for fever reduction and pain relief. Patients would chew the bark or drink the decoction.",
+        modernFindings: "Contains salicin, the natural precursor to aspirin, with proven antipyretic (fever-reducing) and analgesic properties."
+      }
+    ];
+  }
+  
+  // Digestive/stool-specific remedies
+  if (lowerQuery.includes('stool') || lowerQuery.includes('diarrhea') || lowerQuery.includes('digest') || lowerQuery.includes('stomach')) {
+    const digestiveRemedies: Remedy[] = [
       {
         name: "Ginger Root",
-        description: "Ginger contains anti-inflammatory gingerols that may help reduce inflammation and promote relaxation. Selected for its well-documented safety profile and broad therapeutic benefits.",
-        usage: gingerUsage,
+        description: "Ginger directly addresses digestive upset by reducing intestinal inflammation, easing cramping, and helping normalize bowel movements. Its carminative properties soothe the digestive tract.",
+        usage: "Fresh ginger tea (1-2 grams per cup) after meals, or chew crystallized ginger as needed.",
+        warnings: warnings + " May interact with blood thinners.",
+        sources: ["Journal of Gastroenterology", "World Journal of Gastroenterology"]
+      },
+      {
+        name: "Fennel Seed",
+        description: "Fennel is specifically effective for digestive complaints including loose stools, gas, and cramping. It helps normalize gut motility and reduces intestinal spasms.",
+        usage: "Chew 1/2 teaspoon of fennel seeds after meals, or steep in hot water for 10 minutes as tea.",
+        warnings: warnings + " Avoid in large amounts during pregnancy.",
+        sources: ["Journal of Ethnopharmacology", "BioMed Research International"]
+      },
+      {
+        name: "Blackberry Leaf",
+        description: "Rich in tannins, blackberry leaf has astringent properties that help firm loose stools and reduce diarrhea by tightening intestinal tissue.",
+        usage: "Steep 1-2 teaspoons dried leaves in boiling water for 10-15 minutes. Drink 3 cups daily.",
+        warnings: warnings,
+        sources: ["Journal of Agricultural and Food Chemistry"]
+      }
+    ];
+    remedies = remedies.length > 0 ? [...remedies.slice(0, 1), ...digestiveRemedies.slice(0, 2)] : digestiveRemedies;
+    
+    ancientRemedies.push({
+      name: "Carob Pod Preparation",
+      culture: "Ancient Mediterranean Cultures",
+      traditionalUse: "Ancient Egyptians and Greeks used carob preparations to treat diarrhea and digestive upset. The pods were ground and mixed with water or honey.",
+      modernFindings: "Studies confirm carob's high tannin and pectin content effectively reduces diarrhea duration, particularly in children."
+    });
+  }
+  
+  // Default remedies if no specific condition matched
+  if (remedies.length === 0) {
+    remedies = [
+      {
+        name: "Ginger Root",
+        description: "Ginger contains anti-inflammatory gingerols that may help reduce inflammation and support overall wellness. Selected for its well-documented safety profile.",
+        usage: "Fresh ginger tea (1-2 grams per cup) or supplement (250-500mg daily)",
         warnings,
         sources: ["Journal of Pain Research", "Phytotherapy Research"]
       },
@@ -394,24 +525,24 @@ function createPersonalizedFallback(query: string, info: ExtractedInfo): RemedyR
       {
         name: "Peppermint",
         description: "Known for its soothing properties on the digestive and nervous systems, peppermint can help ease tension and promote comfort.",
-        usage: "Steep fresh or dried peppermint leaves in hot water for 5-7 minutes. Can also use diluted peppermint oil topically.",
+        usage: "Steep fresh or dried peppermint leaves in hot water for 5-7 minutes.",
         warnings: "May worsen acid reflux in some people. Not recommended for infants.",
         sources: ["Journal of Clinical Gastroenterology"]
       }
-    ],
-    ancientRemedies: [
+    ];
+    ancientRemedies = [
       {
         name: "Willow Bark",
         culture: "Ancient Egyptian Medicine",
-        traditionalUse: "Used by ancient Egyptians for pain relief and inflammation, particularly for headaches and joint discomfort. Prepared as a tea by boiling the bark in water.",
-        modernFindings: "Contains salicin, which converts to salicylic acid (similar to aspirin) and is scientifically proven to reduce pain and inflammation."
-      },
-      {
-        name: "Turmeric Golden Milk",
-        culture: "Ayurvedic Medicine (Ancient India)",
-        traditionalUse: "Mixed with warm milk and black pepper, turmeric was used for thousands of years to reduce inflammation, support digestion, and promote overall wellness.",
-        modernFindings: "Curcumin, the active compound, has been extensively studied for its anti-inflammatory and antioxidant properties."
+        traditionalUse: "Used by ancient Egyptians for pain relief and inflammation. Prepared as a tea by boiling the bark in water.",
+        modernFindings: "Contains salicin, which converts to salicylic acid (similar to aspirin) and is proven to reduce pain and inflammation."
       }
-    ]
+    ];
+  }
+  
+  return {
+    summary,
+    remedies,
+    ancientRemedies
   };
 }
