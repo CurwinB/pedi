@@ -280,16 +280,6 @@ const Index = () => {
           />
         </div>
         
-        {/* Floating elements */}
-        <div className="absolute top-20 left-10 opacity-20 animate-float">
-          <Leaf className="h-12 w-12 text-primary-foreground" />
-        </div>
-        <div className="absolute top-40 right-20 opacity-20 animate-float" style={{ animationDelay: '1s' }}>
-          <Sparkle className="h-8 w-8 text-primary-foreground" />
-        </div>
-        <div className="absolute bottom-32 left-1/4 opacity-20 animate-float" style={{ animationDelay: '2s' }}>
-          <Heart className="h-10 w-10 text-primary-foreground" />
-        </div>
         
         <div className="relative container mx-auto px-4 pt-32 pb-20 lg:pt-40 lg:pb-32">
           <div className="max-w-5xl mx-auto text-center space-y-10">
