@@ -32,6 +32,12 @@ interface AncientRemedy {
   modernFindings: string;
 }
 
+const stripEmojis = (text: string) =>
+  text
+    .replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+
 const Search = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -288,7 +294,7 @@ const Search = () => {
                 </div>
                 <div className="bg-white/70 rounded-2xl p-6 sm:p-8 border border-slate-200/30 backdrop-blur-sm">
                   <p className="text-slate-700 leading-relaxed text-base sm:text-lg font-medium">
-                    {result.summary}
+                    {stripEmojis(result.summary)}
                   </p>
                 </div>
               </div>
@@ -336,7 +342,7 @@ const Search = () => {
                         <span className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-200 to-orange-200 rounded-full flex items-center justify-center text-amber-800 text-sm sm:text-lg font-bold shadow-soft flex-shrink-0">
                           {index + 1}
                         </span>
-                        {ancientRemedy.name}
+                        {stripEmojis(ancientRemedy.name)}
                       </h3>
                       
                       <div className="space-y-4 sm:space-y-6">
@@ -345,7 +351,7 @@ const Search = () => {
                             Ancient Wisdom from {ancientRemedy.culture}
                           </h4>
                           <p className="text-amber-800 leading-relaxed text-sm sm:text-lg">
-                            {ancientRemedy.traditionalUse}
+                            {stripEmojis(ancientRemedy.traditionalUse)}
                           </p>
                         </div>
                         
@@ -354,7 +360,7 @@ const Search = () => {
                             Modern Science Says
                           </h4>
                           <p className="text-blue-800 leading-relaxed text-sm sm:text-lg">
-                            {ancientRemedy.modernFindings}
+                            {stripEmojis(ancientRemedy.modernFindings)}
                           </p>
                         </div>
                       </div>
@@ -441,7 +447,7 @@ const Search = () => {
                   <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-3">🌿 Explore More Natural Wonders</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-3">Explore More Natural Wonders</h3>
                   <p className="text-slate-600/80 mb-4 sm:mb-6 text-sm sm:text-lg">
                     Join thousands discovering the gentle power of nature's pharmacy
                   </p>
@@ -450,15 +456,14 @@ const Search = () => {
               
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
                 {[
-                  { icon: "🌼", title: "Chamomile Dreams", desc: "Gentle comfort for anxious moments" },
-                  { icon: "🧿", title: "Magnesium Magic", desc: "Nature's relaxation mineral" },
-                  { icon: "💜", title: "Lavender Peace", desc: "Aromatherapy for the soul" },
-                  { icon: "✨", title: "Golden Turmeric", desc: "Ancient anti-inflammatory wisdom" },
-                  { icon: "🫚", title: "Ginger Warmth", desc: "Digestive comfort from the earth" },
-                  { icon: "🍃", title: "Herbal Blends", desc: "Therapeutic teas for every need" }
+                  { title: "Chamomile Dreams", desc: "Gentle comfort for anxious moments" },
+                  { title: "Magnesium Magic", desc: "Nature's relaxation mineral" },
+                  { title: "Lavender Peace", desc: "Aromatherapy for the soul" },
+                  { title: "Golden Turmeric", desc: "Ancient anti-inflammatory wisdom" },
+                  { title: "Ginger Warmth", desc: "Digestive comfort from the earth" },
+                  { title: "Herbal Blends", desc: "Therapeutic teas for every need" }
                 ].map((item, index) => (
                   <div key={index} className="bg-gradient-to-br from-slate-50/80 to-blue-50/60 rounded-2xl p-4 sm:p-6 border border-slate-200/30 hover:shadow-soft transition-all duration-300 cursor-pointer group">
-                    <div className="text-2xl sm:text-3xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform duration-300">{item.icon}</div>
                     <h4 className="font-bold text-slate-800 mb-1 sm:mb-2 text-xs sm:text-sm">{item.title}</h4>
                     <p className="text-xs text-slate-600/80">{item.desc}</p>
                   </div>
@@ -475,7 +480,9 @@ const Search = () => {
 
         {!result && !loading && query && (
           <div className="text-center py-16 sm:py-20">
-            <div className="text-4xl sm:text-6xl mb-6">🌿</div>
+            <div className="mx-auto mb-6 w-16 h-16 rounded-full bg-white/70 border border-slate-200/50 flex items-center justify-center shadow-soft">
+              <Leaf className="h-8 w-8 text-slate-600" />
+            </div>
             <p className="text-slate-600/80 text-lg sm:text-xl px-4">
               Begin your natural wellness journey by sharing your needs above
             </p>

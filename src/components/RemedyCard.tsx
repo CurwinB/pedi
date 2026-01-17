@@ -75,6 +75,12 @@ const colorSchemes = [
   }
 ];
 
+const stripEmojis = (text: string) =>
+  text
+    .replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+
 export const RemedyCard = ({ remedy, index }: RemedyCardProps) => {
   const colors = colorSchemes[index % colorSchemes.length];
 
@@ -87,7 +93,7 @@ export const RemedyCard = ({ remedy, index }: RemedyCardProps) => {
           </div>
           <div className="flex-1 min-w-0">
             <h3 className={`text-xl sm:text-2xl font-bold ${colors.text} mb-2 leading-tight`}>
-              🌿 {remedy.name}
+              {stripEmojis(remedy.name)}
             </h3>
             <div className="flex flex-wrap items-center gap-2">
               <Badge variant="outline" className={`text-xs ${colors.badge}`}>
@@ -108,12 +114,12 @@ export const RemedyCard = ({ remedy, index }: RemedyCardProps) => {
             <Info className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
             How Nature Helps
           </h4>
-          <p className={`${colors.descContent} leading-relaxed text-sm sm:text-lg`}>{remedy.description}</p>
+          <p className={`${colors.descContent} leading-relaxed text-sm sm:text-lg`}>{stripEmojis(remedy.description)}</p>
         </div>
 
         <div className={`${colors.usageBg} rounded-2xl p-4 sm:p-6 border ${colors.usageBg.includes('border') ? '' : colors.border}`}>
-          <h4 className={`font-bold ${colors.usageText} mb-3 text-base sm:text-lg`}>🌱 How to Use</h4>
-          <p className={`${colors.usageContent} leading-relaxed text-sm sm:text-lg`}>{remedy.usage}</p>
+          <h4 className={`font-bold ${colors.usageText} mb-3 text-base sm:text-lg`}>How to Use</h4>
+          <p className={`${colors.usageContent} leading-relaxed text-sm sm:text-lg`}>{stripEmojis(remedy.usage)}</p>
         </div>
 
         {remedy.warnings && (
@@ -122,21 +128,20 @@ export const RemedyCard = ({ remedy, index }: RemedyCardProps) => {
               <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
               Gentle Reminders
             </h4>
-            <p className="text-orange-800 leading-relaxed text-sm sm:text-base">{remedy.warnings}</p>
+            <p className="text-orange-800 leading-relaxed text-sm sm:text-base">{stripEmojis(remedy.warnings)}</p>
           </div>
         )}
 
         {remedy.sources && remedy.sources.length > 0 && (
           <div className="border-t border-slate-200/30 pt-6">
             <h5 className="text-sm font-bold text-slate-700 mb-3 flex items-center gap-2">
-              <span className="text-slate-500">📚</span>
               Trusted Sources
             </h5>
             <ul className="text-sm text-slate-600/80 space-y-2">
               {remedy.sources.map((source, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <span className="w-1 h-1 bg-slate-400 rounded-full mt-2 flex-shrink-0"></span>
-                  <span className="break-words">{source}</span>
+                  <span className="break-words">{stripEmojis(source)}</span>
                 </li>
               ))}
             </ul>
