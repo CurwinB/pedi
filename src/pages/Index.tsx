@@ -4,7 +4,7 @@ import { SearchBar } from "@/components/SearchBar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Leaf, Heart, Shield, Search, Sparkle, Book, Users } from "lucide-react";
+import { Apple, Flame, Brain, Shield, Search, Book, Users, Leaf, BookOpen } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import heroImage from "@/assets/hero-wellness.jpg";
@@ -21,19 +21,19 @@ const Index = () => {
     { 
       name: "Digestive Health", 
       description: "Stomach troubles getting you down? Find natural solutions for bloating, acid reflux, IBS, and other digestive issues that have worked for people just like you.", 
-      icon: Heart,
+      icon: Apple,
       keywords: "digestive health, stomach remedies, acid reflux treatment, bloating relief, IBS natural treatment"
     },
     { 
       name: "Pain & Inflammation", 
       description: "Dealing with aches and pains? Explore gentle, effective home remedies for headaches, arthritis, muscle soreness, and joint pain that won't leave you feeling groggy.", 
-      icon: Shield,
+      icon: Flame,
       keywords: "natural pain relief, arthritis remedies, headache treatment, anti-inflammatory herbs, muscle pain relief"
     },
     { 
       name: "Mental Wellness", 
       description: "Feeling stressed or anxious? Discover calming herbal remedies and natural approaches that can help you feel more centered and sleep better at night.", 
-      icon: Leaf,
+      icon: Brain,
       keywords: "anxiety relief, natural antidepressants, stress management, insomnia remedies, mental health herbs"
     },
     { 
@@ -381,7 +381,7 @@ const Index = () => {
 
               <div className="text-center space-y-6 animate-slide-up" style={{ animationDelay: '0.4s' }}>
                 <div className="mx-auto w-20 h-20 bg-gradient-hero rounded-2xl flex items-center justify-center shadow-glow">
-                  <Sparkle className="h-10 w-10 text-primary-foreground" />
+                  <BookOpen className="h-10 w-10 text-primary-foreground" />
                 </div>
                 <h3 className="text-2xl font-bold text-foreground">Actually Researched</h3>
                 <p className="text-muted-foreground text-lg leading-relaxed">
