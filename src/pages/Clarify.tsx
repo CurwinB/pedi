@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Loader2, AlertTriangle, Sparkles, Heart } from "lucide-react";
+import { ArrowLeft, Loader2, AlertTriangle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
@@ -172,14 +172,9 @@ const Clarify = () => {
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/10 to-transparent rounded-full -translate-y-16 translate-x-16" />
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-secondary/10 to-transparent rounded-full translate-y-12 -translate-x-12" />
           <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <Sparkles className="h-6 w-6 text-primary" />
-              </div>
-              <h1 className="text-3xl font-bold text-foreground">
-                Help Us Understand Your Needs
-              </h1>
-            </div>
+            <h1 className="text-3xl font-bold text-foreground mb-4">
+              Help Us Understand Your Needs
+            </h1>
             <p className="text-muted-foreground leading-relaxed mb-4">
               To provide you with the most accurate and relevant natural remedy recommendations for "{query}", 
               we need to understand your specific situation better. These clarifying questions help us 
@@ -389,12 +384,7 @@ const Clarify = () => {
 
             {/* Additional Comments Section */}
             <div className="bg-gradient-to-br from-background/90 via-background/95 to-secondary/5 backdrop-blur-sm rounded-xl border border-primary/20 p-6 shadow-elegant">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-secondary/10 rounded-lg">
-                  <Heart className="h-5 w-5 text-secondary" />
-                </div>
-                <h3 className="text-lg font-semibold text-foreground">Additional Details (Optional)</h3>
-              </div>
+              <h3 className="text-lg font-semibold text-foreground mb-4">Additional Details (Optional)</h3>
               <p className="text-muted-foreground text-sm mb-4">
                 Please share any additional information about your condition, treatments you've tried, 
                 or specific details that might help us provide better recommendations.
