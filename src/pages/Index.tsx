@@ -476,12 +476,7 @@ const Index = () => {
             {popularRemedies.map((remedy, index) => (
               <AccordionItem key={index} value={`remedy-${index}`} className="bg-card rounded-2xl border border-border hover:shadow-natural transition-all duration-300">
                 <AccordionTrigger className="p-6 hover:no-underline hover:bg-muted/50 rounded-t-2xl">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-primary-soft rounded-lg">
-                      <Leaf className="h-5 w-5 text-primary" />
-                    </div>
-                    <h3 className="text-foreground font-medium text-left">{remedy.title}</h3>
-                  </div>
+                  <h3 className="text-foreground font-medium text-left">{remedy.title}</h3>
                 </AccordionTrigger>
                 <AccordionContent className="p-6 pt-0">
                   <div className="space-y-4">
