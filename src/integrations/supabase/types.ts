@@ -7,100 +7,20 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "12.2.3 (519615d)"
+    PostgrestVersion: "14.1"
   }
   public: {
     Tables: {
-      blog_posts: {
-        Row: {
-          author: string
-          category: string
-          content: string
-          created_at: string
-          excerpt: string
-          featured: boolean | null
-          id: string
-          image_url: string | null
-          meta_description: string | null
-          meta_title: string | null
-          published: boolean | null
-          slug: string
-          tags: string[] | null
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          author: string
-          category: string
-          content: string
-          created_at?: string
-          excerpt: string
-          featured?: boolean | null
-          id?: string
-          image_url?: string | null
-          meta_description?: string | null
-          meta_title?: string | null
-          published?: boolean | null
-          slug: string
-          tags?: string[] | null
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          author?: string
-          category?: string
-          content?: string
-          created_at?: string
-          excerpt?: string
-          featured?: boolean | null
-          id?: string
-          image_url?: string | null
-          meta_description?: string | null
-          meta_title?: string | null
-          published?: boolean | null
-          slug?: string
-          tags?: string[] | null
-          title?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      newsletter_subscriptions: {
-        Row: {
-          confirmed: boolean
-          created_at: string
-          email: string
-          id: string
-          updated_at: string
-        }
-        Insert: {
-          confirmed?: boolean
-          created_at?: string
-          email: string
-          id?: string
-          updated_at?: string
-        }
-        Update: {
-          confirmed?: boolean
-          created_at?: string
-          email?: string
-          id?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      generate_slug: {
-        Args: { title: string }
-        Returns: string
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never
