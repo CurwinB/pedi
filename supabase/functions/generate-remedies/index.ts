@@ -1,5 +1,4 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,7 +26,18 @@ interface RemedyResponse {
   ancientRemedies: AncientRemedy[];
 }
 
-serve(async (req) => {
+interface ExtractedInfo {
+  allergies: string[];
+  ageGroup: string;
+  duration: string;
+  symptoms: string[];
+  treatments: string[];
+  additionalDetails: string;
+  conditionSpecific: string;
+}
+
+Deno.serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -36,51 +46,62 @@ serve(async (req) => {
     const { query, clarificationAnswers } = await req.json();
     
     if (!query) {
-      throw new Error('Query parameter is required');
+      return new Response(
+        JSON.stringify({ error: 'Query parameter is required' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
-    const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
-    if (!geminiApiKey) {
-      throw new Error('Gemini API key not configured');
+    const apiKey = Deno.env.get('LOVABLE_API_KEY');
+    if (!apiKey) {
+      console.error('LOVABLE_API_KEY not found in environment');
+      return new Response(
+        JSON.stringify({ error: 'API configuration error' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
+
+    console.log(`Generating remedies for query: "${query}"`);
+    console.log('Clarification answers:', JSON.stringify(clarificationAnswers, null, 2));
 
     // Extract and structure the clarification data
-    const extractedInfo = {
+    const extractedInfo: ExtractedInfo = {
       allergies: [],
       ageGroup: '',
       duration: '',
       symptoms: [],
       treatments: [],
-      additionalDetails: clarificationAnswers.additional_details || '',
+      additionalDetails: clarificationAnswers?.additional_details || '',
       conditionSpecific: ''
     };
 
     // Process clarification answers to extract meaningful data
-    Object.entries(clarificationAnswers).forEach(([key, value]) => {
-      const valueStr = Array.isArray(value) ? value.join(', ') : value;
-      
-      if (key === 'allergy_details') {
-        // Specific allergy details from the text field
-        extractedInfo.allergies.push(valueStr);
-      } else if (key.toLowerCase().includes('allerg')) {
-        if (!valueStr.toLowerCase().includes('none') && !valueStr.toLowerCase().includes('no known')) {
+    if (clarificationAnswers) {
+      Object.entries(clarificationAnswers).forEach(([key, value]) => {
+        const valueStr = Array.isArray(value) ? value.join(', ') : String(value);
+        
+        if (key === 'allergy_details') {
           extractedInfo.allergies.push(valueStr);
+        } else if (key.toLowerCase().includes('allerg')) {
+          if (!valueStr.toLowerCase().includes('none') && !valueStr.toLowerCase().includes('no known')) {
+            extractedInfo.allergies.push(valueStr);
+          }
+        } else if (key.toLowerCase().includes('age')) {
+          extractedInfo.ageGroup = valueStr;
+        } else if (key.toLowerCase().includes('duration') || key.toLowerCase().includes('long')) {
+          extractedInfo.duration = valueStr;
+        } else if (key.toLowerCase().includes('symptoms') || key.toLowerCase().includes('accompanying')) {
+          extractedInfo.symptoms.push(valueStr);
+        } else if (key.toLowerCase().includes('treatment') || key.toLowerCase().includes('tried')) {
+          extractedInfo.treatments.push(valueStr);
+        } else {
+          extractedInfo.conditionSpecific = valueStr;
         }
-      } else if (key.toLowerCase().includes('age')) {
-        extractedInfo.ageGroup = valueStr;
-      } else if (key.toLowerCase().includes('duration') || key.toLowerCase().includes('long')) {
-        extractedInfo.duration = valueStr;
-      } else if (key.toLowerCase().includes('symptoms') || key.toLowerCase().includes('accompanying')) {
-        extractedInfo.symptoms.push(valueStr);
-      } else if (key.toLowerCase().includes('treatment') || key.toLowerCase().includes('tried')) {
-        extractedInfo.treatments.push(valueStr);
-      } else {
-        extractedInfo.conditionSpecific = valueStr;
-      }
-    });
+      });
+    }
 
     // Build personalized context
-    let personalizedContext = `
+    const personalizedContext = `
 CRITICAL PERSONALIZATION REQUIREMENTS:
 
 SAFETY PROFILE:
@@ -174,50 +195,72 @@ Write: "Given your morning nausea that worsens with stress and your tolerance to
 
 Make every recommendation specific to THEIR reported situation, not generic advice.`;
 
-    console.log('Generating personalized remedies with context:', personalizedContext);
+    console.log('Generating personalized remedies...');
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`, {
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: prompt
-          }]
-        }],
-        generationConfig: {
-          temperature: 0.4, // Lower temperature for more consistent, safer recommendations
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 3000,
-        }
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+        temperature: 0.4,
+        max_tokens: 4000,
       }),
     });
 
     if (!response.ok) {
-      throw new Error(`Gemini API error: ${response.status}`);
+      const errorText = await response.text();
+      console.error('Lovable AI API error:', response.status, errorText);
+      return new Response(
+        JSON.stringify({ error: 'Failed to generate remedies' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     const data = await response.json();
-    const generatedText = data.candidates[0].content.parts[0].text;
+    const generatedText = data.choices?.[0]?.message?.content;
+
+    if (!generatedText) {
+      console.error('No content in API response');
+      return new Response(
+        JSON.stringify({ error: 'No response from AI' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
     
-    // Parse the JSON response from Gemini
+    // Parse the JSON response
     let remedyData: RemedyResponse;
     try {
       // Clean up the response to extract JSON
-      const jsonMatch = generatedText.match(/\{[\s\S]*\}/);
-      const jsonText = jsonMatch ? jsonMatch[0] : generatedText.trim();
+      let cleanContent = generatedText.trim();
+      if (cleanContent.startsWith('```json')) {
+        cleanContent = cleanContent.slice(7);
+      } else if (cleanContent.startsWith('```')) {
+        cleanContent = cleanContent.slice(3);
+      }
+      if (cleanContent.endsWith('```')) {
+        cleanContent = cleanContent.slice(0, -3);
+      }
+      cleanContent = cleanContent.trim();
+      
+      const jsonMatch = cleanContent.match(/\{[\s\S]*\}/);
+      const jsonText = jsonMatch ? jsonMatch[0] : cleanContent;
       remedyData = JSON.parse(jsonText);
       
-      console.log('Successfully generated personalized remedies:', remedyData.remedies.length, 'remedies');
+      console.log('Successfully generated personalized remedies:', remedyData.remedies?.length || 0, 'remedies');
     } catch (parseError) {
-      console.error('Failed to parse Gemini response:', generatedText);
+      console.error('Failed to parse AI response:', parseError);
       
       // Create a more personalized fallback based on extracted info
-      const personalizedFallback = createPersonalizedFallback(query, extractedInfo);
-      remedyData = personalizedFallback;
+      remedyData = createPersonalizedFallback(query, extractedInfo);
     }
 
     return new Response(JSON.stringify(remedyData), {
@@ -229,7 +272,7 @@ Make every recommendation specific to THEIR reported situation, not generic advi
     return new Response(
       JSON.stringify({ 
         error: 'Failed to generate remedies',
-        details: error.message 
+        details: error instanceof Error ? error.message : 'Unknown error'
       }), 
       {
         status: 500,
@@ -239,7 +282,7 @@ Make every recommendation specific to THEIR reported situation, not generic advi
   }
 });
 
-function createPersonalizedFallback(query: string, info: any): RemedyResponse {
+function createPersonalizedFallback(query: string, info: ExtractedInfo): RemedyResponse {
   // Create a basic personalized response even in fallback
   let summary = `Based on your search for "${query}"`;
   
@@ -251,7 +294,7 @@ function createPersonalizedFallback(query: string, info: any): RemedyResponse {
     summary += `, here are natural remedies appropriate for your ${info.ageGroup.toLowerCase()} age group`;
   }
   
-  summary += '. These recommendations consider your personal health profile.';
+  summary += '. These recommendations consider your personal health profile. Always consult a healthcare professional for persistent symptoms.';
   
   // Age-appropriate ginger recommendation
   let gingerUsage = "Fresh ginger tea (1-2 grams per cup) or supplement (250-500mg daily)";
@@ -270,19 +313,39 @@ function createPersonalizedFallback(query: string, info: any): RemedyResponse {
     summary,
     remedies: [
       {
-        name: "Ginger Root (Personalized)",
+        name: "Ginger Root",
         description: `Ginger contains anti-inflammatory gingerols that may help with your specific ${query.toLowerCase()} symptoms. Chosen for your profile based on general safety and effectiveness.`,
         usage: gingerUsage,
         warnings,
         sources: ["Journal of Pain Research", "Phytotherapy Research"]
+      },
+      {
+        name: "Chamomile",
+        description: "A gentle, calming herb suitable for most age groups that can help with stress-related symptoms and promote relaxation.",
+        usage: "Steep 1-2 teaspoons of dried chamomile flowers in hot water for 5-10 minutes. Drink up to 3 cups daily.",
+        warnings: "Avoid if allergic to ragweed or related plants. May cause drowsiness.",
+        sources: ["Molecular Medicine Reports", "Traditional herbal medicine"]
+      },
+      {
+        name: "Peppermint",
+        description: "Known for its soothing properties on the digestive system and ability to ease tension.",
+        usage: "Steep fresh or dried peppermint leaves in hot water for 5-7 minutes. Can also use diluted peppermint oil topically.",
+        warnings: "May worsen acid reflux in some people. Not recommended for infants.",
+        sources: ["Journal of Clinical Gastroenterology"]
       }
     ],
     ancientRemedies: [
       {
         name: "Willow Bark",
         culture: "Ancient Egyptian Medicine",
-        traditionalUse: "Used by ancient Egyptians for pain relief and inflammation, particularly for headaches and joint pain.",
+        traditionalUse: "Used by ancient Egyptians for pain relief and inflammation, particularly for headaches and joint pain. Prepared as a tea by boiling the bark.",
         modernFindings: "Contains salicin, which converts to salicylic acid (similar to aspirin) and is scientifically proven to reduce pain and inflammation."
+      },
+      {
+        name: "Turmeric Golden Milk",
+        culture: "Ayurvedic Medicine (Ancient India)",
+        traditionalUse: "Mixed with warm milk and black pepper, turmeric was used for thousands of years to reduce inflammation and support overall health.",
+        modernFindings: "Curcumin, the active compound, has been extensively studied for its anti-inflammatory and antioxidant properties."
       }
     ]
   };

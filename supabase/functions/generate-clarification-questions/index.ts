@@ -1,5 +1,4 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -12,7 +11,8 @@ interface ClarificationQuestion {
   options: string[];
 }
 
-serve(async (req) => {
+Deno.serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -23,15 +23,21 @@ serve(async (req) => {
     console.log('Received request with query:', query);
     
     if (!query) {
-      throw new Error('Query parameter is required');
+      return new Response(
+        JSON.stringify({ error: 'Query parameter is required' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
-    const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
-    console.log('Gemini API key available:', !!geminiApiKey);
+    const apiKey = Deno.env.get('LOVABLE_API_KEY');
+    console.log('LOVABLE_API_KEY available:', !!apiKey);
     
-    if (!geminiApiKey) {
-      console.error('Gemini API key not found in environment');
-      throw new Error('Gemini API key not configured');
+    if (!apiKey) {
+      console.error('LOVABLE_API_KEY not found in environment');
+      return new Response(
+        JSON.stringify({ error: 'API configuration error' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     const prompt = `You are a healthcare professional creating exactly 6 follow-up questions for someone seeking natural remedies for "${query}". Generate questions that a doctor would ask to better understand the patient's condition.
@@ -74,46 +80,68 @@ Return ONLY a valid JSON array with exactly 6 questions in this structure:
 
 Make the questions specific to "${query}" and medically appropriate. Return valid JSON only.`;
 
-    console.log('Making request to Gemini API...');
+    console.log('Making request to Lovable AI...');
     
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`, {
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: prompt
-          }]
-        }],
-        generationConfig: {
-          temperature: 0.3,
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 1024,
-        }
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+        temperature: 0.3,
+        max_tokens: 2000,
       }),
     });
 
     if (!response.ok) {
-      console.error(`Gemini API error: ${response.status} - ${response.statusText}`);
+      console.error(`Lovable AI API error: ${response.status} - ${response.statusText}`);
       const errorText = await response.text();
       console.error('Error response:', errorText);
-      throw new Error(`Gemini API error: ${response.status}`);
+      return new Response(
+        JSON.stringify({ error: 'Failed to generate questions' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
-    console.log('Gemini API response received successfully');
+    console.log('Lovable AI response received successfully');
     const data = await response.json();
-    const generatedText = data.candidates[0].content.parts[0].text;
-    console.log('Generated text from Gemini:', generatedText);
+    const generatedText = data.choices?.[0]?.message?.content;
     
-    // Parse the JSON response from Gemini
+    if (!generatedText) {
+      console.error('No content in API response');
+      return new Response(
+        JSON.stringify({ error: 'No response from AI' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    console.log('Generated text from Lovable AI:', generatedText.substring(0, 200) + '...');
+    
+    // Parse the JSON response
     let questions: ClarificationQuestion[];
     try {
       // Clean up the response to extract JSON
-      const jsonMatch = generatedText.match(/\[[\s\S]*\]/);
-      const jsonText = jsonMatch ? jsonMatch[0] : generatedText.trim();
+      let cleanContent = generatedText.trim();
+      if (cleanContent.startsWith('```json')) {
+        cleanContent = cleanContent.slice(7);
+      } else if (cleanContent.startsWith('```')) {
+        cleanContent = cleanContent.slice(3);
+      }
+      if (cleanContent.endsWith('```')) {
+        cleanContent = cleanContent.slice(0, -3);
+      }
+      cleanContent = cleanContent.trim();
+      
+      const jsonMatch = cleanContent.match(/\[[\s\S]*\]/);
+      const jsonText = jsonMatch ? jsonMatch[0] : cleanContent;
       questions = JSON.parse(jsonText);
       console.log('Successfully parsed questions:', questions.length, 'questions');
       
@@ -123,8 +151,7 @@ Make the questions specific to "${query}" and medically appropriate. Return vali
         throw new Error('Incorrect number of questions generated');
       }
     } catch (parseError) {
-      console.error('Failed to parse Gemini response:', generatedText);
-      console.error('Parse error:', parseError);
+      console.error('Failed to parse AI response:', parseError);
       
       // Fallback questions - exactly 6 structured questions
       questions = [
@@ -161,7 +188,7 @@ Make the questions specific to "${query}" and medically appropriate. Return vali
       ];
     }
 
-    console.log('Final questions for query:', query, questions);
+    console.log('Final questions for query:', query);
 
     return new Response(JSON.stringify({ questions }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -172,7 +199,7 @@ Make the questions specific to "${query}" and medically appropriate. Return vali
     return new Response(
       JSON.stringify({ 
         error: 'Failed to generate clarification questions',
-        details: error.message 
+        details: error instanceof Error ? error.message : 'Unknown error'
       }), 
       {
         status: 500,
