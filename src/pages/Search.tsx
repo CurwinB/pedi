@@ -195,7 +195,7 @@ const Search = () => {
           </div>
           
           <p className="text-base sm:text-lg text-slate-700/80 max-w-2xl mx-auto leading-relaxed font-medium mb-6 sm:mb-8 px-4">
-            🌿 Gentle, time-tested remedies crafted by nature for your wellness journey
+            Gentle, time-tested remedies crafted by nature for your wellness journey
           </p>
           
           {/* Wellness Promise Cards */}
@@ -236,7 +236,7 @@ const Search = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-indigo-500/20 rounded-full animate-ping"></div>
               </div>
               <div className="space-y-3">
-                <p className="text-xl sm:text-2xl font-semibold text-slate-800">🌱 Gathering Nature's Wisdom</p>
+                <p className="text-xl sm:text-2xl font-semibold text-slate-800">Gathering Nature's Wisdom</p>
                 <p className="text-slate-600/80 max-w-md mx-auto text-base sm:text-lg leading-relaxed">
                   Carefully selecting the perfect natural remedies for your unique needs...
                 </p>
@@ -259,7 +259,7 @@ const Search = () => {
                   <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2">🌿 How We Craft Your Natural Solutions</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-2">How We Craft Your Natural Solutions</h3>
                   <p className="text-slate-600/80 leading-relaxed text-sm sm:text-lg">
                     Each remedy is lovingly selected from nature's pharmacy, combining ancient wisdom with modern understanding. 
                     We consider your unique symptoms, health profile, and preferences to create a personalized wellness plan 
@@ -281,7 +281,7 @@ const Search = () => {
                   </div>
                   <div>
                     <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-2">
-                      🌱 Your Personal Wellness Journey for {query}
+                      Your Personal Wellness Journey for {query}
                     </h2>
                     <p className="text-indigo-600 font-medium text-base sm:text-lg">Gentle healing, naturally crafted for you</p>
                   </div>
@@ -298,7 +298,7 @@ const Search = () => {
             <section className="space-y-6 sm:space-y-8">
               <div className="text-center">
                 <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-4">
-                  🌿 {result.remedies.length} Natural Remedies Chosen Just for You
+                  {result.remedies.length} Natural Remedies Chosen Just for You
                 </h2>
                 <p className="text-slate-600/80 text-base sm:text-lg max-w-2xl mx-auto px-4">
                   Each remedy has been carefully selected to work in harmony with your body's natural healing abilities
@@ -323,7 +323,7 @@ const Search = () => {
                   </div>
                   <div>
                     <h2 className="text-2xl sm:text-3xl font-bold text-amber-900 mb-2">
-                      🏛️ Ancient Wisdom, Modern Validation
+                      Ancient Wisdom, Modern Validation
                     </h2>
                     <p className="text-amber-700 font-medium text-base sm:text-lg">Time-honored remedies blessed by science</p>
                   </div>
@@ -336,13 +336,12 @@ const Search = () => {
                         <span className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-200 to-orange-200 rounded-full flex items-center justify-center text-amber-800 text-sm sm:text-lg font-bold shadow-soft flex-shrink-0">
                           {index + 1}
                         </span>
-                        🌿 {ancientRemedy.name}
+                        {ancientRemedy.name}
                       </h3>
                       
                       <div className="space-y-4 sm:space-y-6">
                         <div className="p-4 sm:p-6 bg-amber-50/60 rounded-2xl border-l-4 border-amber-400 backdrop-blur-sm">
-                          <h4 className="font-bold text-amber-900 mb-3 flex items-center gap-3 text-base sm:text-lg">
-                            <span className="text-xl sm:text-2xl">🏛️</span>
+                          <h4 className="font-bold text-amber-900 mb-3 text-base sm:text-lg">
                             Ancient Wisdom from {ancientRemedy.culture}
                           </h4>
                           <p className="text-amber-800 leading-relaxed text-sm sm:text-lg">
@@ -351,8 +350,7 @@ const Search = () => {
                         </div>
                         
                         <div className="p-4 sm:p-6 bg-blue-50/60 rounded-2xl border-l-4 border-blue-400 backdrop-blur-sm">
-                          <h4 className="font-bold text-blue-900 mb-3 flex items-center gap-3 text-base sm:text-lg">
-                            <span className="text-xl sm:text-2xl">🔬</span>
+                          <h4 className="font-bold text-blue-900 mb-3 text-base sm:text-lg">
                             Modern Science Says
                           </h4>
                           <p className="text-blue-800 leading-relaxed text-sm sm:text-lg">
@@ -364,7 +362,6 @@ const Search = () => {
                   ))
                 ) : (
                   <div className="bg-white/80 rounded-2xl p-6 sm:p-8 border border-amber-200/30 text-center backdrop-blur-sm">
-                    <div className="text-4xl sm:text-6xl mb-4">🌿</div>
                     <p className="text-amber-800 leading-relaxed text-base sm:text-lg">
                       While ancient wisdom offers many treasures, we've focused on providing the most relevant 
                       modern herbal solutions for your specific needs. Each remedy above carries the blessing 
@@ -382,7 +379,7 @@ const Search = () => {
                   <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-3">🌱 Nurturing Your Whole Self</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-800 mb-3">Nurturing Your Whole Self</h3>
                   <p className="text-slate-600/80 leading-relaxed text-sm sm:text-lg mb-4 sm:mb-6">
                     True healing happens when we care for both body and spirit. These gentle practices 
                     can amplify your herbal remedies and support your natural healing journey.
@@ -392,9 +389,7 @@ const Search = () => {
               
               <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
                 <div className="bg-blue-50/60 rounded-2xl p-4 sm:p-6 border border-blue-200/30">
-                  <h4 className="font-bold text-blue-900 mb-4 text-base sm:text-lg flex items-center gap-2">
-                    <span className="text-lg sm:text-xl">🌸</span> Daily Rituals
-                  </h4>
+                  <h4 className="font-bold text-blue-900 mb-4 text-base sm:text-lg">Daily Rituals</h4>
                   <ul className="space-y-2 text-blue-800 text-sm sm:text-base">
                     <li className="flex items-center gap-2">
                       <span className="w-2 h-2 bg-blue-400 rounded-full flex-shrink-0"></span>
@@ -416,9 +411,7 @@ const Search = () => {
                 </div>
                 
                 <div className="bg-purple-50/60 rounded-2xl p-4 sm:p-6 border border-purple-200/30">
-                  <h4 className="font-bold text-purple-900 mb-4 text-base sm:text-lg flex items-center gap-2">
-                    <span className="text-lg sm:text-xl">🕊️</span> Creating Harmony
-                  </h4>
+                  <h4 className="font-bold text-purple-900 mb-4 text-base sm:text-lg">Creating Harmony</h4>
                   <ul className="space-y-2 text-purple-800 text-sm sm:text-base">
                     <li className="flex items-center gap-2">
                       <span className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></span>
