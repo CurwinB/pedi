@@ -14,13 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      blog_posts: {
+        Row: {
+          author: string
+          category: string
+          content: string
+          created_at: string | null
+          excerpt: string
+          featured: boolean | null
+          id: string
+          image_url: string | null
+          meta_description: string | null
+          meta_title: string | null
+          published: boolean | null
+          slug: string
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          author: string
+          category: string
+          content: string
+          created_at?: string | null
+          excerpt: string
+          featured?: boolean | null
+          id?: string
+          image_url?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          published?: boolean | null
+          slug: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          author?: string
+          category?: string
+          content?: string
+          created_at?: string | null
+          excerpt?: string
+          featured?: boolean | null
+          id?: string
+          image_url?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          published?: boolean | null
+          slug?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      newsletter_subscriptions: {
+        Row: {
+          confirmed: boolean | null
+          created_at: string | null
+          email: string
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          confirmed?: boolean | null
+          created_at?: string | null
+          email: string
+          id?: string
+          updated_at?: string | null
+        }
+        Update: {
+          confirmed?: boolean | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_slug: { Args: { title: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
